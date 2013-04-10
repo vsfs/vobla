@@ -4,6 +4,7 @@
 #
 # Copyright 2013 (c) Lei Xu <eddyxu@gmail.com>
 
+cp contrib/pre-commit .git/hooks
 case `uname` in
 	Darwin*) glibtoolize --copy ;;  # For MacOSX
     *) libtoolize --copy ;; # Otherwise.
