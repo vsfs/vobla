@@ -16,3 +16,7 @@ before_script:
   - ./bootstrap.sh
 script:
   - CXX=g++-4.7 ./configure && make && make check
+notifications:
+  email:
+    - xulei82@gmail.com
+    - zil.huang@gmail.com
