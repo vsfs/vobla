@@ -14,7 +14,6 @@
  * limitations under the License.
  *
  * \brief Implementation of Status class
- * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  */
 
 #include "vobla/status.h"
@@ -41,25 +40,20 @@ Status& Status::operator=(const Status& rhs) {
   return *this;
 }
 
-void Status::set_error_code(int code) {
+void Status::set_error(int code) {
   code_ = code;
 }
 
-int Status::error_code() const {
+int Status::error() const {
   return code_;
 }
 
-void Status::set_error_message(const string& message) {
+void Status::set_message(const string& message) {
   message_ = message;
 }
 
-const string& Status::error_message() const {
+const string& Status::message() const {
   return message_;
-}
-
-void Status::set_error(int code, const std::string& message) {
-  set_error_code(code);
-  set_error_message(message);
 }
 
 bool Status::ok() const {
