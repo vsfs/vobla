@@ -27,6 +27,7 @@ fi
 
 # Checks for library functions.
 
+AC_SUBST([AM_CXXFLAGS], [-Wall -Wextra])
 AC_CONFIG_FILES([Makefile
 		         vobla/Makefile])
 AC_OUTPUT
