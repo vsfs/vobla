@@ -2,6 +2,23 @@
 *.slo
 *.lo
 *.o
+config.*
+Makefile
+Makefile.in
+/api
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+test-driver
+configure.scan
+stamp-h1
+libtool
+ltmain.sh
+*.log
 
 # Compiled Dynamic libraries
 *.so
