@@ -43,23 +43,25 @@ class Status {
 
   Status& operator=(const Status& rhs);
 
-  int error_code() const;
+  /// Returns the error code.
+  int error() const;
 
-  void set_error_code(int code);
+  /// Sets the new error code.
+  void set_error(int code);
 
-  const std::string& error_message() const;
+  /// Returns the error message.
+  const std::string& message() const;
 
-  void set_error_message(const std::string& message);
+  /// Sets the new error message.
+  void set_message(const std::string& message);
 
   // TODO(eddyxu): set message with format
   // void set_error_message(const char* fmt, ...)
 
-  /// set both error code and error message
-  void set_error(int code, const std::string& message);
-
-  /// Tests whether the error code is zero
+  /// Tests whether the error code is zero.
   bool ok() const;
 
+  /// A static Status object to prepresent OK status.
   static const Status OK;
 
  private:
