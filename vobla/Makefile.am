@@ -1,5 +1,6 @@
 # vim: ts=8:st=8:noexpandtab
-AM_LDFLAGS = -lpthread
+AM_LDFLAGS = -lpthread -L@top_srcdir@/test/gtest-1.6.0/lib
+AM_CXXFLAGS = -I@top_srcdir@/test/gtest-1.6.0/include
 
 SUBDIRS = .
 noinst_LIBRARIES = libvobla.a

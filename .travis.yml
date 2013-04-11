@@ -4,8 +4,11 @@ compiler:
 before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
   - sudo apt-get update
-  - sudo apt-get install -y g++-4.7 libgtest-dev google-mock
-  - cd /usr/src/gtest && sudo cmake . && sudo make && sudo mv libg* /usr/lib
+  - sudo apt-get install -y g++-4.7
+  - cd test
+  - wget https://googletest.googlecode.com/files/gtest-1.6.0.zip && unzip gtest-*.zip
+  - cd gtest-1.6.0
+  - CXX=g++-4.7 ./configure && make
   - cd -
   - wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz -O glog.tar.gz
   - tar -xzf glog.tar.gz

@@ -4,14 +4,13 @@
  * Copyright 2011 (c) Lei Xu <eddyxu@gmail.com>
  */
 
-#include "vobla/hash.h"
-
 #include <fcntl.h>
 #include <glog/logging.h>
 #include <unistd.h>
 #include <cstdio>
 #include <memory>
 #include <string>
+#include "vobla/hash.h"
 
 using std::string;
 using std::unique_ptr;

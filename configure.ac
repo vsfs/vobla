@@ -16,8 +16,6 @@ AC_PROG_CC
 AC_LANG([C++])
 
 # Checks for libraries.
-AC_CHECK_LIB([gtest], [main], [AC_SUBST([GTEST_LIBS], [-lgtest])],
-		     [google-test was not found.])
 AC_CHECK_LIB([glog], [main], [], [AC_MSG_ERROR(google-glog was not found.)])
 
 # Checks for header files.
