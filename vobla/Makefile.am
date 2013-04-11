@@ -5,13 +5,17 @@ SUBDIRS = .
 noinst_LIBRARIES = libvobla.a
 libvobla_a_SOURCES = \
 		     clock.h clock.cpp \
+		     hash.h hash.cpp \
+		     macors.h \
 		     status.h status.cpp \
 		     traits.h traits.cpp
 
 TESTS = \
+	hash_test \
 	traits_test
 
 check_PROGRAMS = $(TESTS)
 
 LDADD = -lgtest -lgtest_main libvobla.a
+hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
 traits_test_SOURCES = traits_test.cpp traits.h traits.cpp
