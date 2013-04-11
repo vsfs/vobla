@@ -17,6 +17,7 @@ AC_LANG([C++])
 
 # Checks for libraries.
 AC_CHECK_LIB([glog], [main], [], [AC_MSG_ERROR(google-glog was not found.)])
+AC_CHECK_LIB([crypto], [main], [], [AC_MSG_ERROR([libcrypto was not found.])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([sys/time.h fcntl.h])
