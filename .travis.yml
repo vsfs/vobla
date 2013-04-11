@@ -18,6 +18,7 @@ before_install:
 before_script:
   - ./bootstrap.sh
 script:
+  - export LD_LIBRARY_PATH=/usr/local/lib
   - CXX=g++-4.7 ./configure && make && make check
 notifications:
   email:
