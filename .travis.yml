@@ -9,7 +9,7 @@ before_install:
   - wget https://googletest.googlecode.com/files/gtest-1.6.0.zip && unzip gtest-*.zip
   - cd gtest-1.6.0
   - CXX=g++-4.7 ./configure && make
-  - cd -
+  - cd ../..
   - wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz -O glog.tar.gz
   - tar -xzf glog.tar.gz
   - cd glog*
