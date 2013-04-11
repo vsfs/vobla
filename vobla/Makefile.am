@@ -9,6 +9,7 @@ libvobla_a_SOURCES = \
 		     hash.h hash.cpp \
 		     macors.h \
 		     status.h status.cpp \
+		     timer.h timer.cpp \
 		     traits.h traits.cpp
 
 TESTS = \

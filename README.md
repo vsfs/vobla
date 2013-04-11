@@ -11,7 +11,8 @@ Vsfs Open-sourced Base C++ Library
  - autoconf
  - automake
  - libtool
- - glog 
+ - boost >= 1.50
+ - glog
  - gtest 1.6
    - Download gtest 1.6.0 from
      http://googletest.googlecode.com/files/gtest-1.6.0.zip and unzip it to `test/` directory.
