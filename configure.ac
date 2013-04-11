@@ -13,14 +13,27 @@ AC_CONFIG_MACRO_DIR([m4])
 AC_PROG_CXX
 AC_PROG_CC
 AC_LANG([C++])
+AC_PROG_RANLIB
 
 # Checks for libraries.
 AC_CHECK_LIB([gtest], [main], [AC_SUBST([GTEST_LIBS], [-lgtest])],
 		     [google-test was not found.])
 
 # Checks for header files.
+AC_CHECK_HEADERS([sys/time.h])
+
 
 # Checks for typedefs, structures, and compiler characteristics.
+AC_TYPE_INT8_T
+AC_TYPE_INT16_T
+AC_TYPE_INT32_T
+AC_TYPE_INT64_T
+AC_TYPE_UINT8_T
+AC_TYPE_UINT16_T
+AC_TYPE_UINT32_T
+AC_TYPE_UINT64_T
+
+
 AC_CHECK_HEADER_STDBOOL
 AX_CXX_COMPILE_STDCXX_11(noext)
 if test "$ac_cv_cxx_compile_cxx11" = no ; then
@@ -28,6 +41,8 @@ if test "$ac_cv_cxx_compile_cxx11" = no ; then
 fi
 
 # Checks for library functions.
+AC_CHECK_FUNCS([gettimeofday])
+AC_FUNC_ERROR_AT_LINE
 
 AC_SUBST([AM_CXXFLAGS], [-Wall -Wextra])
 AC_CONFIG_FILES([Makefile
