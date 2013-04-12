@@ -5,8 +5,10 @@ AM_CXXFLAGS = -I@top_srcdir@/test/gtest-1.6.0/include
 SUBDIRS = .
 noinst_LIBRARIES = libvobla.a
 libvobla_a_SOURCES = \
+		     algorithm.h \
 		     clock.h clock.cpp \
 		     hash.h hash.cpp \
+		     map_util.h \
 		     macors.h \
 		     status.h status.cpp \
 		     timer.h timer.cpp \
@@ -14,10 +16,12 @@ libvobla_a_SOURCES = \
 
 TESTS = \
 	hash_test \
+	map_util_test \
 	traits_test
 
 check_PROGRAMS = $(TESTS)
 
 LDADD = -lgtest -lgtest_main libvobla.a
 hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
+map_util_test_SOURCES = map_util.h map_util_test.cpp
 traits_test_SOURCES = traits_test.cpp traits.h traits.cpp
