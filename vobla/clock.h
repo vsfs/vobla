@@ -20,11 +20,13 @@
 #ifndef VOBLA_CLOCK_H_
 #define VOBLA_CLOCK_H_
 
+#include <boost/noncopyable.hpp>
+
 /**
  * \class Clock
  * \brief The basic interface of accessing wall clock time.
  */
-class Clock {
+class Clock : public boost::noncopyable {
  public:
   virtual ~Clock();
 
