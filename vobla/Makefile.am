@@ -5,7 +5,7 @@ AM_CXXFLAGS = -I@top_srcdir@/test/gtest-1.6.0/include
 SUBDIRS = .
 noinst_LIBRARIES = libvobla.a
 libvobla_a_SOURCES = \
-		     algorithm.h \
+		     stl_util.h \
 		     clock.h clock.cpp \
 		     hash.h hash.cpp \
 		     map_util.h \

@@ -6,8 +6,8 @@
  * Copyright 2011 Lei Xu <eddyxu@gmail.com>
  */
 
-#ifndef VOBLA_ALGORITHM_H_
-#define VOBLA_ALGORITHM_H_
+#ifndef VOBLA_STL_UTIL_H_
+#define VOBLA_STL_UTIL_H_
 
 #include <algorithm>
 #include "vobla/macros.h"
@@ -64,4 +64,4 @@ void delete_pointers(const Container& container) {
   delete_pointers(container.begin(), container.end());
 }
 
-#endif  // VOBLA_ALGORITHM_H_
+#endif  // VOBLA_STL_UTIL_H_
