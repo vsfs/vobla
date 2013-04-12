@@ -44,7 +44,7 @@ fi
 AC_CHECK_FUNCS([gettimeofday strerror])
 AC_FUNC_ERROR_AT_LINE
 
-AC_SUBST([AM_CXXFLAGS], [-Wall -Wextra])
+AC_SUBST([AM_CXXFLAGS], [-Wall])
 AC_CONFIG_FILES([Makefile
 		         vobla/Makefile])
 AC_OUTPUT
