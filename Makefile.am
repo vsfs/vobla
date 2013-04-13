@@ -7,4 +7,4 @@ SUBDIRS = vobla
 api:
 	doxygen
 
-.PHONY:
+.PHONY: api

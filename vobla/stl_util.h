@@ -13,16 +13,6 @@
 #include "vobla/macros.h"
 
 /**
- * \brief Is value an even number
- *
- * \return true if it is a even number
- */
-template <typename Value>
-bool is_even(Value value) {
-  return value % 2 == 0;
-}
-
-/**
  * \brief Does the container contains a given value
  */
 template <typename InputIterator, typename Value>
