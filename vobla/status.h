@@ -37,10 +37,13 @@ class Status {
   /// The default constructor builds a success status (error_code == 0)
   Status();
 
+  /// Constructs a Status object with error code and error message.
   Status(int code, const std::string& message);
 
+  /// Copy constructor.
   Status(const Status& rhs);
 
+  /// Assign operation.
   Status& operator=(const Status& rhs);
 
   /// Returns the error code.

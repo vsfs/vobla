@@ -83,8 +83,13 @@ class Timer : public TimerInterface {
   virtual double get_in_ms() const;
 
  protected:
+  /// Start time.
   double start_;
+
+  /// End time.
   double end_;
+
+  /// The Clock object to get timestamp.
   Clock* clock_;
 };
 
