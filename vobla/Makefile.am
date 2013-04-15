@@ -8,8 +8,9 @@ libvobla_a_SOURCES = \
 		     stl_util.h \
 		     clock.h clock.cpp \
 		     hash.h hash.cpp \
-		     map_util.h \
 		     macros.h \
+		     map_util.h \
+		     range.h \
 		     status.h status.cpp \
 		     timer.h timer.cpp \
 		     traits.h traits.cpp
@@ -17,6 +18,7 @@ libvobla_a_SOURCES = \
 TESTS = \
 	hash_test \
 	map_util_test \
+	range_test \
 	traits_test
 
 check_PROGRAMS = $(TESTS)
@@ -24,4 +26,5 @@ check_PROGRAMS = $(TESTS)
 LDADD = -lgtest -lgtest_main libvobla.a
 hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
 map_util_test_SOURCES = map_util.h map_util_test.cpp
+range_test_SOURCES = range_test.cpp
 traits_test_SOURCES = traits_test.cpp traits.h traits.cpp
