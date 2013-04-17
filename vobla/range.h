@@ -138,6 +138,10 @@ class Range {
         upper_opened_ == rhs.upper_opened_;
   }
 
+  bool operator!=(const Range &rhs) const {
+    return !(*this == rhs);
+  }
+
   /// Returns true if this range includes the range 'rhs'.
   bool contains(const Range &rhs) const {
     return lower_ <= rhs.lower_ && upper_ >= rhs.upper_;

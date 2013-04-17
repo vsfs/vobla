@@ -33,6 +33,17 @@ TEST(RangeTest, TestInitialization) {
   EXPECT_EQ(range, range1);
 }
 
+TEST(RangeTest, TestNotEqualOp) {
+  IntRange range0 = {1, 20};
+  IntRange range1 = {2, 35};
+  EXPECT_NE(range0, range1);
+
+  IntRange range2;
+  range2.set_lower(1, true);
+  range2.set_upper(20, true);
+  EXPECT_NE(range0, range2);
+}
+
 TEST(MultiDimRangeTest, Initialization) {
   TestRange empty;
   for (int i = 0; i < TestRange::dimention(); i++) {
