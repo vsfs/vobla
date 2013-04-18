@@ -15,6 +15,9 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_LANG([C++])
 
+CFLAGS="-Wall -Wunused-value $CFLAGS"
+CXXFLAGS="$CFLAGS $CXXFLAGS"
+
 # Checks for libraries.
 AC_CHECK_LIB([glog], [main], [], [AC_MSG_ERROR(google-glog was not found.)])
 AC_CHECK_LIB([crypto], [main], [], [AC_MSG_ERROR([libcrypto was not found.])])
@@ -44,7 +47,20 @@ fi
 AC_CHECK_FUNCS([gettimeofday strerror])
 AC_FUNC_ERROR_AT_LINE
 
-AC_SUBST([AM_CXXFLAGS], [-Wall])
+AC_ARG_ENABLE([gcov],
+		      [AS_HELP_STRING([--enable-gcov],
+				  [enable coverage test (default: no).])],
+			  [gcov_enabled=${enableval}], [gcov_enabled=no])
+if test "x${gcov_enabled}" = xyes; then
+  CFLAGS = "$CFLAGS -fprofile-arcs -ftest-coverage --coverage"
+  CXXFLAGS="$CXXFLAGS -fprofile-arcs -ftest-coverage --coverage"
+  LDFLAGS="$LDFLAGS -fprofile-arcs"
+  LIBS="$LIBS -lgcov"
+fi
+
+AC_SUBST([AM_CXXFLAGS], ["$CXXFLAGS"])
+AC_SUBST(LDFLAGS, "$LDFLAGS")
+AC_SUBST(LIBS, "$LIBS")
 AC_CONFIG_FILES([Makefile
 		         vobla/Makefile])
 AC_OUTPUT
