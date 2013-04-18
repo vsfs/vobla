@@ -22,7 +22,7 @@ script:
   - export LD_LIBRARY_PATH=/usr/local/lib
   - CXX=g++-4.7 ./configure --enable-gcov && make && make check
 after_success:
-  - coveralls --gcov gcov-4.7
+  - coveralls --gcov gcov-4.7 -e test -e glog-0.3.3
 notifications:
   email:
     - xulei82@gmail.com
