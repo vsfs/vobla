@@ -121,6 +121,8 @@ class MD5Digest : public BaseHashDigest<MD5_CTX, 16> {
   /// Constructs a MD5Digest from a buffer.
   MD5Digest(const char* buffer, size_t size);
 
+  ~MD5Digest();
+
   /// Initializes a SHA1Digest update.
   void init();
 
@@ -161,6 +163,8 @@ class SHA1Digest : public BaseHashDigest<SHA_CTX, 20> {
 
   /// Constructs a SHA1Digest from a raw buffer.
   SHA1Digest(const char *buffer, size_t size);
+
+  ~SHA1Digest();
 
   /// Initializes a SHA1Digest update.
   void init();

@@ -30,6 +30,10 @@ TEST(HashDigestTest, MD5Create) {
 
   MD5Digest md5_2("abcdefg\n");
   EXPECT_EQ(md5_2.hexdigest(), "020861c8c3fe177da19a7e9539a5dbac");
+
+  MD5Digest md5_3;
+  md5_3.reset(buf.data(), buf.size());
+  EXPECT_EQ(md5_3, md5_1);
 }
 
 TEST(HashDigestTest, SHA1Create) {
@@ -40,4 +44,8 @@ TEST(HashDigestTest, SHA1Create) {
 
   SHA1Digest sha1_2("abcdefg\n");
   EXPECT_EQ(sha1_2.hexdigest(), "69bca99b923859f2dc486b55b87f49689b7358c7");
+
+  SHA1Digest sha1_3;
+  sha1_3.reset(buf.data(), buf.size());
+  EXPECT_EQ(sha1_1, sha1_3);
 }

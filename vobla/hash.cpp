@@ -44,6 +44,9 @@ MD5Digest::MD5Digest(const char* buffer, size_t size) {
   final();
 }
 
+MD5Digest::~MD5Digest() {
+}
+
 void MD5Digest::init() {
   MD5_Init(&context_);
 }
@@ -71,6 +74,9 @@ SHA1Digest::SHA1Digest(const char* buffer, size_t size) {
   init();
   update(buffer, size);
   final();
+}
+
+SHA1Digest::~SHA1Digest() {
 }
 
 void SHA1Digest::init() {
