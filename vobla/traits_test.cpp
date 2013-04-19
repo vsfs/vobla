@@ -52,3 +52,14 @@ TEST(TypeToIntTest, TestParseTypeStringToInt) {
 
   EXPECT_EQ(UNKNOWN, parse_type_string_to_int("int33"));
 }
+
+TEST(TraitsTest, TestTypeIntToString) {
+  EXPECT_EQ(string("uint64"), type_int_to_string(UINT64));
+  EXPECT_EQ(string("char"), type_int_to_string(CHAR));
+  EXPECT_EQ(string("string"), type_int_to_string(STRING));
+  EXPECT_EQ(string("unknown"), type_int_to_string(UNKNOWN));
+
+  // Invalid values.
+  EXPECT_EQ(string("unknown"), type_int_to_string(-1));
+  EXPECT_EQ(string("unknown"), type_int_to_string(100));
+}
