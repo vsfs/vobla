@@ -33,4 +33,18 @@ TEST(StatusTest, TestConstructors) {
   EXPECT_EQ("SUCCESS", s1.message());
 
   EXPECT_NE(s, s1);
+
+  Status s2(1, "test failure");
+  Status s3(s2);
+  Status s4;
+  s4 = s2;
+  EXPECT_EQ(s2, s3);
+  EXPECT_EQ(s3, s4);
+}
+
+TEST(StatusTest, TestSetterAndGetter) {
+  Status s;
+  s.set_error(10);
+  s.set_message("10");
+  EXPECT_EQ(Status(10, "10"), s);
 }
