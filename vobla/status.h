@@ -67,6 +67,13 @@ class Status {
   /// A static Status object to prepresent OK status.
   static const Status OK;
 
+  /// Returns true if two status objects have same error numbers and messages.
+  bool operator==(const Status &rhs) const;
+
+  bool operator!=(const Status &rhs) const {
+    return !(*this == rhs);
+  }
+
  private:
   int code_;
   std::string message_;

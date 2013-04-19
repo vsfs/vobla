@@ -59,3 +59,7 @@ const string& Status::message() const {
 bool Status::ok() const {
   return code_ == 0;
 }
+
+bool Status::operator==(const Status &rhs) const {
+  return code_ == rhs.code_ && message_ == rhs.message_;
+}

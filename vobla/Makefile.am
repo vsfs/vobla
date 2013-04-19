@@ -19,6 +19,7 @@ TESTS = \
 	hash_test \
 	map_util_test \
 	range_test \
+	status_test \
 	traits_test
 
 check_PROGRAMS = $(TESTS)
@@ -26,5 +27,6 @@ check_PROGRAMS = $(TESTS)
 LDADD = -lgtest -lgtest_main libvobla.a
 hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
 map_util_test_SOURCES = map_util.h map_util_test.cpp
-range_test_SOURCES = range_test.cpp
+range_test_SOURCES = range_test.cpp range.h
+status_test_SOURCES = status_test.cpp status.h status.cpp
 traits_test_SOURCES = traits_test.cpp traits.h traits.cpp
