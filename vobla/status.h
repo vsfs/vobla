@@ -43,6 +43,9 @@ class Status {
   /// Copy constructor.
   Status(const Status& rhs);
 
+  /// Explicit destructor.
+  ~Status();
+
   /// Assign operation.
   Status& operator=(const Status& rhs);
 

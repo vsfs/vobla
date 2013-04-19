@@ -34,6 +34,9 @@ Status::Status(const Status& rhs) {
   *this = rhs;
 }
 
+Status::~Status() {
+}
+
 Status& Status::operator=(const Status& rhs) {
   code_ = rhs.code_;
   message_ = rhs.message_;
