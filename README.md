@@ -17,3 +17,10 @@ Vsfs Open-sourced Base C++ Library
    - Download gtest 1.6.0 from
      http://googletest.googlecode.com/files/gtest-1.6.0.zip and unzip it to `test/` directory.
  - libssl-dev
+
+### Install dependencies on specific platform
+
+```sh
+# Ubuntu 12.10
+sudo apt-get install g++ autoconf automake libtool libboost1.50-all-dev libssl-dev libgoogle-glog-dev
+```

@@ -22,7 +22,6 @@
 
 #include <glog/logging.h>
 #include <array>
-#include <cstdint>
 #include <initializer_list>
 #include <limits>
 #include <utility>
