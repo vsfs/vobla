@@ -61,7 +61,7 @@ struct TestTask {
 };
 
 TEST(ThreadPoolTest, TestTaskObjects) {
-  ThreadPool pool(4);
+  ThreadPool pool;
   int execute_count = 0;
   std::mutex mutex;
   std::vector<TestTask> tasks;
