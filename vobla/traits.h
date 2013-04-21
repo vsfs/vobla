@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2012 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file type_meta.h
+ */
+
+/**
+ * \file traits.h
  *
  * \brief Provide an convinient way to do type->int and int->type conversions.
  */
@@ -24,6 +26,7 @@
 #include <cstdint>  // NOLINT
 #include <string>
 
+/// The integer ID for basic C++ types.
 enum TypeIDs {
   UNKNOWN, CHAR, UINT8, INT8, INT16, UINT16, INT32, UINT32, INT64,
   UINT64, FLOAT, DOUBLE, STRING
@@ -72,9 +75,17 @@ struct Int2Type {
  */
 int parse_type_string_to_int(const std::string &str);
 
+/**
+ * \brief Returns a string representation for a type.
+ * \param type_id the integer ID of the type.
+ */
 std::string type_int_to_string(int type_id);
 
 /// \cond
+
+/**
+ * \brief Defines the mapping from C++ type to its integer ID.
+ */
 #define DEFINE_INT2TYPE(type, intval) \
     template <> struct TypeToInt<type> { \
       enum { value_ = intval }; \
