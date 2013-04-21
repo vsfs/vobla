@@ -25,7 +25,7 @@
 
 #define DISALLOW_IMPLICIT_CONSTRUCTORS(ClassName) \
   ClassName(); \
-  DISABLE_COPY_AND_ASSIGN(ClassName)
+  DISALLOW_COPY_AND_ASSIGN(ClassName)
 
 // Refer to facebook's folly library.
 #define ONE_OR_NONE(a, ...) THIRD(a, ## __VA_ARGS__, a)

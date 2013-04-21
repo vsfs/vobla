@@ -2,6 +2,8 @@
 AM_LDFLAGS = -lpthread -L@top_srcdir@/test/gtest-1.6.0/lib
 AM_CXXFLAGS = -I@top_srcdir@/test/gtest-1.6.0/include
 
+CLEANFILES = *.gcov *.gcno *.gcda
+
 SUBDIRS = .
 noinst_LIBRARIES = libvobla.a
 libvobla_a_SOURCES = \
@@ -12,6 +14,8 @@ libvobla_a_SOURCES = \
 		     map_util.h \
 		     range.h \
 		     status.h status.cpp \
+		     sysinfo.h sysinfo.cpp \
+		     thread_pool.h thread_pool.cpp \
 		     timer.h timer.cpp \
 		     traits.h traits.cpp
 
@@ -20,6 +24,7 @@ TESTS = \
 	map_util_test \
 	range_test \
 	status_test \
+	thread_pool_test \
 	traits_test
 
 check_PROGRAMS = $(TESTS)
@@ -29,4 +34,5 @@ hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
 map_util_test_SOURCES = map_util.h map_util_test.cpp
 range_test_SOURCES = range_test.cpp range.h
 status_test_SOURCES = status_test.cpp status.h status.cpp
+thread_pool_test_SOURCES = thread_pool_test.cpp thread_pool.h thread_pool.cpp
 traits_test_SOURCES = traits_test.cpp traits.h traits.cpp
