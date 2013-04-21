@@ -23,7 +23,7 @@ AC_CHECK_LIB([glog], [main], [], [AC_MSG_ERROR(google-glog was not found.)])
 AC_CHECK_LIB([crypto], [main], [], [AC_MSG_ERROR([libcrypto was not found.])])
 
 # Checks for header files.
-AC_CHECK_HEADERS([sys/time.h fcntl.h stddef.h])
+AC_CHECK_HEADERS([sys/time.h fcntl.h stddef.h sys/ioctl.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_INT8_T
@@ -36,6 +36,8 @@ AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
 AC_TYPE_SIZE_T
 AC_TYPE_SSIZE_T
+AC_TYPE_OFF_T
+AC_TYPE_PID_T
 
 AC_CHECK_HEADER_STDBOOL
 AX_CXX_COMPILE_STDCXX_11(noext)
@@ -44,7 +46,7 @@ if test "$ac_cv_cxx_compile_cxx11" = no ; then
 fi
 
 # Checks for library functions.
-AC_CHECK_FUNCS([gettimeofday strerror])
+AC_CHECK_FUNCS([gettimeofday strerror memset strrchr])
 AC_FUNC_ERROR_AT_LINE
 
 AC_ARG_ENABLE([gcov],
