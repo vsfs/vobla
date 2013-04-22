@@ -24,6 +24,7 @@
 #include <mutex>  // NOLINT
 #include <vector>
 #include "vobla/status.h"
+#include "vobla/sysinfo.h"
 #include "vobla/thread_pool.h"
 
 namespace vobla {
@@ -45,6 +46,23 @@ TEST(ThreadPoolTest, TestLambdas) {
   pool.close();
   pool.join();
   EXPECT_EQ(100, execute_count);
+}
+
+TEST(ThreadPoolTest, TestJoinInDestructor) {
+  int execute_count = 0;
+  std::mutex mutex;
+  {
+    ThreadPool pool;
+    for (int i = 0; i < 5; i++) {
+      // Use lambda to demostrate
+      pool.add_task([&mutex, &execute_count]() -> Status {
+            std::unique_lock<std::mutex> lock(mutex);
+            execute_count++;
+            return Status::OK;
+          });
+    }
+  }
+  EXPECT_EQ(5, execute_count);
 }
 
 struct TestTask {
@@ -77,6 +95,17 @@ TEST(ThreadPoolTest, TestTaskObjects) {
     EXPECT_TRUE(rst.get().ok());
   }
   EXPECT_EQ(100, execute_count);
+}
+
+TEST(ThreadPoolTest, TestDefaultNumberThreads) {
+  ThreadPool p1;
+  EXPECT_EQ(2u * SysInfo::get_num_cpus(), p1.num_threads());
+
+  ThreadPool p2(0);
+  EXPECT_EQ(2u * SysInfo::get_num_cpus(), p2.num_threads());
+
+  ThreadPool p3(3);
+  EXPECT_EQ(3u, p3.num_threads());
 }
 
 }  // namespace vobla
