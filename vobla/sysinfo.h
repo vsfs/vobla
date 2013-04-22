@@ -35,7 +35,7 @@ namespace vobla {
 class SysInfo {
  public:
   /// Gets CPU frequency.
-  static double cpu_freq();
+  static double get_cpu_freq();
 
   /// Gets the total number of logical CPUs.
   static int get_num_cpus();
@@ -56,27 +56,6 @@ class SysInfo {
    * \return 0 if success.
    */
   static int get_process_name(pid_t pid, std::string* name);
-
-  static bool is_block_device(const std::string &dev_path);
-
-  /**
-   * \brief Get the size of the given block device.
-   *
-   * \param[in] dev_path the path of the block device.
-   * \return the number of bytes of this block device. Returns -1 if an error
-   * occurred.
-   */
-  static off_t get_block_device_size(const std::string &dev_path);
-
-  /**
-   * \brief Get file size
-   * \return the size of a file, returns -1 if failed.
-   * TODO(eddyxu): Move to another class.
-   */
-  static off_t get_file_size(const std::string &file_path);
-
-  // Get the size of either a file or a block device.
-  static off_t get_file_or_device_size(const std::string &file_path);
 
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(SysInfo);

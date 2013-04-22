@@ -41,7 +41,7 @@ const int BUFSIZE = 1024;
 
 static double cpufreq_ = 0;
 
-double SysInfo::cpu_freq() {
+double SysInfo::get_cpu_freq() {
   if (cpufreq_)
     return cpufreq_;
 
@@ -192,85 +192,6 @@ int SysInfo::get_process_name(pid_t pid, string *name) {
 #error "Unsupported platform"
 #endif
   return 0;
-}
-
-bool SysInfo::is_block_device(const string &dev_path) {
-  struct stat stbuf;
-  if (stat(dev_path.c_str(), &stbuf) < 0) {
-    fprintf(stderr, "SysInfo::is_block_device: stat file %s: %s\n",
-            dev_path.c_str(), strerror(errno));
-    return false;
-  }
-
-  return S_ISBLK(stbuf.st_mode);
-}
-
-off_t SysInfo::get_block_device_size(const string &dev_path) {
-  off_t num_bytes = 0;
-
-  int fd;
-  fd = open(dev_path.c_str(), O_RDONLY);
-  if (fd < 0) {
-    fprintf(stderr, "SysInfo::get_block_device_size: failed to open device [%s]"
-            ": %s\n", dev_path.c_str(), strerror(errno));
-    return -1;
-  }
-
-#if defined(linux)
-  if (ioctl(fd, BLKGETSIZE64, &num_bytes) < 0) {
-    fprintf(stderr, "SysInfo::get_block_device_size: iotcl BLKGETSIZE64 %s"
-            ": %s\n", dev_path.c_str(), strerror(errno));
-    return -1;
-  }
-#elif defined(__APPLE__)
-  uint32_t blocksize;
-  uint64_t blockcount;
-  if (ioctl(fd, DKIOCGETBLOCKSIZE, &blocksize) < 0) {
-    fprintf(stderr, "SysInfo::get_block_device_size: "
-            "ioctl DKIOCGETBLOCKSIZE %s: %s\n", dev_path.c_str(),
-            strerror(errno));
-    return -1;
-  }
-  if (ioctl(fd, DKIOCGETBLOCKCOUNT, &blockcount) < 0) {
-    fprintf(stderr, "SysInfo::get_block_device_size: "
-            "ioctl DKIOGETBLOCKCOUNT %s: %s\n", dev_path.c_str(),
-            strerror(errno));
-    return -1;
-  }
-#else
-  LOG(FATAL) << "Not implemented.";
-#endif
-
-  close(fd);
-  return num_bytes;
-}
-
-off_t SysInfo::get_file_size(const string &file_path) {
-  struct stat stbuf;
-  if (stat(file_path.c_str(), &stbuf) < 0) {
-    fprintf(stderr, "SysInfo::get_file_size: stat file %s: %s\n",
-            file_path.c_str(), strerror(errno));
-    return -1;
-  }
-  CHECK(S_ISREG(stbuf.st_mode));
-  return stbuf.st_size;
-}
-
-off_t SysInfo::get_file_or_device_size(const string &file_path) {
-  struct stat stbuf;
-  if (stat(file_path.c_str(), &stbuf) < 0) {
-    fprintf(stderr, "SysInfo::get_file_size: stat file %s: %s\n",
-            file_path.c_str(), strerror(errno));
-    return -1;
-  }
-  if (S_ISREG(stbuf.st_mode)) {
-    return stbuf.st_size;
-  } else if (S_ISBLK(stbuf.st_mode)) {
-    return get_block_device_size(file_path);
-  } else {
-    LOG(FATAL) << "Unsupport file type: " << stbuf.st_mode;
-  }
-  return -1;
 }
 
 }  // namespace vobla
