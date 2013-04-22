@@ -30,14 +30,14 @@ const size_t kDefaultThreadsPerCpu = 2;
 
 ThreadPool::ThreadPool()
   : num_threads_(kDefaultThreadsPerCpu * SysInfo::get_num_cpus()),
-    has_stoped_(false) {
+    closed_(false) {
   for (size_t i = 0; i < num_threads_; ++i) {
     threads_.emplace_back(thread(&ThreadPool::worker, this));
   }
 }
 
 ThreadPool::ThreadPool(size_t num_threads)
-  : num_threads_(num_threads), has_stoped_(false) {
+  : num_threads_(num_threads), closed_(false) {
   if (num_threads_ == 0) {
     num_threads_ = kDefaultThreadsPerCpu * SysInfo::get_num_cpus();
   }
@@ -47,21 +47,25 @@ ThreadPool::ThreadPool(size_t num_threads)
 }
 
 ThreadPool::~ThreadPool() {
-  if (!has_stoped_) {
-    stop();
+  if (!closed_) {
+    close();
+    join();
   }
 }
 
-void ThreadPool::stop() {
-  if (has_stoped_) {
+void ThreadPool::close() {
+  if (closed_) {
     return;
   }
 
-  has_stoped_ = true;
+  closed_ = true;
   condition_.notify_all();
+}
 
-  for (size_t i = 0; i < threads_.size(); ++i)
-    threads_[i].join();
+void ThreadPool::join() {
+  for (auto& thd : threads_) {
+    thd.join();
+  }
 }
 
 ThreadPool::FutureType ThreadPool::add_task(TaskType func) {
@@ -76,17 +80,21 @@ ThreadPool::FutureType ThreadPool::add_task(TaskType func) {
   return future;
 }
 
+size_t ThreadPool::num_threads() const {
+  return threads_.size();
+}
+
 void ThreadPool::worker() {
   while (true) {
     PackagedTask task;
     {
       std::unique_lock<std::mutex> lock(mutex_);
 
-      while (!has_stoped_ && task_queue_.empty()) {
+      while (!closed_ && task_queue_.empty()) {
         condition_.wait(lock);
       }
 
-      if (has_stoped_ && task_queue_.empty()) {
+      if (closed_ && task_queue_.empty()) {
         break;
       }
 

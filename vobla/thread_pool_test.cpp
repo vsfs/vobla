@@ -42,7 +42,8 @@ TEST(ThreadPoolTest, TestLambdas) {
           return Status::OK;
         });
   }
-  pool.stop();
+  pool.close();
+  pool.join();
   EXPECT_EQ(100, execute_count);
 }
 
@@ -70,7 +71,8 @@ TEST(ThreadPoolTest, TestTaskObjects) {
     tasks.emplace_back(&execute_count, &mutex);
     results.emplace_back(pool.add_task(std::bind(tasks.back())));
   }
-  pool.stop();
+  pool.close();
+  pool.join();
   for (auto& rst : results) {
     EXPECT_TRUE(rst.get().ok());
   }

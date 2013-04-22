@@ -22,6 +22,7 @@
 #ifndef VOBLA_THREAD_POOL_H_
 #define VOBLA_THREAD_POOL_H_
 
+#include <boost/noncopyable.hpp>
 #include <condition_variable>
 #include <functional>
 #include <future>  // NOLINT
@@ -38,7 +39,7 @@ namespace vobla {
  * \class ThreadPool
  * \brief A simple FIFO-queue based thread pool.
  */
-class ThreadPool {
+class ThreadPool : public boost::noncopyable {
  public:
   typedef Status ReturnType;
 
@@ -54,8 +55,11 @@ class ThreadPool {
 
   virtual ~ThreadPool();
 
-  /// Stops this pool and waits all threads to finish.
-  virtual void stop();
+  /// Closes this pool.
+  virtual void close();
+
+  /// Waits all tasks to finish.
+  virtual void join();
 
   /**
    * \brief Add a task to the task queue.
@@ -63,6 +67,9 @@ class ThreadPool {
    * It can add function, functional object and lambda.
    */
   virtual FutureType add_task(TaskType task);
+
+  /// Returns the number of working threads
+  size_t num_threads() const;
 
  private:
   void worker();
@@ -79,9 +86,7 @@ class ThreadPool {
 
   std::condition_variable condition_;
 
-  bool has_stoped_;
-
-  DISALLOW_COPY_AND_ASSIGN(ThreadPool);
+  bool closed_;
 };
 
 }  // namespace vobla
