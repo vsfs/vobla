@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
- /**
- * \file stl_util.h
- * Provide extensed template algorithms
+
+/**
+ * \file vobla/stl_util.h
+ * \brief Provide extensed template algorithms.
  */
 
 #ifndef VOBLA_STL_UTIL_H_
@@ -23,9 +24,7 @@
 
 #include <algorithm>
 
-/**
- * \brief Does the container contains a given value
- */
+/// Returns true if the container has the value.
 template <typename InputIterator, typename Value>
 bool contains(InputIterator begin, InputIterator end, const Value& value) {
   return std::find(begin, end, value) != end;
@@ -37,14 +36,6 @@ bool contains(InputIterator begin, InputIterator end, const Value& value) {
 template <typename InputIterator, typename Predicate>
 bool contains_if(InputIterator begin, InputIterator end, Predicate pred) {
   return std::find_if(begin, end, pred) != end;
-}
-
-/**
- * \brief Does the container has the key
- */
-template <typename InputIterator, typename Key>
-bool contains_key(InputIterator begin, InputIterator end, const Key& key) {
-  return true;
 }
 
 /**
