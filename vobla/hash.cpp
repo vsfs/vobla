@@ -91,34 +91,3 @@ void SHA1Digest::update(const char* buffer, size_t size) {
 void SHA1Digest::final() {
   SHA1_Final(digest_.data(), &context_);
 }
-
-SHA1Digest* SHA1Digest::parse_file(const string &filepath) {
-  int fd = open(filepath.data(), O_RDONLY);
-  if (fd < 0) {
-    LOG(ERROR) << "SHA1Digest::parse_file: Failed to open file: "
-        << filepath << ": " << strerror(errno);
-    return NULL;
-  }
-  SHA1Digest *ret = SHA1Digest::parse_file(fd);
-  close(fd);
-  return ret;
-}
-
-SHA1Digest* SHA1Digest::parse_file(int fd) {
-  ssize_t read_size = 0;
-  char buff[BUFSIZE];
-
-  unique_ptr<SHA1Digest> digest(new SHA1Digest);
-  digest->init();
-
-  while ((read_size = ::read(fd, buff, BUFSIZE)) > 0) {
-    digest->update(buff, read_size);
-  }
-  if (read_size < 0) {
-    LOG(ERROR) << "SHA1Digest::parse_file: Failed to read file: "
-        << strerror(errno);
-    return NULL;
-  }
-  digest->final();
-  return digest.release();
-}

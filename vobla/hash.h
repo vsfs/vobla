@@ -105,13 +105,6 @@ class MD5Digest : public BaseHashDigest<MD5_CTX, 16> {
   /// Create a MD5Digest from a buffer.
   static MD5Digest* create(const char* buffer, size_t size);
 
-  /**
-   * \brief Creates a MD5 digest by reading the content from the file.
-   * \param filepath the path of file.
-   * \return a MD5Digest object. NULL if anything has failed.
-   */
-  static MD5Digest* parse_file(const std::string& filepath);
-
   /// Constructs an empty MD5Digest.
   MD5Digest();
 
@@ -148,12 +141,6 @@ class SHA1Digest : public BaseHashDigest<SHA_CTX, 20> {
 
   /// Creates a SHA1Digest from a buffer.
   static SHA1Digest* create(const char *buffer, size_t size);
-
-  /// Creates a SHA1Digest by reading the content of a file.
-  static SHA1Digest* parse_file(const std::string &filepath);
-
-  /// Creates a SHA1Digest by reading from a file description.
-  static SHA1Digest* parse_file(int fd);
 
   /// Constructs an empty SHA1Digest.
   SHA1Digest();
