@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */
+/**
+ * \file vobla/hash_test.cpp
  * \brief Unit tests for Hash Digests.
  */
 
@@ -21,6 +23,8 @@
 #include "vobla/hash.h"
 
 using std::string;
+
+namespace vobla {
 
 TEST(HashDigestTest, MD5Create) {
   const string buf("This is a buffer.");
@@ -49,3 +53,5 @@ TEST(HashDigestTest, SHA1Create) {
   sha1_3.reset(buf.data(), buf.size());
   EXPECT_EQ(sha1_1, sha1_3);
 }
+
+}  // namespace vobla

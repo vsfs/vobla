@@ -10,6 +10,8 @@
 #include <unistd.h>
 #include "vobla/clock.h"
 
+namespace vobla {
+
 /**
  * \brief Real wall clock.
  */
@@ -56,3 +58,5 @@ double FakeClock::now() {
 void FakeClock::sleep(double seconds) {
   advance(seconds);
 }
+
+}  // namespace vobla

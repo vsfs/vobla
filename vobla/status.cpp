@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,14 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \brief Implementation of Status class
  */
 
 #include "vobla/status.h"
 #include <string>
 
 using std::string;
+
+namespace vobla {
 
 const Status Status::OK = Status();
 
@@ -66,3 +66,5 @@ bool Status::ok() const {
 bool Status::operator==(const Status &rhs) const {
   return code_ == rhs.code_ && message_ == rhs.message_;
 }
+
+}  // namespace vobla

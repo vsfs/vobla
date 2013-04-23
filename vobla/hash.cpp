@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,13 +12,14 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \brief    Hash Digests
  */
 
-#include <fcntl.h>
+/**
+ * \file vobla/hash.cpp
+ * \brief Implementation of Hash Digests.
+ */
+
 #include <glog/logging.h>
-#include <unistd.h>
 #include <cstdio>
 #include <memory>
 #include <string>
@@ -27,7 +28,9 @@
 using std::string;
 using std::unique_ptr;
 
-const size_t BUFSIZE = 16 * 1024;  // 16KB
+namespace vobla {
+
+const size_t kBufSize = 16 * 1024;  // 16KB
 
 MD5Digest::MD5Digest() {
 }
@@ -91,3 +94,5 @@ void SHA1Digest::update(const char* buffer, size_t size) {
 void SHA1Digest::final() {
   SHA1_Final(digest_.data(), &context_);
 }
+
+}  // namespace vobla

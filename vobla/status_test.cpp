@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,13 +12,17 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file status_test.cpp
+ */
+
+/**
+ * \file vobla/status_test.cpp
  * \brief Unit tests for status class.
  */
 
 #include <gtest/gtest.h>
 #include "vobla/status.h"
+
+namespace vobla {
 
 TEST(StatusTest, TestConstructors) {
   // Default constructor
@@ -48,3 +52,5 @@ TEST(StatusTest, TestSetterAndGetter) {
   s.set_message("10");
   EXPECT_EQ(Status(10, "10"), s);
 }
+
+}  // namespace vobla

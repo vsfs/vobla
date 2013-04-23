@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */
+
+/**
  * \file map_util.h
  * \brief Map (and unordered_map) functions to simplify map manunipulations.
  */
@@ -22,6 +24,8 @@
 
 #include <glog/logging.h>
 #include <utility>
+
+namespace vobla {
 
 template <typename Map>
 bool contain_key(const Map& map,
@@ -216,5 +220,7 @@ typename Map::value_type::second_type sum_values(const Map &map) {
   }
   return result;
 }
+
+}  // namespace vobla
 
 #endif  // VOBLA_MAP_UTIL_H_

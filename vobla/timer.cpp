@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,18 +12,20 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file timer.cpp
- * \brief implementation of several timers.
  */
 
+/**
+ * \file vobla/timer.cpp
+ * \brief Implementation of various timers.
+ */
 
 #include <stddef.h>
 #include <sys/time.h>
 #include <sys/resource.h>
 #include "vobla/clock.h"
-
 #include "vobla/timer.h"
+
+namespace vobla {
 
 static double kMilliSecond = 1000000;
 
@@ -126,3 +128,5 @@ double UserAndSysUsageTimer::sys_time_in_ms() const {
 double UserAndSysUsageTimer::sys_time_in_second() const {
   return sys_time_in_ms() / kMilliSecond;
 }
+
+}  // namespace vobla

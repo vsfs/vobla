@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +12,6 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file map_util_test.cpp
- * \brief Unit tests for map_util.h
  */
 
 #include <gtest/gtest.h>
@@ -28,14 +25,13 @@ using std::map;
 using std::unordered_map;
 using std::vector;
 
+namespace vobla {
+
 typedef map<int, int> IntMap;
 typedef unordered_map<int, int*> IntHashMap;
 typedef vector<int> IntVector;
 
-class MapUtilTest : public ::testing::Test {
-};
-
-TEST_F(MapUtilTest, ContainKey) {
+TEST(MapUtilTest, ContainKey) {
   IntMap test_map;
   test_map[0] = 1;
   test_map[1] = 2;
@@ -44,7 +40,7 @@ TEST_F(MapUtilTest, ContainKey) {
   EXPECT_FALSE(contain_key(test_map, 3));
 }
 
-TEST_F(MapUtilTest, AppendKeys) {
+TEST(MapUtilTest, AppendKeys) {
   IntMap test_map;
   for (int i = 0; i < 10; i++) {
     test_map[i] = 100 + i;
@@ -57,7 +53,7 @@ TEST_F(MapUtilTest, AppendKeys) {
   }
 }
 
-TEST_F(MapUtilTest, DeleteSecondPointersForUnorderedMap) {
+TEST(MapUtilTest, DeleteSecondPointersForUnorderedMap) {
   IntHashMap int_hash_map;
   for (int i = 0; i < 10; ++i) {
     int *obj = new int;
@@ -66,3 +62,5 @@ TEST_F(MapUtilTest, DeleteSecondPointersForUnorderedMap) {
   }
   delete_second_pointers(int_hash_map.begin(), int_hash_map.end());
 }
+
+}  // namespace vobla

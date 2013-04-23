@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file timer.h
+ */
+
+/**
+ * \file vobla/timer.h
  * \brief Provides a timer for conveniently timing.
  */
 
@@ -23,8 +25,11 @@
 #include <boost/noncopyable.hpp>
 #include <memory>
 
-class Clock;
 struct rusage;
+
+namespace vobla {
+
+class Clock;
 
 /**
  * \class TimerInterface
@@ -183,5 +188,7 @@ class UserAndSysUsageTimer : public TimerInterface {
   std::unique_ptr<rusage> begin_;
   std::unique_ptr<rusage> end_;
 };
+
+}  // namespace vobla
 
 #endif  // VOBLA_TIMER_H_

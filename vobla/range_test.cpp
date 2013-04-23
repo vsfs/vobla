@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,12 +12,16 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */
+
+/**
  * \brief Unit tests for Range and MultiDimRange.
  */
 
 #include <gtest/gtest.h>
 #include "vobla/range.h"
+
+namespace vobla {
 
 typedef Range<int> IntRange;
 typedef MultiDimRange<int, 8> TestRange;
@@ -61,3 +65,5 @@ TEST(MultiDimRangeTest, Initialization) {
     EXPECT_EQ(TestRange::kMax, range.upper(i));
   }
 }
+
+}  // namespace vobla

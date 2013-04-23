@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,16 +12,18 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file status.h
+ */
+/**
+ * \file vobla/status.h
  * \brief Status -- encapsure both error code and error message.
- *
  */
 
 #ifndef VOBLA_STATUS_H_
 #define VOBLA_STATUS_H_
 
 #include <string>
+
+namespace vobla {
 
 /**
  * \class Status
@@ -81,5 +83,7 @@ class Status {
   int code_;
   std::string message_;
 };
+
+}  // namespace vobla
 
 #endif  // VOBLA_STATUS_H_

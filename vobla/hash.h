@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * \file  hash.h
- * \brief    Hash Digests
+ */
+
+/**
+ * \file vobla/hash.h
+ * \brief Hash Digests
  *
- * This file provides few classes to encapture the common usages of various hash
- * functions:
+ * This file provides few classes to encapture the common usages of various
+ * hash functions:
  *   - MD5
  *   - SHA1
  */
@@ -37,6 +40,8 @@
 #include <array>
 #include <memory>
 #include <string>
+
+namespace vobla {
 
 /**
  * \class BaseHashDigest
@@ -202,5 +207,7 @@ std::string BaseHashDigest<Ctx, L>::hexdigest() const {
   buffer[LENGTH * 2] = '\0';
   return buffer;
 }
+
+}  // namespace vobla
 
 #endif  // VOBLA_HASH_H_

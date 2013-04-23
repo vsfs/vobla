@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +12,10 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
- * \file clock.h
+ */
+
+/**
+ * \file vobla/clock.h
  * \brief Convinient classes to access the wall clock.
  */
 
@@ -21,6 +23,8 @@
 #define VOBLA_CLOCK_H_
 
 #include <boost/noncopyable.hpp>
+
+namespace vobla {
 
 /**
  * \class Clock
@@ -61,5 +65,7 @@ class FakeClock : public Clock {
  private:
   double second_;
 };
+
+}  // namespace vobla
 
 #endif  // VOBLA_CLOCK_H_

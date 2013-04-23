@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright 2012-2013 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,7 +12,9 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
+ */
+
+/**
  * \file "vobla/range.h"
  * \brief Defines Range and MultiDimRange classes.
  */
@@ -28,6 +30,8 @@
 
 using std::array;
 using std::pair;
+
+namespace vobla {
 
 /**
  * \class Range
@@ -269,5 +273,7 @@ const V MultiDimRange<V, D>::kMin = std::numeric_limits<value_type>::min();
 
 template <> template<typename V, int D>
 const V MultiDimRange<V, D>::kMax = std::numeric_limits<value_type>::max();
+
+}  // namespace vobla
 
 #endif  // VOBLA_RANGE_H_
