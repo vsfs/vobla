@@ -17,7 +17,7 @@ before_install:
   - ./configure && make && sudo make install
   - cd -
 before_script:
-  - ./bootstrap.sh
+  - ./bootstrap
 script:
   - export LD_LIBRARY_PATH=/usr/local/lib
   - CXX=g++-4.7 ./configure --enable-gcov && make && make check

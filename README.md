@@ -24,3 +24,24 @@ Vsfs Open-sourced Base C++ Library
 # Ubuntu 12.10
 sudo apt-get install g++ autoconf automake libtool libboost1.50-all-dev libssl-dev libgoogle-glog-dev
 ```
+
+### Compile
+
+```sh
+cd /path/of/vobla
+git clone git://github.com/vsfs/vobla.git
+cd vobla
+# Download gtest
+cd test
+wget http://googletest.googlecode.com/files/gtest-1.6.0.zip
+unzip gtest-*.zip
+cd gtest
+./configure && make
+
+cd ../..
+./bootstrap.sh
+./configure
+make
+# Run unit tests
+make check
+```
