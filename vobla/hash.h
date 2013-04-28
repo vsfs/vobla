@@ -78,7 +78,7 @@ class BaseHashDigest {
   virtual void final() = 0;
 
   /// get underlay digest array.
-  const unsigned char* const digest() const { return digest_.data(); }
+  const unsigned char* digest() const { return digest_.data(); }
 
   /// return the hexadecimal digest.
   std::string hexdigest() const;

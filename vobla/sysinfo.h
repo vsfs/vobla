@@ -58,7 +58,7 @@ class SysInfo {
   static int get_process_name(pid_t pid, std::string* name);
 
  private:
-  DISALLOW_IMPLICIT_CONSTRUCTORS(SysInfo);
+  DISALLOW_IMPLICIT_CONSTRUCTORS(SysInfo)
 };
 
 }  // namespace vobla

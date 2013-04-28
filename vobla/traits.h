@@ -90,7 +90,7 @@ std::string type_int_to_string(int type_id);
     template <> struct TypeToInt<type> { \
       enum { value_ = intval }; \
       static int value() { return value_; } \
-    };
+    }
 
 DEFINE_INT2TYPE(char, CHAR);
 DEFINE_INT2TYPE(int8_t, INT8);

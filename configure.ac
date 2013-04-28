@@ -15,12 +15,12 @@ AC_PROG_CXX
 AC_PROG_CC
 AC_LANG([C++])
 
-CFLAGS="-Wall -Wunused-value $CFLAGS"
+CFLAGS="-Wall -Wextra -Werror -pedantic -Wunused-value $CFLAGS"
 CXXFLAGS="$CFLAGS $CXXFLAGS"
 
 # Checks for libraries.
-AC_CHECK_LIB([glog], [main], [], [AC_MSG_ERROR(google-glog was not found.)])
-AC_CHECK_LIB([crypto], [main], [], [AC_MSG_ERROR([libcrypto was not found.])])
+AC_CHECK_LIB([glog], [openlog], [], [AC_MSG_ERROR(google-glog was not found.)])
+AC_CHECK_LIB([crypto], [MD5_Init], [], [AC_MSG_ERROR([libcrypto was not found.])])
 
 # Checks for header files.
 AC_CHECK_HEADERS([sys/time.h fcntl.h stddef.h sys/ioctl.h])
