@@ -161,6 +161,7 @@ int SysInfo::get_process_name(pid_t pid, string *name) {
   char buffer[BUFSIZE];
   int ret = 0;
   ret = proc_name(pid, buffer, BUFSIZE);
+  *name = buffer;
   if (ret) {
     return ret;
   }
