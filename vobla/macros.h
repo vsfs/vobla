@@ -20,11 +20,11 @@
 #define VOBLA_MACROS_H_
 
 #define DISALLOW_COPY_AND_ASSIGN(ClassName) \
-  ClassName(const ClassName&); \
-  ClassName& operator=(const ClassName&)
+  ClassName(const ClassName&) = delete; \
+  ClassName& operator=(const ClassName&) = delete
 
 #define DISALLOW_IMPLICIT_CONSTRUCTORS(ClassName) \
-  ClassName(); \
+  ClassName() = delete; \
   DISALLOW_COPY_AND_ASSIGN(ClassName)
 
 // Refer to facebook's folly library.
