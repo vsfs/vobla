@@ -7,13 +7,14 @@ CLEANFILES = *.gcov *.gcno *.gcda
 SUBDIRS = .
 noinst_LIBRARIES = libvobla.a
 libvobla_a_SOURCES = \
-		     stl_util.h \
 		     clock.h clock.cpp \
 		     hash.h hash.cpp \
+		     lru_cache.h \
 		     macros.h \
 		     map_util.h \
 		     range.h \
 		     status.h status.cpp \
+		     stl_util.h \
 		     sysinfo.h sysinfo.cpp \
 		     thread_pool.h thread_pool.cpp \
 		     timer.h timer.cpp \
@@ -21,6 +22,7 @@ libvobla_a_SOURCES = \
 
 TESTS = \
 	hash_test \
+	lru_cache_test \
 	map_util_test \
 	range_test \
 	status_test \
@@ -31,6 +33,7 @@ check_PROGRAMS = $(TESTS)
 
 LDADD = -lgtest -lgtest_main libvobla.a
 hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
+lru_cache_test_SOURCES = lru_cache.h lru_cache_test.cpp
 map_util_test_SOURCES = map_util.h map_util_test.cpp
 range_test_SOURCES = range_test.cpp range.h
 status_test_SOURCES = status_test.cpp status.h status.cpp
