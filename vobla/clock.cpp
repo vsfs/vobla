@@ -17,6 +17,8 @@ namespace vobla {
  */
 class RealClock : public Clock {
  public:
+  RealClock() = default;
+
   double now();
 
   void sleep(double seconds);
@@ -33,9 +35,6 @@ void RealClock::sleep(double seconds) {
 }
 
 static RealClock* global_clock = new RealClock;
-
-Clock::~Clock() {
-}
 
 // static
 Clock* Clock::real_clock() {
