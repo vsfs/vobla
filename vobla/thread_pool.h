@@ -22,7 +22,6 @@
 #ifndef VOBLA_THREAD_POOL_H_
 #define VOBLA_THREAD_POOL_H_
 
-#include <boost/noncopyable.hpp>
 #include <condition_variable>
 #include <functional>
 #include <future>  // NOLINT
@@ -39,7 +38,7 @@ namespace vobla {
  * \class ThreadPool
  * \brief A simple FIFO-queue based thread pool.
  */
-class ThreadPool : public boost::noncopyable {
+class ThreadPool {
  public:
   typedef Status ReturnType;
 
@@ -87,6 +86,8 @@ class ThreadPool : public boost::noncopyable {
   std::condition_variable condition_;
 
   bool closed_;
+
+  DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 };
 
 }  // namespace vobla
