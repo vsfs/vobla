@@ -58,6 +58,7 @@ void ThreadPool::close() {
     return;
   }
 
+  std::unique_lock<std::mutex> lock(mutex_);
   closed_ = true;
   condition_.notify_all();
 }
@@ -75,8 +76,8 @@ ThreadPool::FutureType ThreadPool::add_task(TaskType func) {
     std::unique_lock<std::mutex> lock(mutex_);
     future = task.get_future();
     task_queue_.push(std::move(task));
+    condition_.notify_one();
   }
-  condition_.notify_one();
   return future;
 }
 
