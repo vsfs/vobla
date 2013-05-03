@@ -4,7 +4,10 @@
 #
 # Copyright 2013 (c) Lei Xu <eddyxu@gmail.com>
 
-cp contrib/pre-commit .git/hooks
+if [ -d .git/hooks ]; then
+	# vobla is used as an individual project.
+	cp contrib/pre-commit .git/hooks
+fi
 
 case `uname` in
 	Darwin*) glibtoolize --copy ;;  # For MacOSX
