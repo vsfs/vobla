@@ -21,8 +21,8 @@ Vsfs Open-sourced Base C++ Library
 ### Install dependencies on specific platform
 
 ```sh
-# Ubuntu 12.10
-sudo apt-get install g++ autoconf automake libtool libboost1.50-all-dev libssl-dev libgoogle-glog-dev
+# Ubuntu 13.04
+sudo apt-get install g++ autoconf automake libtool libboost1.53-all-dev libssl-dev libgoogle-glog-dev
 ```
 
 ### Compile
