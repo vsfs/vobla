@@ -1,6 +1,10 @@
 # vim: ts=8:st=8:noexpandtab
-AM_LDFLAGS = -lpthread -L@top_srcdir@/test/gtest-1.6.0/lib
-AM_CXXFLAGS = -I@top_srcdir@/test/gtest-1.6.0/include
+AM_LDFLAGS = -lpthread \
+	     -L@top_srcdir@/test/gmock-1.6.0/lib \
+	     -L@top_srcdir@/test/gmock-1.6.0/gtest/lib
+
+AM_CXXFLAGS = -I@top_srcdir@/test/gmock-1.6.0/include \
+	      -I@top_srcdir@/test/gmock-1.6.0/gtest/include
 
 CLEANFILES = *.gcov *.gcno *.gcda
 
