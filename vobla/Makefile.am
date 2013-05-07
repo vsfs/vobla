@@ -8,6 +8,7 @@ SUBDIRS = .
 noinst_LIBRARIES = libvobla.a
 libvobla_a_SOURCES = \
 		     clock.h clock.cpp \
+		     consistent_hash_map.h \
 		     hash.h hash.cpp \
 		     lru_cache.h \
 		     macros.h \
@@ -21,6 +22,7 @@ libvobla_a_SOURCES = \
 		     traits.h traits.cpp
 
 TESTS = \
+	consistent_hash_map_test \
 	hash_test \
 	lru_cache_test \
 	map_util_test \
@@ -32,6 +34,7 @@ TESTS = \
 check_PROGRAMS = $(TESTS)
 
 LDADD = -lgtest -lgtest_main libvobla.a
+consistent_hash_map_test_SOURCES = consistent_hash_map.h consistent_hash_map_test.cpp
 hash_test_SOURCES = hash.h hash.cpp hash_test.cpp
 lru_cache_test_SOURCES = lru_cache.h lru_cache_test.cpp
 map_util_test_SOURCES = map_util.h map_util_test.cpp
