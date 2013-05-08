@@ -181,7 +181,7 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief Gets the Max Range of the current ring.
+   * \brief Gets the largest hash range of the current ring.
    * \param[out] range a (Key, Key) pair. If first key is smaller than the
    * second key, then the range start clockwise from first key and ends
    * at second key and does not cross zero. If first key is larger than

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-/*
+/**
  * \file consistent_hash_map_test.cpp
  *
  * \brief Unit test for Consistent Hashing class
@@ -303,26 +303,23 @@ TEST(ConsistentHashMapTest, TestSinglePartition) {
 
 TEST(ConsistentHashMapTest, TestNumNodes) {
   TestMap test_map;
-  size_t num_nodes = 10;
   for (int i = 0; i < 10; i++) {
     test_map.insert(i*100, string("node") + lexical_cast<string>(i));
   }
-  EXPECT_EQ(num_nodes, test_map.num_nodes());
+  EXPECT_EQ(10u, test_map.num_nodes());
 }
 
 TEST(ConsistentHashMapTest, TestNumPartitions) {
   TestMap test_map;
-  size_t num_partitions = 10*4;
   for (int i = 0; i < 10; i++) {
     test_map.insert(i*100, string("node") + lexical_cast<string>(i));
   }
-  EXPECT_EQ(num_partitions, test_map.num_partitions());
+  EXPECT_EQ(40u, test_map.num_partitions());
 }
 
 TEST(ConsistentHashMapTest, TestNumPartitionsPerNode) {
   TestMap test_map;
-  size_t num_partitions_per_node = 4;
-  EXPECT_EQ(num_partitions_per_node, test_map.num_partitions_per_node());
+  EXPECT_EQ(4u, test_map.num_partitions_per_node());
 }
 
 }  // namespace vobla
