@@ -12,14 +12,12 @@
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
- *
  */
 
 /**
  * \file vobla/consistent_hash_map.h
  *
  * \brief A generic class for Consistent Hashing
- *
  */
 
 #ifndef VOBLA_CONSISTENT_HASH_MAP_H_
@@ -129,7 +127,7 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief Get the responsible node for a client specified key.
+   * \brief Gets the responsible node for a client specified key.
    */
   Status get(const key_type& key, value_type* value) const {
     key_type sep;
@@ -159,7 +157,7 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief return the partition starting points.
+   * \brief Return the partition starting points.
    * \param[out] partitions A vector to stores the partitions;
    *
    * \TODO provides an iterator later.
@@ -183,7 +181,7 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief Get the Max Range of the current ring.
+   * \brief Gets the Max Range of the current ring.
    * \param[out] range a (Key, Key) pair. If first key is smaller than the
    * second key, then the range start clockwise from first key and ends
    * at second key and does not cross zero. If first key is larger than
@@ -232,12 +230,12 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief get the successive value of the value this is responsible
+   * \brief Gets the successive value of the value this is responsible
    * for the given key.
    * \param[in] key the current key specified by client.
    * \param[out] successive the successive value returned to client.
    */
-  Status succ(const Key& key, Value* successive) {
+  Status succ(const Key& key, Value* successive) const {
     CHECK_NOTNULL(successive);
     // O(logN)
     auto it = ring_.find(key);
@@ -253,11 +251,11 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief get the successive value of current value on the ring.
+   * \brief Gets the successive value of current value on the ring.
    * \param[in] current the current value specified by client.
    * \param[out] successive the successive value returned to client.
    */
-  Status succ_by_value(const Value& current, Value* successive) {
+  Status succ_by_value(const Value& current, Value* successive) const {
     CHECK_NOTNULL(successive);
     // O(N)
     auto it = ring_.begin();
@@ -279,12 +277,12 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief get the previous value of the value that is responsible for
+   * \brief Gets the previous value of the value that is responsible for
    * the given key.
    * \param[in] key the current key specified by client.
    * \param[out] previous the previous value returned to client.
    */
-  Status prev(const Key& key, Value* previous) {
+  Status prev(const Key& key, Value* previous) const {
     CHECK_NOTNULL(previous);
     // O(logN)
     auto it = ring_.find(key);
@@ -301,11 +299,11 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief get the previous value of current value on the ring.
+   * \brief Gets the previous value of current value on the ring.
    * \param[in] current the current value specified by client.
    * \param[out] prev the previous value returned to client.
    */
-  Status prev_by_value(const Value& current, Value* previous) {
+  Status prev_by_value(const Value& current, Value* previous) const {
     CHECK_NOTNULL(previous);
     // O(N)
     auto it = ring_.begin();
@@ -328,7 +326,7 @@ class ConsistentHashMap {
   }
 
   /**
-   * \brief return a pair which contains a node and its range by the given key.
+   * \brief Return a pair which contains a node and its range by the given key.
    */
   Status get_range(const Key& key, range_type* range) const {
     CHECK_NOTNULL(range);

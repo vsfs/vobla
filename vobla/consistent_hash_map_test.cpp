@@ -18,8 +18,6 @@
  * \file consistent_hash_map_test.cpp
  *
  * \brief Unit test for Consistent Hashing class
- *
- * Copyright 2013 (c) Ziling Huang <hzlgis@gmail.com>
  */
 
 #include <boost/lexical_cast.hpp>
