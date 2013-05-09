@@ -18,7 +18,8 @@ libvobla_a_SOURCES = \
 		     sysinfo.h sysinfo.cpp \
 		     thread_pool.h thread_pool.cpp \
 		     timer.h timer.cpp \
-		     traits.h traits.cpp
+		     traits.h traits.cpp \
+		     unique_resource.h
 
 TESTS = \
 	hash_test \
@@ -27,7 +28,8 @@ TESTS = \
 	range_test \
 	status_test \
 	thread_pool_test \
-	traits_test
+	traits_test \
+	unique_resource_test
 
 check_PROGRAMS = $(TESTS)
 
@@ -39,3 +41,4 @@ range_test_SOURCES = range_test.cpp range.h
 status_test_SOURCES = status_test.cpp status.h status.cpp
 thread_pool_test_SOURCES = thread_pool_test.cpp thread_pool.h thread_pool.cpp
 traits_test_SOURCES = traits_test.cpp traits.h traits.cpp
+unique_resource_test_SOURCES = unique_resource_test.cpp unique_resource.h
