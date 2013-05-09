@@ -34,7 +34,7 @@ using std::pair;
 namespace vobla {
 
 /**
- * \class Range
+ * \class Range vobla/range.h
  * \brief A one-dimentional value range (or interval).
  *
  * It can represent both open interval or closed interval on either endpoints.
@@ -56,9 +56,9 @@ class Range {
  public:
   typedef Value value_type;
 
-  /// Minimal value.
+  /// The minimal possible value.
   static const Value kMin;
-  /// Maximal value.
+  /// The maximal possible value.
   static const Value kMax;
 
   /// Default constructor. It constructs a full-range Range object.
@@ -68,7 +68,8 @@ class Range {
   }
 
   /**
-   * \brief Constructs a Range object with lower bound and upper bound.
+   * \brief Constructs a Range object with closed lower bound and closed upper
+   * bound.
    * \param l lower bound.
    * \param u upper bound.
    *
@@ -112,11 +113,17 @@ class Range {
     set_lower(l, false);
   }
 
+  /**
+   * \brief Sets the lower endpoint.
+   * \param l the value of lower endpoint.
+   * \param is_opened sets to true if this is an opened endpoint.
+   */
   void set_lower(value_type l, bool is_opened) {
     lower_ = l;
     lower_opened_ = is_opened;
   }
 
+  /// Returns the upper endpoint.
   value_type upper() const {
     return upper_;
   }
@@ -126,21 +133,29 @@ class Range {
     return upper_opened_;
   }
 
+  /// Sets a closed upper bound.
   void set_upper(value_type u) {
     set_upper(u, false);
   }
 
+  /**
+   * \brief Sets the lower endpoint.
+   * \param u the value of the upper endpoint.
+   * \param is_opened sets it to true if this is an opened endpoint.
+   */
   void set_upper(value_type u, bool is_opened) {
     upper_ = u;
     upper_opened_ = is_opened;
   }
 
+  /// Returns true if two ranges are exactly same.
   bool operator==(const Range &rhs) const {
     return lower_ == rhs.lower_ && upper_ == rhs.upper_ &&
         lower_opened_ == rhs.lower_opened_ &&
         upper_opened_ == rhs.upper_opened_;
   }
 
+  /// Returns true if two ranges are not same.
   bool operator!=(const Range &rhs) const {
     return !(*this == rhs);
   }
