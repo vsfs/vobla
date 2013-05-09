@@ -27,7 +27,7 @@ sudo apt-get install g++ autoconf automake libtool libboost1.53-all-dev libssl-d
 
 ### Compile
 
-```sh
+~~~~~~~~~~~~~~{.sh}
 $ git clone git://github.com/vsfs/vobla.git
 $ cd vobla
 # Download gtest
@@ -43,4 +43,4 @@ $ ./configure
 $ make
 # Run unit tests
 $ make check
-```
+~~~~~~~~~~~~~~
