@@ -23,6 +23,8 @@ nobase_voblainclude_HEADERS = \
   traits.h \
   unique_resource.h
 
+libvobla_la_LDFLAGS =
+libvobla_la_CXXFLAGS =
 libvobla_la_SOURCES = \
 		     clock.h clock.cpp \
 		     hash.h hash.cpp \
