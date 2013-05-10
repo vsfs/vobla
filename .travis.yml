@@ -7,8 +7,8 @@ before_install:
   - sudo apt-get install -y g++-4.7 libboost1.48-dev
   - sudo pip install cpp-coveralls --use-mirrors
   - cd test
-  - wget http://googlemock.googlecode.com/files/gmock-1.6.0.zip && unzip gmock-*.zip
-  - cd gmock-1.6.0
+  - wget http://gmock.googlecode.com/files/gmock-0.8.2-all.zip && unzip gmock-*.zip
+  - cd gmock-0.8.2
   - CXX=g++-4.7 ./configure && make
   - cd ../..
   - wget https://google-glog.googlecode.com/files/glog-0.3.3.tar.gz -O glog.tar.gz

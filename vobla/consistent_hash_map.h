@@ -70,7 +70,7 @@ class ConsistentHashMap {
 
   typedef vector<Key> partition_type;
 
-  explicit ConsistentHashMap() : num_partitions_per_node_(Partitions) {
+  ConsistentHashMap() : num_partitions_per_node_(Partitions) {
   }
 
   ConsistentHashMap(const ConsistentHashMap &rhs) {
