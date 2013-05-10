@@ -11,6 +11,7 @@ Vsfs Open-sourced Base C++ Library
  - autoconf
  - automake
  - libtool
+ - boost >= 1.48
  - glog
  - gmock 1.6
    - Download gmock 1.6.0 from
