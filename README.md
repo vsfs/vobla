@@ -11,7 +11,6 @@ Vsfs Open-sourced Base C++ Library
  - autoconf
  - automake
  - libtool
- - boost >= 1.48
  - glog
  - gmock 1.6
    - Download gmock 1.6.0 from
@@ -20,14 +19,14 @@ Vsfs Open-sourced Base C++ Library
 
 ### Install dependencies on specific platform
 
-```sh
+~~~~~~~~~~~~~~{.sh}
 # Ubuntu 13.04
-sudo apt-get install g++ autoconf automake libtool libboost1.53-all-dev libssl-dev libgoogle-glog-dev
-```
+sudo apt-get install g++ autoconf automake libtool libssl-dev libgoogle-glog-dev
+~~~~~~~~~~~~~~
 
 ### Compile
 
-```sh
+~~~~~~~~~~~~~~{.sh}
 $ git clone git://github.com/vsfs/vobla.git
 $ cd vobla
 # Download gtest
@@ -43,4 +42,4 @@ $ ./configure
 $ make
 # Run unit tests
 $ make check
-```
+~~~~~~~~~~~~~~

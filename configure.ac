@@ -3,9 +3,8 @@
 
 AC_PREREQ([2.61])
 AC_INIT([vobla], [0.0.1], [eddyxu@gmail.com])
-AM_INIT_AUTOMAKE
+AM_INIT_AUTOMAKE([foreign dist-bzip2])
 AC_LIBTOOL_DLOPEN
-AC_PROG_LIBTOOL
 AC_CONFIG_SRCDIR([vobla/status.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -13,10 +12,10 @@ AC_CONFIG_MACRO_DIR([m4])
 # Checks for programs.
 AC_PROG_CXX
 AC_PROG_CC
+AC_PROG_LIBTOOL
 AC_LANG([C++])
 
-CXXFLAGS="-Wall -Wextra -pedantic -Wunused-value $CFLAGS"
-#CXXFLAGS="-Wall -Wextra -Werror -pedantic -Wunused-value $CFLAGS"
+CXXFLAGS="-Wall -Wextra -pedantic -Wunused-value $CXXFLAGS"
 
 # Checks for libraries.
 AC_CHECK_LIB([glog], [openlog], [], [AC_MSG_ERROR(google-glog was not found.)])
@@ -54,13 +53,12 @@ AC_ARG_ENABLE([gcov],
 				  [enable coverage test (default: no).])],
 			  [gcov_enabled=${enableval}], [gcov_enabled=no])
 if test "x${gcov_enabled}" = xyes; then
-  CFLAGS = "$CFLAGS -fprofile-arcs -ftest-coverage --coverage"
   CXXFLAGS="$CXXFLAGS -fprofile-arcs -ftest-coverage --coverage"
   LDFLAGS="$LDFLAGS -fprofile-arcs"
   LIBS="$LIBS -lgcov"
 fi
 
-AC_SUBST([AM_CXXFLAGS], ["$CXXFLAGS"])
+AC_SUBST([CXXFLAGS], ["$CXXFLAGS"])
 AC_SUBST(LDFLAGS, "$LDFLAGS")
 AC_SUBST(LIBS, "$LIBS")
 AC_CONFIG_FILES([Makefile

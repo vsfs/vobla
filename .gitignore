@@ -19,6 +19,10 @@ stamp-h1
 libtool
 ltmain.sh
 *.log
+*.trs
+.deps
+vobla-*.tar.gz
+
 
 # Compiled Dynamic libraries
 *.so
@@ -29,4 +33,6 @@ ltmain.sh
 *.la
 *.a
 
+test/gmock-*
+*.zip
 *.sw*

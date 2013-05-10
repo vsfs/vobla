@@ -52,19 +52,19 @@ TEST(ConsistentHashMapTest, TestInsert) {
   size_t hash_value1;
   memcpy(&hash_value1, hash1.digest(), sizeof(size_t));
   test_map.insert(hash_value1, node1);
-  EXPECT_EQ(static_cast<size_t>(4), test_map.num_partitions());
+  EXPECT_EQ(4u, test_map.num_partitions());
   test_map.get_partitions(&partitions);
-  EXPECT_EQ(static_cast<size_t>(4), partitions.size());
+  EXPECT_EQ(4u, partitions.size());
 
   const string node2("node2");
   SHA1Digest hash2(node2);
   size_t hash_value2;
   memcpy(&hash_value2, hash2.digest(), sizeof(size_t));
   test_map.insert(hash_value2, node2);
-  EXPECT_EQ(static_cast<size_t>(8), test_map.num_partitions());
+  EXPECT_EQ(8u, test_map.num_partitions());
   partitions.clear();
   test_map.get_partitions(&partitions);
-  EXPECT_EQ(static_cast<size_t>(8), partitions.size());
+  EXPECT_EQ(8u, partitions.size());
 }
 
 TEST(ConsistentHashMapTest, TestRemove) {
@@ -83,9 +83,9 @@ TEST(ConsistentHashMapTest, TestRemove) {
   test_map.insert(hash_value2, node2);
 
   test_map.remove(hash_value2);
-  EXPECT_EQ(static_cast<size_t>(4), test_map.num_partitions());
+  EXPECT_EQ(4u, test_map.num_partitions());
   test_map.remove(hash_value1);
-  EXPECT_EQ(static_cast<size_t>(0), test_map.num_partitions());
+  EXPECT_EQ(0u, test_map.num_partitions());
 }
 
 TEST(ConsistentHashMapTest, TestGetPartitionOneNode) {
@@ -147,18 +147,18 @@ TEST(ConsistentHashMapTest, TestGetMaxRange) {
 
   test_map.insert(10, node1);
   EXPECT_TRUE(test_map.get_max_range(&range).ok());
-  EXPECT_EQ(range.lower(), static_cast<size_t>(10));
-  EXPECT_EQ(range.upper(), static_cast<size_t>(10));
+  EXPECT_EQ(range.lower(), 10u);
+  EXPECT_EQ(range.upper(), 10u);
 
   test_map.insert(100, node2);
   test_map.insert(500, node3);
   EXPECT_TRUE(test_map.get_max_range(&range).ok());
-  EXPECT_EQ(range.lower(), static_cast<size_t>(500));
-  EXPECT_EQ(range.upper(), static_cast<size_t>(10));
+  EXPECT_EQ(range.lower(), 500u);
+  EXPECT_EQ(range.upper(), 10u);
 
   test_map.insert(numeric_limits<size_t>::max() - 1, node4);
   EXPECT_TRUE(test_map.get_max_range(&range).ok());
-  EXPECT_EQ(range.lower(), static_cast<size_t>(500));
+  EXPECT_EQ(range.lower(), 500u);
   EXPECT_EQ(range.upper(), numeric_limits<size_t>::max() - 1);
 }
 

@@ -44,8 +44,10 @@ class LRUCacheItem {
 };
 
 /**
- * \class LRUCache
- * \brief a generic Least-Recent-Used(LRU) cache.
+ * \class LRUCache vobla/lru_cache.h
+ * \brief A generic Least-Recent-Used(LRU) cache template.
+ * \tparam Item the type of the entity stored in this LRUCache.
+ * \tparam Key the type of the key that is used to locat LRUCacheItem.
  */
 template <typename Item, typename Key = typename Item::cache_key_type,
   const int Capacity = 1024, typename LRUList = typename std::list<Item*>,
@@ -55,22 +57,17 @@ class LRUCache {
   typedef Item value_type;
   typedef Item* pointer_type;
   typedef Key key_type;
-  typedef int intype;
 
   explicit LRUCache(int cap = Capacity) : capacity_(cap) {
   }
 
   /**
    * \brief Destructor.
-   *
    * Similar to STL containers, LRUCache does not support inheritance.
    */
-  ~LRUCache() {
-  }
+  ~LRUCache() = default;
 
-  /**
-   * \brief whether this cache is already full
-   */
+  /// Returns true if this LRUCache is full of capacity.
   bool full() const {
     return size() >= capacity();
   }
@@ -79,6 +76,7 @@ class LRUCache {
     return cache_.empty();
   }
 
+  /// Returns the number of LRUCacheItems it contains.
   size_t size() const {
     return cache_.size();
   }
@@ -111,20 +109,26 @@ class LRUCache {
   }
 
   /**
-   * \brief find a item's pointer with key
+   * \brief Finds an item's pointer with key
    *
    * Time complexity: O(1)
    */
   pointer_type find(const Key& key) const {
-    pointer_type ret = NULL;
-    typename container_type::const_iterator it = cache_.find(key);
+    pointer_type ret = nullptr;
+    auto it = cache_.find(key);
     if (it != cache_.end()) {
       ret = *(it->second);
     }
     return ret;
   }
 
-  /// Finds the victim item and remove it from the lru list.
+  /**
+   * \brief Finds the victim item and remove it from this LRU cache.
+   * \return The pointer to the victim item.
+   *
+   * \note After calling victim(), this LRU cache does not hold the ownership
+   * of the victim item anymore.
+   */
   pointer_type victim() {
     if (lru_.empty()) {
       return NULL;
@@ -137,10 +141,10 @@ class LRUCache {
 
   /// Uses a item with the given key, and move it to the head
   void use(const Key &key) {
-    typename container_type::iterator it = cache_.find(key);
+    auto it = cache_.find(key);
     assert(it != cache_.end());
     pointer_type value = *(it->second);
-    typename lru_type::iterator pos(it->second);
+    auto pos(it->second);
     lru_.erase(pos);
     lru_.push_back(value);
     cache_[value->cache_key()] = --lru_.end();
@@ -148,7 +152,7 @@ class LRUCache {
 
   /// Forces destaging a item specified by the key
   void destage(const Key &key) {
-    typename container_type::iterator it = cache_.find(key);
+    auto it = cache_.find(key);
     if (it == cache_.end()) {
       return;
     }
@@ -156,9 +160,7 @@ class LRUCache {
     cache_.erase(it);
   }
 
-  /**
-   * \brief clear the LRU cache
-   */
+  /// Clears all items.
   void clear() {
     delete_pointers(lru_);
     lru_.clear();
