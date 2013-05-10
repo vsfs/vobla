@@ -7,7 +7,9 @@ SUBDIRS = vobla
 EXTRA_DIST = \
   Doxyfile \
   LICENSE \
-  README.md
+  README.md \
+  contrib/cpplint.py \
+  contrib/pre-commit
 
 api:
 	doxygen

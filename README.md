@@ -11,7 +11,6 @@ Vsfs Open-sourced Base C++ Library
  - autoconf
  - automake
  - libtool
- - boost >= 1.48
  - glog
  - gtest 1.6
    - Download gtest 1.6.0 from
@@ -22,7 +21,7 @@ Vsfs Open-sourced Base C++ Library
 
 ~~~~~~~~~~~~~~{.sh}
 # Ubuntu 13.04
-sudo apt-get install g++ autoconf automake libtool libboost1.53-all-dev libssl-dev libgoogle-glog-dev
+sudo apt-get install g++ autoconf automake libtool libssl-dev libgoogle-glog-dev
 ~~~~~~~~~~~~~~
 
 ### Compile
