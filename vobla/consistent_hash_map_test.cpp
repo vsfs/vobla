@@ -30,6 +30,7 @@
 #include <vector>
 #include "vobla/consistent_hash_map.h"
 #include "vobla/hash.h"
+#include "vobla/range.h"
 #include "vobla/status.h"
 
 using boost::lexical_cast;
@@ -103,8 +104,7 @@ TEST(ConsistentHashMapTest, TestGetPartitionOneNode) {
 
 TEST(ConsistentHashMapTest, TestGetRange) {
   TestMap test_map;
-  typedef std::pair<size_t, size_t> range_type;
-  typedef std::pair<string, range_type> node_range_type;
+  typedef std::pair<string, Range<size_t>> node_range_type;
   const string node1("node1");
   test_map.insert(0, node1);
   size_t range = numeric_limits<size_t>::max() / test_map.num_partitions();
@@ -116,10 +116,10 @@ TEST(ConsistentHashMapTest, TestGetRange) {
   test_map.get_partitions(&actual_parts);
   EXPECT_THAT(actual_parts, ContainerEq(expected_parts));
 
-  range_type range1 = std::make_pair(0, range - 1);
-  range_type range2 = std::make_pair(range, range*2 - 1);
-  range_type range3 = std::make_pair(range*2, range*3 - 1);
-  range_type range4 = std::make_pair(range*3, numeric_limits<size_t>::max());
+  Range<size_t> range1(0, range - 1);
+  Range<size_t> range2(range, range*2 - 1);
+  Range<size_t> range3(range*2, range*3 - 1);
+  Range<size_t> range4(range*3, numeric_limits<size_t>::max());
   node_range_type range1_node1 = std::make_pair(node1, range1);
   node_range_type range2_node1 = std::make_pair(node1, range2);
   node_range_type range3_node1 = std::make_pair(node1, range3);
@@ -141,25 +141,25 @@ TEST(ConsistentHashMapTest, TestGetMaxRange) {
   const string node2("node2");
   const string node3("node3");
   const string node4("node4");
-  std::pair<size_t, size_t> range;
+  Range<size_t> range;
 
   EXPECT_FALSE(test_map.get_max_range(&range).ok());
 
   test_map.insert(10, node1);
   EXPECT_TRUE(test_map.get_max_range(&range).ok());
-  EXPECT_EQ(range.first, static_cast<size_t>(10));
-  EXPECT_EQ(range.second, static_cast<size_t>(10));
+  EXPECT_EQ(range.lower(), static_cast<size_t>(10));
+  EXPECT_EQ(range.upper(), static_cast<size_t>(10));
 
   test_map.insert(100, node2);
   test_map.insert(500, node3);
   EXPECT_TRUE(test_map.get_max_range(&range).ok());
-  EXPECT_EQ(range.first, static_cast<size_t>(500));
-  EXPECT_EQ(range.second, static_cast<size_t>(10));
+  EXPECT_EQ(range.lower(), static_cast<size_t>(500));
+  EXPECT_EQ(range.upper(), static_cast<size_t>(10));
 
   test_map.insert(numeric_limits<size_t>::max() - 1, node4);
   EXPECT_TRUE(test_map.get_max_range(&range).ok());
-  EXPECT_EQ(range.first, static_cast<size_t>(500));
-  EXPECT_EQ(range.second, numeric_limits<size_t>::max() - 1);
+  EXPECT_EQ(range.lower(), static_cast<size_t>(500));
+  EXPECT_EQ(range.upper(), numeric_limits<size_t>::max() - 1);
 }
 
 TEST(ConsistentHashMapTest, TestGet) {

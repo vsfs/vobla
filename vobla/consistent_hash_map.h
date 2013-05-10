@@ -31,6 +31,7 @@
 #include <utility>
 #include <vector>
 #include "vobla/map_util.h"
+#include "vobla/range.h"
 #include "vobla/status.h"
 
 using std::numeric_limits;
@@ -58,10 +59,10 @@ class ConsistentHashMap {
   typedef Value value_type;
 
   // a pair of range <start, end>
-  typedef pair<Key, Key> pair_type;
+  typedef Range<Key> range_type;
 
   // a pair of Value and its range
-  typedef pair<Value, pair_type> range_type;
+  typedef pair<Value, range_type> value_to_range_type;
 
   typedef typename HashMap::iterator iterator;
 
@@ -69,8 +70,7 @@ class ConsistentHashMap {
 
   typedef vector<Key> partition_type;
 
-  explicit ConsistentHashMap(size_t num_partitions = Partitions)
-      : num_partitions_per_node_(num_partitions) {
+  explicit ConsistentHashMap() : num_partitions_per_node_(Partitions) {
   }
 
   ConsistentHashMap(const ConsistentHashMap &rhs) {
@@ -188,7 +188,7 @@ class ConsistentHashMap {
    * the second key, then it is a range starting clockwise from first key
    * and crossed zero to second key.
    */
-  Status get_max_range(pair_type *key_pair) {
+  Status get_max_range(range_type *key_pair) {
     CHECK_NOTNULL(key_pair);
     // if there is no element, return error.
     if (ring_.empty()) {
@@ -197,14 +197,15 @@ class ConsistentHashMap {
     // if there is only one element, set upper bound same as lower bound
     // and let caller deal with it.
     if (ring_.size() == 1) {
-      key_pair->first = key_pair->second = ring_.begin()->first;
+      key_pair->set_lower(ring_.begin()->first);
+      key_pair->set_upper(ring_.begin()->first);
       return Status::OK;
     }
 
     auto it = ring_.begin();
-    key_pair->first = it->first;
-    key_pair->second = (++it)->first;
-    key_type max_range = key_pair->second - key_pair->first;
+    key_pair->set_lower(it->first);
+    key_pair->set_upper((++it)->first);
+    key_type max_range = key_pair->upper() - key_pair->lower();
     for (size_t i = 0; i < num_nodes(); i++) {
       if (it == ring_.begin()) {
         break;
@@ -222,8 +223,8 @@ class ConsistentHashMap {
       }
       if (range > max_range) {
         max_range = range;
-        key_pair->first = prev;
-        key_pair->second = it->first;
+        key_pair->set_lower(prev);
+        key_pair->set_upper(it->first);
       }
     }
     return Status::OK;
@@ -328,28 +329,28 @@ class ConsistentHashMap {
   /**
    * \brief Return a pair which contains a node and its range by the given key.
    */
-  Status get_range(const Key& key, range_type* range) const {
+  Status get_range(const Key& key, value_to_range_type* range) const {
     CHECK_NOTNULL(range);
     if (ring_.empty()) {
       return Status(-ENOENT, "The ring is empty.");
     }
 
-    pair_type range_pair;
+    range_type range_pair;
     auto it = ring_.upper_bound(key);
     // if it's after the last element
     if (it == ring_.end()) {
       // lower bound is the last element
-      range_pair.first = ring_.rbegin()->first;
+      range_pair.set_lower(ring_.rbegin()->first);
       range->first = ring_.rbegin()->second;
       // upper bound is the first element
       if (ring_.begin()->first == 0) {
-        range_pair.second = numeric_limits<Key>::max();
+        range_pair.set_upper(numeric_limits<Key>::max());
       } else {
-        range_pair.second = ring_.begin()->first - 1;
+        range_pair.set_upper(ring_.begin()->first - 1);
       }
     } else {
-      range_pair.second = it->first - 1;
-      range_pair.first = (--it)->first;
+      range_pair.set_upper(it->first - 1);
+      range_pair.set_lower((--it)->first);
       range->first = it->second;
     }
     range->second = range_pair;
