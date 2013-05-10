@@ -58,7 +58,7 @@ if test "x${gcov_enabled}" = xyes; then
   LIBS="$LIBS -lgcov"
 fi
 
-AC_SUBST([AM_CXXFLAGS], ["$CXXFLAGS"])
+AC_SUBST([CXXFLAGS], ["$CXXFLAGS"])
 AC_SUBST(LDFLAGS, "$LDFLAGS")
 AC_SUBST(LIBS, "$LIBS")
 AC_CONFIG_FILES([Makefile

@@ -23,32 +23,32 @@ nobase_voblainclude_HEADERS = \
   traits.h \
   unique_resource.h
 
-libvobla_la_LDFLAGS =
-libvobla_la_CXXFLAGS =
+libvobla_la_LDFLAGS = $(LDFLAGS)
+libvobla_la_CXXFLAGS = $(CXXFLAGS)
 libvobla_la_SOURCES = \
-		     clock.h clock.cpp \
-		     hash.h hash.cpp \
-		     lru_cache.h \
-		     macros.h \
-		     map_util.h \
-		     range.h \
-		     status.h status.cpp \
-		     stl_util.h \
-		     sysinfo.h sysinfo.cpp \
-		     thread_pool.h thread_pool.cpp \
-		     timer.h timer.cpp \
-		     traits.h traits.cpp \
-		     unique_resource.h
+  clock.h clock.cpp \
+  hash.h hash.cpp \
+  lru_cache.h \
+  macros.h \
+  map_util.h \
+  range.h \
+  status.h status.cpp \
+  stl_util.h \
+  sysinfo.h sysinfo.cpp \
+  thread_pool.h thread_pool.cpp \
+  timer.h timer.cpp \
+  traits.h traits.cpp \
+  unique_resource.h
 
 TESTS = \
-	hash_test \
-	lru_cache_test \
-	map_util_test \
-	range_test \
-	status_test \
-	thread_pool_test \
-	traits_test \
-	unique_resource_test
+  hash_test \
+  lru_cache_test \
+  map_util_test \
+  range_test \
+  status_test \
+  thread_pool_test \
+  traits_test \
+  unique_resource_test
 
 check_PROGRAMS = $(TESTS)
 
