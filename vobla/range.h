@@ -26,6 +26,7 @@
 #include <array>
 #include <initializer_list>
 #include <limits>
+#include <type_traits>  // NOLINT
 #include <utility>
 
 using std::array;
@@ -35,15 +36,16 @@ namespace vobla {
 
 /**
  * \class Range vobla/range.h
+ * \tparam Value it must be an arithmetic type.
  * \brief A one-dimentional value range (or interval).
  *
  * It can represent both open interval or closed interval on either endpoints.
  *
  * For example:
  *  - The interval '[10, 20]' is a closed interval, which means its
- *  'is_upper_opened() = false' and 'is_lower_opened() = false';
+ *  'is_upper_opened() == false' and 'is_lower_opened() == false';
  *  - The interval '(10, 20)' is open interval, which means its
- *  'is_upper_opened() = true' and 'is_lower_opened() = true';
+ *  'is_upper_opened() == true' and 'is_lower_opened() == true';
  *
  * Of course, it also supports half open / half closed intervals such as
  *  - '(10, 20]'
@@ -51,7 +53,8 @@ namespace vobla {
  *
  *  \note By default, both endpoints are closed.
  */
-template <typename Value>
+template <typename Value,
+    typename = typename std::enable_if<std::is_arithmetic<Value>::value>::type>
 class Range {
  public:
   typedef Value value_type;
@@ -172,11 +175,11 @@ class Range {
   bool upper_opened_;
 };
 
-template <> template<typename V>
-const V Range<V>::kMin = std::numeric_limits<V>::min();
+template <> template<typename V, typename I>
+const V Range<V, I>::kMin = std::numeric_limits<V>::min();
 
-template <> template<typename V>
-const V Range<V>::kMax = std::numeric_limits<V>::max();
+template <> template<typename V, typename I>
+const V Range<V, I>::kMax = std::numeric_limits<V>::max();
 
 /**
  * \class MultiDimRange
@@ -184,7 +187,8 @@ const V Range<V>::kMax = std::numeric_limits<V>::max();
  * \tparam Value value type.
  * \tparam Dimention the number of dimentions.
  */
-template <typename Value, int Dimention>
+template <typename Value, int Dimention,
+    typename = typename std::enable_if<std::is_arithmetic<Value>::value>::type>
 class MultiDimRange {
  public:
   typedef Value value_type;
@@ -283,11 +287,11 @@ class MultiDimRange {
   array<range_type, DIMENSION> ranges_;
 };
 
-template <> template<typename V, int D>
-const V MultiDimRange<V, D>::kMin = std::numeric_limits<value_type>::min();
+template <> template<typename V, int D, typename I>
+const V MultiDimRange<V, D, I>::kMin = std::numeric_limits<value_type>::min();
 
-template <> template<typename V, int D>
-const V MultiDimRange<V, D>::kMax = std::numeric_limits<value_type>::max();
+template <> template<typename V, int D, typename I>
+const V MultiDimRange<V, D, I>::kMax = std::numeric_limits<value_type>::max();
 
 }  // namespace vobla
 
