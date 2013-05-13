@@ -15,8 +15,7 @@ AC_PROG_CC
 AC_PROG_LIBTOOL
 AC_LANG([C++])
 
-# CXXFLAGS="-Wall -Wextra -Werror -pedantic -Wunused-value $CXXFLAGS"
-CXXFLAGS="-Wall -Wextra -pedantic -Wunused-value $CXXFLAGS"
+CXXFLAGS="-Wall -Wextra -Werror -pedantic -Wunused-value $CXXFLAGS"
 
 # Checks for libraries.
 AC_CHECK_LIB([glog], [openlog], [], [AC_MSG_ERROR(google-glog was not found.)])
