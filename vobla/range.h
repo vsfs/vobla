@@ -80,7 +80,6 @@ class Range {
    */
   Range(value_type l, value_type u) : lower_(l), upper_(u),
       lower_opened_(false), upper_opened_(false) {
-    CHECK_LE(l, u);
   }
 
   /**
@@ -98,7 +97,6 @@ class Range {
     lower_ = *it;
     ++it;
     upper_ = *it;
-    CHECK_LE(lower_, upper_);
   }
 
   /// Returns the lower endpoint.
@@ -149,6 +147,23 @@ class Range {
   void set_upper(value_type u, bool is_opened) {
     upper_ = u;
     upper_opened_ = is_opened;
+  }
+
+  /**
+   * \brief Returns the length of this range / interval.
+   *
+   * It also supports wraps the interval around the boundary of the value
+   * type, if the lower_ < upper_, e.g., (10, 1), the length is the full range
+   * minus (1, 10).
+   */
+  value_type length() const {
+    if (upper_ >= lower_) {
+      return upper_ - lower_;
+    } else {
+      return (std::numeric_limits<value_type>::max() -
+              std::numeric_limits<value_type>::min()) -
+              (lower_ - upper_);
+    }
   }
 
   /// Returns true if two ranges are exactly same.
