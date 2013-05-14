@@ -5,6 +5,7 @@ AM_CPPFLAGS = -I@top_srcdir@/src
 SUBDIRS = vobla
 
 EXTRA_DIST = \
+  AUTHORS \
   Doxyfile \
   LICENSE \
   README.md \
