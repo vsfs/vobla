@@ -190,10 +190,10 @@ class Range {
   bool upper_opened_;
 };
 
-template <> template<typename V, typename I>
+template<typename V, typename I>
 const V Range<V, I>::kMin = std::numeric_limits<V>::min();
 
-template <> template<typename V, typename I>
+template<typename V, typename I>
 const V Range<V, I>::kMax = std::numeric_limits<V>::max();
 
 /**
@@ -302,10 +302,10 @@ class MultiDimRange {
   array<range_type, DIMENSION> ranges_;
 };
 
-template <> template<typename V, int D, typename I>
+template <typename V, int D, typename I>
 const V MultiDimRange<V, D, I>::kMin = std::numeric_limits<value_type>::min();
 
-template <> template<typename V, int D, typename I>
+template <typename V, int D, typename I>
 const V MultiDimRange<V, D, I>::kMax = std::numeric_limits<value_type>::max();
 
 }  // namespace vobla
