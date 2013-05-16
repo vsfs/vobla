@@ -44,8 +44,14 @@ namespace vobla {
 /**
  * \class ConsistentHashMap
  *
- * \brief A generic class for Consistent Hashing, client are responsible of
- *  calculating the key value when lookup an object.
+ * \brief A generic class for Consistent Hashing, clients are responsible of
+ *  calculating the key when lookup an object.
+ *
+ *  Refer to http://en.wikipedia.org/wiki/Consistent_hashing for information
+ *  about Consistent Hashing.
+ *
+ *  e.g. If a node1 is inserted at position 100 and node2 is at position 200,
+ *  then node1 is in charge of any value falls in range (100, 200].
  *
  * \note This class is not thread-safe.
  */
@@ -59,7 +65,7 @@ class ConsistentHashMap {
   typedef Value value_type;
 
   // a pair of range <start, end>
-  typedef Range<Key> range_type;
+  typedef Range<key_type> range_type;
 
   // a pair of Value and its range
   typedef pair<Value, range_type> value_to_range_type;
@@ -68,8 +74,6 @@ class ConsistentHashMap {
 
   typedef typename HashMap::const_iterator const_iterator;
 
-  typedef vector<Key> partition_type;
-
   ConsistentHashMap() : num_partitions_per_node_(Partitions) {
   }
 
@@ -77,8 +81,7 @@ class ConsistentHashMap {
     *this = rhs;
   }
 
-  virtual ~ConsistentHashMap() {
-  }
+  ~ConsistentHashMap() = default;
 
   ConsistentHashMap& operator=(const ConsistentHashMap& rhs) {
     ring_ = rhs.ring_;
@@ -89,14 +92,14 @@ class ConsistentHashMap {
   /**
    * \brief Insert a node with a client specified key value to the hash map.
    */
-  Status insert(const Key& key, const Value& value) {
+  Status insert(key_type key, const Value& value) {
     if (contain_key(ring_, key)) {
       return Status(-EEXIST, "The key is already inserted");
     }
-    static Key kMax = numeric_limits<Key>::max();
+    static key_type kMax = numeric_limits<key_type>::max();
     for (size_t i = 0; i < num_partitions_per_node_; i++) {
       // TODO(Ziling): improve the precision of this calculation!
-      Key new_key = (key + (kMax / num_partitions_per_node_ * i)) % kMax;
+      key_type new_key = (key + (kMax / num_partitions_per_node_ * i)) % kMax;
       ring_[new_key] = value;
     }
     return Status::OK;
@@ -106,19 +109,19 @@ class ConsistentHashMap {
    * \brief Remove a node with a client specified key value, note this key
    * value must be the same with the original key value when inserting.
    */
-  Status remove(const Key& key) {
+  Status remove(key_type key) {
     if (!contain_key(ring_, key)) {
       return Status(-ENOENT, "The key does not exist");
     }
-    static Key kMax = numeric_limits<Key>::max();
+    static key_type kMax = numeric_limits<key_type>::max();
     for (size_t i = 0; i < num_partitions_per_node_; i++) {
-      Key new_key = (key + (kMax / num_partitions_per_node_ * i)) % kMax;
+      key_type new_key = (key + (kMax / num_partitions_per_node_ * i)) % kMax;
       ring_.erase(new_key);
     }
     return Status::OK;
   }
 
-  bool has_key(const Key& key) const {
+  bool has_key(key_type key) const {
     return contain_key(ring_, key);
   }
 
@@ -129,13 +132,13 @@ class ConsistentHashMap {
   /**
    * \brief Gets the responsible node for a client specified key.
    */
-  Status get(const key_type& key, value_type* value) const {
+  Status get(key_type key, value_type* value) const {
     key_type sep;
     return get(key, &sep, value);
   }
 
-  /// Gets both the sep and the value.
-  Status get(const key_type& key, key_type* sep, value_type* value) const {
+  /// Gets both the sep and the value for a client specified key.
+  Status get(key_type key, key_type* sep, value_type* value) const {
     CHECK_NOTNULL(sep);
     CHECK_NOTNULL(value);
     if (ring_.empty()) {
@@ -157,10 +160,17 @@ class ConsistentHashMap {
   }
 
   /**
+   * \brief If key has a responsible node, returns the responsible node.
+   * If key does not belong to any nodes, insert the key and return a
+   * reference to its mapped node.
+   * TODO(ziling): implement this function later.
+   */
+  value_type& operator[] (key_type key) const {
+  }
+
+  /**
    * \brief Return the partition starting points.
    * \param[out] partitions A vector to stores the partitions;
-   *
-   * \TODO provides an iterator later.
    */
   void get_partitions(vector<key_type> *partitions) const {
     CHECK_NOTNULL(partitions);
@@ -188,8 +198,8 @@ class ConsistentHashMap {
    * the second key, then it is a range starting clockwise from first key
    * and crossed zero to second key.
    */
-  Status get_max_range(range_type *key_pair) {
-    CHECK_NOTNULL(key_pair);
+  Status get_max_range(range_type *range) {
+    CHECK_NOTNULL(range);
     // if there is no element, return error.
     if (ring_.empty()) {
       return Status(-ENOENT, "Cannot get max range.");
@@ -197,34 +207,34 @@ class ConsistentHashMap {
     // if there is only one element, set upper bound same as lower bound
     // and let caller deal with it.
     if (ring_.size() == 1) {
-      key_pair->set_lower(ring_.begin()->first);
-      key_pair->set_upper(ring_.begin()->first);
+      range->set_lower(ring_.begin()->first);
+      range->set_upper(ring_.begin()->first);
       return Status::OK;
     }
 
     auto it = ring_.begin();
-    key_pair->set_lower(it->first);
-    key_pair->set_upper((++it)->first);
-    key_type max_range = key_pair->upper() - key_pair->lower();
+    range->set_lower(it->first);
+    range->set_upper((++it)->first);
+    key_type max_range = range->length();
     for (size_t i = 0; i < num_nodes(); i++) {
       if (it == ring_.begin()) {
         break;
       }
       key_type prev = it->first;
-      key_type range;
+      key_type current;
       if (++it == ring_.end()) {
         it = ring_.begin();
       }
       if (it->first > prev) {
-        range = it->first - prev;
+        current = it->first - prev;
       } else {
         // if it->first is the beginning now
-        range = (numeric_limits<Key>::max() - prev) + it->first;
+        current = (numeric_limits<key_type>::max() - prev) + it->first;
       }
-      if (range > max_range) {
-        max_range = range;
-        key_pair->set_lower(prev);
-        key_pair->set_upper(it->first);
+      if (current > max_range) {
+        max_range = current;
+        range->set_lower(prev);
+        range->set_upper(it->first);
       }
     }
     return Status::OK;
@@ -236,7 +246,7 @@ class ConsistentHashMap {
    * \param[in] key the current key specified by client.
    * \param[out] successive the successive value returned to client.
    */
-  Status succ(const Key& key, Value* successive) const {
+  Status succ(key_type key, Value* successive) const {
     CHECK_NOTNULL(successive);
     // O(logN)
     auto it = ring_.find(key);
@@ -283,7 +293,7 @@ class ConsistentHashMap {
    * \param[in] key the current key specified by client.
    * \param[out] previous the previous value returned to client.
    */
-  Status prev(const Key& key, Value* previous) const {
+  Status prev(key_type key, Value* previous) const {
     CHECK_NOTNULL(previous);
     // O(logN)
     auto it = ring_.find(key);
@@ -329,7 +339,7 @@ class ConsistentHashMap {
   /**
    * \brief Return a pair which contains a node and its range by the given key.
    */
-  Status get_range(const Key& key, value_to_range_type* range) const {
+  Status get_range(key_type key, value_to_range_type* range) const {
     CHECK_NOTNULL(range);
     if (ring_.empty()) {
       return Status(-ENOENT, "The ring is empty.");
@@ -344,7 +354,7 @@ class ConsistentHashMap {
       range->first = ring_.rbegin()->second;
       // upper bound is the first element
       if (ring_.begin()->first == 0) {
-        range_pair.set_upper(numeric_limits<Key>::max());
+        range_pair.set_upper(numeric_limits<key_type>::max());
       } else {
         range_pair.set_upper(ring_.begin()->first - 1);
       }
