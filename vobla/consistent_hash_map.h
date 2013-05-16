@@ -165,8 +165,8 @@ class ConsistentHashMap {
    * reference to its mapped node.
    * TODO(ziling): implement this function later.
    */
-  value_type& operator[] (key_type key) const {
-  }
+  /* value_type& operator[] (key_type key) const {
+  } */
 
   /**
    * \brief Return the partition starting points.
