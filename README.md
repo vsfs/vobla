@@ -44,3 +44,10 @@ $ make
 # Run unit tests
 $ make check
 ~~~~~~~~~~~~~~
+
+### Generate API documents
+
+~~~~~~~~~~~~{.sh}
+$ make api
+$ open api/html/index.html  # On MacOSX
+~~~~~~~~~~~~

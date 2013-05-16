@@ -33,7 +33,7 @@ enum TypeIDs {
 };
 
 /**
- * \class TypeToInt
+ * \class TypeToInt vobla/traits.h
  * \brief A mapping between C++ type to int.
  * \tparam T A C++ type.
  *
@@ -50,19 +50,20 @@ struct TypeToInt {
 };
 
 /**
- * \class Int2Type
+ * \class IntToType vobla/traits.h
  * \brief A mapping from int to C++ types.
  * \tparam I an integer.
  *
  * To get the type represented by the given integer.
  * \code
- *   Int2Type<STRING>::type a_str = "Hello World";
+ *   IntToType<STRING>::type a_str = "Hello World";
  * \endcode
  *
  * \see TypeIDs for the available integers.
+ * \TODO(eddyxu) Rename it to IntToType
  */
 template<TypeIDs I>
-struct Int2Type {
+struct IntToType {
   enum { value_ = I };
   typedef int type;
 
@@ -86,70 +87,70 @@ std::string type_int_to_string(int type_id);
 /**
  * \brief Defines the mapping from C++ type to its integer ID.
  */
-#define DEFINE_INT2TYPE(type, intval) \
+#define DEFINE_TYPE_TO_INT(type, intval) \
     template <> struct TypeToInt<type> { \
       enum { value_ = intval }; \
       static int value() { return value_; } \
     }
 
-DEFINE_INT2TYPE(char, CHAR);
-DEFINE_INT2TYPE(int8_t, INT8);
-DEFINE_INT2TYPE(uint8_t, UINT8);
-DEFINE_INT2TYPE(int16_t, INT16);
-DEFINE_INT2TYPE(uint16_t, UINT16);
-DEFINE_INT2TYPE(int32_t, INT32);
-DEFINE_INT2TYPE(uint32_t, UINT32);
-DEFINE_INT2TYPE(int64_t, INT64);
-DEFINE_INT2TYPE(uint64_t, UINT64);
-DEFINE_INT2TYPE(float, FLOAT);
-DEFINE_INT2TYPE(double, DOUBLE);
-DEFINE_INT2TYPE(std::string, STRING);
+DEFINE_TYPE_TO_INT(char, CHAR);
+DEFINE_TYPE_TO_INT(int8_t, INT8);
+DEFINE_TYPE_TO_INT(uint8_t, UINT8);
+DEFINE_TYPE_TO_INT(int16_t, INT16);
+DEFINE_TYPE_TO_INT(uint16_t, UINT16);
+DEFINE_TYPE_TO_INT(int32_t, INT32);
+DEFINE_TYPE_TO_INT(uint32_t, UINT32);
+DEFINE_TYPE_TO_INT(int64_t, INT64);
+DEFINE_TYPE_TO_INT(uint64_t, UINT64);
+DEFINE_TYPE_TO_INT(float, FLOAT);
+DEFINE_TYPE_TO_INT(double, DOUBLE);
+DEFINE_TYPE_TO_INT(std::string, STRING);
 
-template<> struct Int2Type<CHAR> {
+template<> struct IntToType<CHAR> {
   typedef char type;
 };
 
-template<> struct Int2Type<INT8> {
+template<> struct IntToType<INT8> {
   typedef int8_t type;
 };
 
-template<> struct Int2Type<UINT8> {
+template<> struct IntToType<UINT8> {
   typedef uint8_t type;
 };
 
-template<> struct Int2Type<INT16> {
+template<> struct IntToType<INT16> {
   typedef int16_t type;
 };
 
-template<> struct Int2Type<UINT16> {
+template<> struct IntToType<UINT16> {
   typedef uint16_t type;
 };
 
-template<> struct Int2Type<INT32> {
+template<> struct IntToType<INT32> {
   typedef int32_t type;
 };
 
-template<> struct Int2Type<UINT32> {
+template<> struct IntToType<UINT32> {
   typedef uint32_t type;
 };
 
-template<> struct Int2Type<INT64> {
+template<> struct IntToType<INT64> {
   typedef int64_t type;
 };
 
-template<> struct Int2Type<UINT64> {
+template<> struct IntToType<UINT64> {
   typedef uint64_t type;
 };
 
-template<> struct Int2Type<FLOAT> {
+template<> struct IntToType<FLOAT> {
   typedef float type;
 };
 
-template<> struct Int2Type<DOUBLE> {
+template<> struct IntToType<DOUBLE> {
   typedef double type;
 };
 
-template<> struct Int2Type<STRING> {
+template<> struct IntToType<STRING> {
   typedef typename std::string type;
 };
 /// \endcond

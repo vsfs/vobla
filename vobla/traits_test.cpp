@@ -32,16 +32,16 @@ TEST(TypeToIntTest, ConvertTypeToInt) {
 }
 
 TEST(IntToTypeTest, ConvertIntToType) {
-  bool result = is_same<Int2Type<CHAR>::type, char>::value;
+  bool result = is_same<IntToType<CHAR>::type, char>::value;
   EXPECT_TRUE(result);
 
-  result = is_same<Int2Type<INT32>::type, uint32_t>::value;
+  result = is_same<IntToType<INT32>::type, uint32_t>::value;
   EXPECT_FALSE(result);
 
-  result = is_same<Int2Type<FLOAT>::type, float>::value;
+  result = is_same<IntToType<FLOAT>::type, float>::value;
   EXPECT_TRUE(result);
 
-  result = is_same<Int2Type<STRING>::type, std::string>::value;
+  result = is_same<IntToType<STRING>::type, std::string>::value;
   EXPECT_TRUE(result);
 }
 

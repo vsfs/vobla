@@ -19,6 +19,7 @@
  */
 
 #include <gtest/gtest.h>
+#include <limits>
 #include "vobla/range.h"
 
 namespace vobla {
@@ -46,6 +47,40 @@ TEST(RangeTest, TestNotEqualOp) {
   range2.set_lower(1, true);
   range2.set_upper(20, true);
   EXPECT_NE(range0, range2);
+}
+
+TEST(RangeTest, TestLengthNoWrap) {
+  Range<int> range0 = {1, 10};
+  EXPECT_EQ(9, range0.length());
+  Range<int> range1 = {-1, 10};
+  EXPECT_EQ(11, range1.length());
+
+  Range<uint32_t> range2 = {1, 10};
+  EXPECT_EQ(9u, range2.length());
+
+  Range<float> range3 = {1.2, 3.5};
+  EXPECT_NEAR(2.3, range3.length(), 0.00001);
+  Range<float> range4 = {-1.2, 3.5};
+  EXPECT_NEAR(4.7, range4.length(), 0.00001);
+}
+
+TEST(RangeTest, TestLengthWraps) {
+  const int kMaxIntRange = std::numeric_limits<int>::max() -
+      std::numeric_limits<int>::min();
+  Range<int> r0 = {10, 1};
+  EXPECT_EQ(kMaxIntRange - 9, r0.length());
+  Range<int> r1 = {5, -4};
+  EXPECT_EQ(kMaxIntRange - 9, r1.length());
+
+  const uint32_t kMaxUintRange = std::numeric_limits<uint32_t>::max() -
+      std::numeric_limits<uint32_t>::min();
+  Range<uint32_t> r2 = {10, 1};
+  EXPECT_EQ(kMaxUintRange - 9, r2.length());
+
+  const float kMaxFloatRange = std::numeric_limits<float>::max() -
+      std::numeric_limits<float>::min();
+  Range<float> r3 = { 1.6, 0.4 };
+  EXPECT_NEAR(kMaxFloatRange - 2.0, r3.length(), 0.0001);
 }
 
 TEST(MultiDimRangeTest, Initialization) {
