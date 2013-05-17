@@ -2,6 +2,7 @@
 *.slo
 *.lo
 *.o
+.gdb_history
 config.*
 Makefile
 Makefile.in
@@ -22,6 +23,9 @@ ltmain.sh
 *.trs
 .deps
 vobla-*.tar.gz
+.libs
+/m4/lt*.m4
+/m4/libtool.m4
 
 
 # Compiled Dynamic libraries
@@ -36,3 +40,4 @@ vobla-*.tar.gz
 test/gmock-*
 *.zip
 *.sw*
+vobla/*_test
