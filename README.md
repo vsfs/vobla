@@ -14,7 +14,6 @@ Vsfs Open-sourced Base C++ Library
  - libtool
  - glog
  - libssl-dev
- - boost >= 1.48 (Optional for test)
  - gmock 1.6.0 (Optional for test)
    - Download gmock 1.6.0 from
      http://googlemock.googlecode.com/files/gmock-1.6.0.zip and unzip it to `test/` directory.

@@ -20,7 +20,6 @@
  * \brief Unit test for Consistent Hashing class
  */
 
-#include <boost/lexical_cast.hpp>
 #include <gtest/gtest.h>
 #include <gmock/gmock.h>
 #include <string.h>
@@ -33,10 +32,10 @@
 #include "vobla/range.h"
 #include "vobla/status.h"
 
-using boost::lexical_cast;
 using std::numeric_limits;
 using std::string;
 using std::vector;
+using std::to_string;
 using ::testing::ContainerEq;
 
 namespace vobla {
@@ -190,7 +189,7 @@ TEST(ConsistentHashMapTest, TestGetValues) {
   TestMap test_map;
   vector<string> expected_nodes;
   for (int i = 0; i < 10; ++i) {
-    string node_name = string("node") + lexical_cast<string>(i);
+    string node_name = string("node") + to_string(i);
     test_map.insert(i * 1000, node_name);
     expected_nodes.push_back(node_name);
   }
@@ -264,7 +263,7 @@ TEST(ConsistentHashMapTest, TestPrev) {
 TEST(ConsistentHashMapTest, TestCopyConstructor) {
   TestMap test_map;
   for (int i = 0; i < 10; i++) {
-    test_map.insert(0*100, string("node") + lexical_cast<string>(i));
+    test_map.insert(0*100, string("node") + to_string(i));
   }
   vector<TestMap::key_type> partitions;
   test_map.get_partitions(&partitions);
@@ -278,19 +277,19 @@ TEST(ConsistentHashMapTest, TestCopyConstructor) {
 TEST(ConsistentHashMapTest, TestIterator) {
   TestMap test_map;
   for (int i = 0; i < 10; i++) {
-    test_map.insert(i*100, string("node") + lexical_cast<string>(i));
+    test_map.insert(i*100, string("node") + to_string(i));
   }
 
   TestMap::iterator it = test_map.begin();
   for (size_t i = 0; i < test_map.num_nodes(); ++i, ++it) {
     EXPECT_EQ(i*100, it->first);
-    EXPECT_EQ(string("node") + lexical_cast<string>(i), it->second);
+    EXPECT_EQ(string("node") + to_string(i), it->second);
   }
 
   TestMap::const_iterator cit = test_map.begin();
   for (size_t i = 0; i < test_map.num_nodes(); ++i, ++cit) {
     EXPECT_EQ(i*100, cit->first);
-    EXPECT_EQ(string("node") + lexical_cast<string>(i), cit->second);
+    EXPECT_EQ(string("node") + to_string(i), cit->second);
   }
 }
 
@@ -304,7 +303,7 @@ TEST(ConsistentHashMapTest, TestSinglePartition) {
 TEST(ConsistentHashMapTest, TestNumNodes) {
   TestMap test_map;
   for (int i = 0; i < 10; i++) {
-    test_map.insert(i*100, string("node") + lexical_cast<string>(i));
+    test_map.insert(i*100, string("node") + to_string(i));
   }
   EXPECT_EQ(10u, test_map.num_nodes());
 }
@@ -312,7 +311,7 @@ TEST(ConsistentHashMapTest, TestNumNodes) {
 TEST(ConsistentHashMapTest, TestNumPartitions) {
   TestMap test_map;
   for (int i = 0; i < 10; i++) {
-    test_map.insert(i*100, string("node") + lexical_cast<string>(i));
+    test_map.insert(i*100, string("node") + to_string(i));
   }
   EXPECT_EQ(40u, test_map.num_partitions());
 }
