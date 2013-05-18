@@ -24,6 +24,7 @@ AC_CHECK_LIB([crypto], [MD5_Init], [], [AC_MSG_ERROR([libcrypto was not found.])
 
 # Checks for header files.
 AC_CHECK_HEADERS([sys/time.h fcntl.h stddef.h sys/ioctl.h])
+AC_HEADER_STDBOOL
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_TYPE_INT8_T
@@ -39,7 +40,6 @@ AC_TYPE_SSIZE_T
 AC_TYPE_OFF_T
 AC_TYPE_PID_T
 
-AC_CHECK_HEADER_STDBOOL
 AX_CXX_COMPILE_STDCXX_11(noext)
 if test "$ac_cv_cxx_compile_cxx11" = no ; then
 	AC_MSG_ERROR("It requires C++ 11 to build.!")
