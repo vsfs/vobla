@@ -20,7 +20,10 @@
  */
 
 #include <gtest/gtest.h>
+#include <string>
 #include "vobla/status.h"
+
+using std::string;
 
 namespace vobla {
 
@@ -44,6 +47,22 @@ TEST(StatusTest, TestConstructors) {
   s4 = s2;
   EXPECT_EQ(s2, s3);
   EXPECT_EQ(s3, s4);
+}
+
+TEST(StatusTest, TestMoveConstructors) {
+  Status s(1, "This is a test.");
+  Status s1 = std::move(s);
+  EXPECT_EQ(1, s1.error());
+  EXPECT_EQ(0, s.error());
+  EXPECT_EQ(string("This is a test."), s1.message());
+  EXPECT_TRUE(s.message().empty());
+
+  Status s2;
+  s2 = std::move(s1);
+  EXPECT_EQ(1, s2.error());
+  EXPECT_EQ(0, s1.error());
+  EXPECT_EQ(string("This is a test."), s2.message());
+  EXPECT_TRUE(s.message().empty());
 }
 
 TEST(StatusTest, TestSetterAndGetter) {

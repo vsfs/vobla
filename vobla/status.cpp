@@ -16,6 +16,7 @@
 
 #include "vobla/status.h"
 #include <string>
+#include <utility>
 
 using std::string;
 
@@ -34,12 +35,29 @@ Status::Status(const Status& rhs) {
   *this = rhs;
 }
 
+Status::Status(Status&& rhs) {
+  if (this != &rhs) {
+    code_ = rhs.code_;
+    rhs.code_ = 0;
+    message_ = std::move(rhs.message_);
+  }
+}
+
 Status::~Status() {
 }
 
 Status& Status::operator=(const Status& rhs) {
   code_ = rhs.code_;
   message_ = rhs.message_;
+  return *this;
+}
+
+Status& Status::operator=(Status&& rhs) {
+  if (this != &rhs) {
+    code_ = rhs.code_;
+    rhs.code_ = 0;
+    message_ = std::move(rhs.message_);
+  }
   return *this;
 }
 

@@ -45,11 +45,17 @@ class Status {
   /// Copy constructor.
   Status(const Status& rhs);
 
+  /// Move constructor.
+  Status(Status&& rhs);
+
   /// Explicit destructor.
   ~Status();
 
   /// Assign operation.
   Status& operator=(const Status& rhs);
+
+  /// Move
+  Status& operator=(Status&& rhs);
 
   /// Returns the error code.
   int error() const;
