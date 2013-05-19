@@ -1,7 +1,8 @@
 # vim: ts=8:st=8:noexpandtab
 AM_LDFLAGS = -lpthread \
 	     -L@top_srcdir@/test/gmock-1.6.0/lib \
-	     -L@top_srcdir@/test/gmock-1.6.0/gtest/lib
+	     -L@top_srcdir@/test/gmock-1.6.0/gtest/lib \
+	     $(BOOST_FILESYSTEM_LIB) $(BOOST_SYSTEM_LIB)
 
 AM_CXXFLAGS = -isystem @top_srcdir@/test/gmock-1.6.0/include \
 	      -isystem @top_srcdir@/test/gmock-1.6.0/gtest/include
@@ -16,6 +17,7 @@ voblaincludedir = $(includedir)/vobla
 nobase_voblainclude_HEADERS = \
   clock.h \
   consistent_hash_map.h \
+  file.h \
   hash.h \
   lru_cache.h \
   macros.h \
@@ -28,10 +30,11 @@ nobase_voblainclude_HEADERS = \
   traits.h \
   unique_resource.h
 
-libvobla_la_LDFLAGS = $(LDFLAGS)
+libvobla_la_LDFLAGS = $(BOOST_FILESYSTEM_LIB) $(BOOST_SYSTEM_LIB) $(LDFLAGS)
 libvobla_la_CXXFLAGS = $(CXXFLAGS)
 libvobla_la_SOURCES = \
   clock.h clock.cpp \
+  file.h file.cpp \
   hash.h hash.cpp \
   lru_cache.h \
   macros.h \
@@ -47,6 +50,7 @@ libvobla_la_SOURCES = \
 
 TESTS = \
   consistent_hash_map_test \
+  file_test \
   hash_test \
   lru_cache_test \
   map_util_test \
@@ -60,6 +64,7 @@ check_PROGRAMS = $(TESTS)
 
 LDADD = -lgtest -lgtest_main libvobla.la
 consistent_hash_map_test_SOURCES = consistent_hash_map_test.cpp
+file_test_SOURCES = file_test.cpp
 hash_test_SOURCES = hash_test.cpp
 lru_cache_test_SOURCES = lru_cache_test.cpp
 map_util_test_SOURCES = map_util_test.cpp
