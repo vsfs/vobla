@@ -12,6 +12,9 @@ Vsfs Open-sourced Base C++ Library
  - automake
  - autoconf-archive
  - libtool
+ - boost > 1.48
+   - boost_filesystem
+   - boost_system
  - glog
  - libssl-dev
  - gmock 1.6.0 (Optional for test)

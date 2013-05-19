@@ -40,4 +40,17 @@ TemporaryDirectory::~TemporaryDirectory() {
   }
 }
 
+TemporaryDirectory::TemporaryDirectory(TemporaryDirectory &&rhs)
+  : op_(rhs.op_), path_(rhs.path_) {
+  rhs.op_ = ScopeOp::KEEP;
+}
+
+TemporaryDirectory& TemporaryDirectory::operator=(TemporaryDirectory&& rhs) {
+  if (this != &rhs) {
+    op_ = rhs.op_;
+    path_ = rhs.path_;
+    rhs.op_ = ScopeOp::KEEP;
+  }
+}
+
 }  // namespace vobla

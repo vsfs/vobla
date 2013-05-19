@@ -33,6 +33,8 @@ class TemporaryFile : public File {
 /**
  * \brief Temporary directory.
  *
+ * By default (op_ == ScopeOp::DELETE), the temporary directory will be
+ * recursively deleted when this object being destructs.
  */
 class TemporaryDirectory {
  public:
@@ -43,11 +45,16 @@ class TemporaryDirectory {
     DELETE
   };
 
+  // TODO(eddyxu): add prefix as parameters.
   explicit TemporaryDirectory(ScopeOp op = ScopeOp::DELETE);
 
   ~TemporaryDirectory();
 
-  TemporaryDirectory(TemporaryDirectory &&rhs);
+  /// Move constructor
+  TemporaryDirectory(TemporaryDirectory&& rhs);
+
+  /// Move assignment.
+  TemporaryDirectory& operator=(TemporaryDirectory&& rhs);
 
   const string& path() const {
     return path_;
