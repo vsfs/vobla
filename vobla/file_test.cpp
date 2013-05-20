@@ -34,4 +34,21 @@ TEST(TemporaryDirectoryTest, UseDeleteScopeOp) {
   EXPECT_FALSE(fs::exists(tmp_path));
 }
 
+TEST(TemporaryDirectoryTest, TestMoveConstructor) {
+  string tmp_path;
+  TemporaryDirectory td1;
+  tmp_path = td1.path();
+
+  TemporaryDirectory td2 = std::move(td1);
+  EXPECT_TRUE(td1.path().empty());
+  EXPECT_EQ(tmp_path, td2.path());
+
+  TemporaryDirectory td3;
+  string td3_path = td3.path();
+  EXPECT_TRUE(fs::exists(td3_path));
+  td3 = std::move(td2);
+  EXPECT_EQ(tmp_path, td3.path());
+  EXPECT_FALSE(fs::exists(td3_path));
+}
+
 }  // namespace vobla

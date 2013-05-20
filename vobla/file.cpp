@@ -31,6 +31,25 @@ TemporaryDirectory::TemporaryDirectory(ScopeOp op) : op_(op) {
 }
 
 TemporaryDirectory::~TemporaryDirectory() {
+  remove_directory();
+}
+
+TemporaryDirectory::TemporaryDirectory(TemporaryDirectory &&rhs)
+  : op_(rhs.op_), path_(std::move(rhs.path_)) {
+  rhs.op_ = ScopeOp::KEEP;
+}
+
+TemporaryDirectory& TemporaryDirectory::operator=(TemporaryDirectory&& rhs) {
+  if (this != &rhs) {
+    remove_directory();
+    op_ = rhs.op_;
+    path_ = std::move(rhs.path_);
+    rhs.op_ = ScopeOp::KEEP;
+  }
+  return *this;
+}
+
+void TemporaryDirectory::remove_directory() {
   if (op_ == ScopeOp::DELETE) {
     boost::system::error_code ec;
     fs::remove_all(path_, ec);
@@ -38,20 +57,6 @@ TemporaryDirectory::~TemporaryDirectory() {
       LOG(WARNING) << "Failed to delete temporary directory: " << ec;
     }
   }
-}
-
-TemporaryDirectory::TemporaryDirectory(TemporaryDirectory &&rhs)
-  : op_(rhs.op_), path_(rhs.path_) {
-  rhs.op_ = ScopeOp::KEEP;
-}
-
-TemporaryDirectory& TemporaryDirectory::operator=(TemporaryDirectory&& rhs) {
-  if (this != &rhs) {
-    op_ = rhs.op_;
-    path_ = rhs.path_;
-    rhs.op_ = ScopeOp::KEEP;
-  }
-  return *this;
 }
 
 }  // namespace vobla

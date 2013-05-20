@@ -61,6 +61,8 @@ class TemporaryDirectory {
   }
 
  private:
+  void remove_directory();
+
   ScopeOp op_;
   string path_;
 
