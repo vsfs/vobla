@@ -37,13 +37,7 @@ MD5Digest::MD5Digest() {
 
 MD5Digest::MD5Digest(const string &buffer) {
   init();
-  update(buffer.data(), buffer.size());
-  final();
-}
-
-MD5Digest::MD5Digest(const char* buffer, size_t size) {
-  init();
-  update(buffer, size);
+  update(buffer);
   final();
 }
 
@@ -54,9 +48,9 @@ void MD5Digest::init() {
   MD5_Init(&context_);
 }
 
-void MD5Digest::update(const char* buffer, size_t size) {
-  CHECK_NOTNULL(buffer);
-  MD5_Update(&context_, buffer, size);
+void MD5Digest::update(const string &buffer) {
+  CHECK(!buffer.empty());
+  MD5_Update(&context_, buffer.data(), buffer.size());
 }
 
 void MD5Digest::final() {
@@ -69,13 +63,7 @@ SHA1Digest::SHA1Digest() {
 
 SHA1Digest::SHA1Digest(const string& buffer) {
   init();
-  update(buffer.data(), buffer.size());
-  final();
-}
-
-SHA1Digest::SHA1Digest(const char* buffer, size_t size) {
-  init();
-  update(buffer, size);
+  update(buffer);
   final();
 }
 
@@ -86,9 +74,9 @@ void SHA1Digest::init() {
   SHA1_Init(&context_);
 }
 
-void SHA1Digest::update(const char* buffer, size_t size) {
-  CHECK_NOTNULL(buffer);
-  SHA1_Update(&context_, buffer, size);
+void SHA1Digest::update(const string& buffer) {
+  CHECK(!buffer.empty());
+  SHA1_Update(&context_, buffer.data(), buffer.size());
 }
 
 void SHA1Digest::final() {

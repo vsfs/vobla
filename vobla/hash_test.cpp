@@ -29,29 +29,23 @@ namespace vobla {
 TEST(HashDigestTest, MD5Create) {
   const string buf("This is a buffer.");
   MD5Digest md5_0(buf);
-  MD5Digest md5_1(buf.data(), buf.size());
-  EXPECT_EQ(md5_0, md5_1);
+  MD5Digest md5_3;
+  md5_3.reset(buf);
+  EXPECT_EQ(md5_3, md5_0);
 
   MD5Digest md5_2("abcdefg\n");
   EXPECT_EQ(md5_2.hexdigest(), "020861c8c3fe177da19a7e9539a5dbac");
-
-  MD5Digest md5_3;
-  md5_3.reset(buf.data(), buf.size());
-  EXPECT_EQ(md5_3, md5_1);
 }
 
 TEST(HashDigestTest, SHA1Create) {
   const string buf("SHA1's buffer");
   SHA1Digest sha1_0(buf);
-  SHA1Digest sha1_1(buf.data(), buf.size());
+  SHA1Digest sha1_1;
+  sha1_1.reset(buf);
   EXPECT_EQ(sha1_0, sha1_1);
 
   SHA1Digest sha1_2("abcdefg\n");
   EXPECT_EQ(sha1_2.hexdigest(), "69bca99b923859f2dc486b55b87f49689b7358c7");
-
-  SHA1Digest sha1_3;
-  sha1_3.reset(buf.data(), buf.size());
-  EXPECT_EQ(sha1_1, sha1_3);
 }
 
 }  // namespace vobla

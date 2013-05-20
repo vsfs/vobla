@@ -55,7 +55,16 @@ class BaseHashDigest {
   /// Copy constractor
   BaseHashDigest(const BaseHashDigest& rhs);
 
+  BaseHashDigest(BaseHashDigest&& rhs) {
+    digest_ = std::move(rhs.digest_);
+  }
+
   BaseHashDigest& operator=(const BaseHashDigest& rhs);
+
+  BaseHashDigest& operator=(BaseHashDigest&& rhs) {
+    digest_ = std::move(rhs.digest_);
+    return *this;
+  }
 
   bool operator<(const BaseHashDigest& rhs) const {
     return digest_ < rhs.digest_;
@@ -66,13 +75,13 @@ class BaseHashDigest {
   }
 
   /// Resets the value of this hash from the new content.
-  virtual void reset(const char* buffer, size_t size);
+  virtual void reset(const std::string& buffer);
 
   /// Initial this digest for feeding data.
   virtual void init() = 0;
 
   /// Feeds data to this hash digest.
-  virtual void update(const char* buffer, size_t size) = 0;
+  virtual void update(const std::string& buffer) = 0;
 
   /// Finalize the data feeding process.
   virtual void final() = 0;
@@ -107,17 +116,11 @@ class MD5Digest : public BaseHashDigest<MD5_CTX, 16> {
   /// Creates a MD5Digest from a string.
   static MD5Digest* create(const std::string& buffer);
 
-  /// Create a MD5Digest from a buffer.
-  static MD5Digest* create(const char* buffer, size_t size);
-
   /// Constructs an empty MD5Digest.
   MD5Digest();
 
   /// Constructs a MD5Digest from a string.
   explicit MD5Digest(const std::string& buffer);
-
-  /// Constructs a MD5Digest from a buffer.
-  MD5Digest(const char* buffer, size_t size);
 
   ~MD5Digest();
 
@@ -125,7 +128,7 @@ class MD5Digest : public BaseHashDigest<MD5_CTX, 16> {
   void init();
 
   /// Updates the content.
-  void update(const char *buffer, size_t size);
+  void update(const std::string& buf);
 
   /**
    * \brief Finalizes the MD5Digest content generation and move the MD5 value
@@ -144,17 +147,11 @@ class SHA1Digest : public BaseHashDigest<SHA_CTX, 20> {
   /// Creates a SHA1Digest from a string.
   static SHA1Digest* create(const std::string &buffer);
 
-  /// Creates a SHA1Digest from a buffer.
-  static SHA1Digest* create(const char *buffer, size_t size);
-
   /// Constructs an empty SHA1Digest.
   SHA1Digest();
 
   /// Constructs a SHA1Digest from a string.
   explicit SHA1Digest(const std::string &buffer);
-
-  /// Constructs a SHA1Digest from a raw buffer.
-  SHA1Digest(const char *buffer, size_t size);
 
   ~SHA1Digest();
 
@@ -162,7 +159,7 @@ class SHA1Digest : public BaseHashDigest<SHA_CTX, 20> {
   void init();
 
   /// Updates the content.
-  void update(const char *buffer, size_t size);
+  void update(const std::string& buffer);
 
   /**
    * \brief Finalizes the SHA1Digest content generation and move the SHA1 value
@@ -189,9 +186,9 @@ BaseHashDigest<Ctx, L>& BaseHashDigest<Ctx, L>::operator=(
 }
 
 template <typename Ctx, size_t L>
-void BaseHashDigest<Ctx, L>::reset(const char* buffer, size_t size) {
+void BaseHashDigest<Ctx, L>::reset(const std::string& buf) {
   init();
-  update(buffer, size);
+  update(buf);
   final();
 }
 
