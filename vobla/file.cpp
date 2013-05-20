@@ -51,6 +51,7 @@ TemporaryDirectory& TemporaryDirectory::operator=(TemporaryDirectory&& rhs) {
     path_ = rhs.path_;
     rhs.op_ = ScopeOp::KEEP;
   }
+  return *this;
 }
 
 }  // namespace vobla
