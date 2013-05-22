@@ -321,4 +321,18 @@ TEST(ConsistentHashMapTest, TestNumPartitionsPerNode) {
   EXPECT_EQ(4u, test_map.num_partitions_per_node());
 }
 
+TEST(ConsistentHashMapTest, TestSwapTwoMaps) {
+  TestMap map0 = { {1, "node1"}, {10, "node2"} };
+  TestMap map1;
+  map0.swap(map1);
+
+  EXPECT_TRUE(map0.empty());
+
+  size_t sep;
+  string node;
+  EXPECT_TRUE(map1.get(5, &sep, &node).ok());
+  EXPECT_EQ(1u, sep);
+  EXPECT_EQ("node1", node);
+}
+
 }  // namespace vobla

@@ -24,6 +24,8 @@
 #define VOBLA_CONSISTENT_HASH_MAP_H_
 
 #include <glog/logging.h>
+#include <algorithm>
+#include <initializer_list>
 #include <limits>
 #include <map>
 #include <stdexcept>
@@ -79,6 +81,10 @@ class ConsistentHashMap {
 
   ConsistentHashMap(const ConsistentHashMap &rhs) {
     *this = rhs;
+  }
+
+  explicit ConsistentHashMap(
+      std::initializer_list<typename HashMap::value_type> il) : ring_(il) {
   }
 
   ~ConsistentHashMap() = default;
@@ -402,6 +408,10 @@ class ConsistentHashMap {
 
   const_iterator end() const {
     return ring_.end();
+  }
+
+  void swap(ConsistentHashMap& rhs) {
+    ring_.swap(rhs.ring_);
   }
 
  private:
