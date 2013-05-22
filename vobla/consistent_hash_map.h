@@ -25,7 +25,7 @@
 
 #include <glog/logging.h>
 #include <algorithm>
-#include <initializer_list>
+#include <initializer_list>  // NOLINT
 #include <limits>
 #include <map>
 #include <stdexcept>
@@ -83,7 +83,7 @@ class ConsistentHashMap {
     *this = rhs;
   }
 
-  explicit ConsistentHashMap(
+  /* explicit */ ConsistentHashMap(
       std::initializer_list<typename HashMap::value_type> il) : ring_(il) {
   }
 
