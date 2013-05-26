@@ -37,7 +37,7 @@ class Clock;
  */
 class TimerInterface {
  public:
-  TimerInterface();
+  TimerInterface() = default;
 
   virtual ~TimerInterface();
 

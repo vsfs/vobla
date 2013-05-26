@@ -27,23 +27,20 @@
 
 namespace vobla {
 
-static double kMilliSecond = 1000000;
-
-TimerInterface::TimerInterface() {
-}
+static double kMicroSecond = 1000000;
 
 TimerInterface::~TimerInterface() {
 }
 
 double TimerInterface::get_in_second() const {
-  return get_in_ms() / kMilliSecond;
+  return get_in_ms() / kMicroSecond;
 }
 
 namespace {
 
 // Calculate the interval between start and end time.
 double get_delta_time(const timeval& start, const timeval& end) {
-  return (end.tv_sec - start.tv_sec) * kMilliSecond
+  return (end.tv_sec - start.tv_sec) * kMicroSecond
       + (end.tv_usec - start.tv_usec);
 }
 
@@ -68,7 +65,7 @@ void Timer::stop() {
 }
 
 double Timer::get_in_ms() const {
-  return (end_ - start_) * kMilliSecond;
+  return (end_ - start_) * kMicroSecond;
 }
 
 CumulatedTimer::CumulatedTimer() : cumulated_milli_seconds_(0) {
@@ -118,7 +115,7 @@ double UserAndSysUsageTimer::user_time_in_ms() const {
 }
 
 double UserAndSysUsageTimer::user_time_in_second() const {
-  return user_time_in_ms() / kMilliSecond;
+  return user_time_in_ms() / kMicroSecond;
 }
 
 double UserAndSysUsageTimer::sys_time_in_ms() const {
@@ -126,7 +123,7 @@ double UserAndSysUsageTimer::sys_time_in_ms() const {
 }
 
 double UserAndSysUsageTimer::sys_time_in_second() const {
-  return sys_time_in_ms() / kMilliSecond;
+  return sys_time_in_ms() / kMicroSecond;
 }
 
 }  // namespace vobla

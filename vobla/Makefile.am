@@ -57,6 +57,7 @@ TESTS = \
   range_test \
   status_test \
   thread_pool_test \
+  timer_test \
   traits_test \
   unique_resource_test
 
@@ -71,5 +72,6 @@ map_util_test_SOURCES = map_util_test.cpp
 range_test_SOURCES = range_test.cpp
 status_test_SOURCES = status_test.cpp
 thread_pool_test_SOURCES = thread_pool_test.cpp
+timer_test_SOURCES = timer_test.cpp
 traits_test_SOURCES = traits_test.cpp
 unique_resource_test_SOURCES = unique_resource_test.cpp
