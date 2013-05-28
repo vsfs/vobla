@@ -52,7 +52,7 @@ TEST(ConsistentHashMapTest, TestInsert) {
   memcpy(&hash_value1, hash1.digest(), sizeof(size_t));
   test_map.insert(hash_value1, node1);
   EXPECT_EQ(4u, test_map.num_partitions());
-  test_map.get_partitions(&partitions);
+  partitions = test_map.get_partitions();
   EXPECT_EQ(4u, partitions.size());
 
   const string node2("node2");
@@ -61,8 +61,7 @@ TEST(ConsistentHashMapTest, TestInsert) {
   memcpy(&hash_value2, hash2.digest(), sizeof(size_t));
   test_map.insert(hash_value2, node2);
   EXPECT_EQ(8u, test_map.num_partitions());
-  partitions.clear();
-  test_map.get_partitions(&partitions);
+  partitions = test_map.get_partitions();
   EXPECT_EQ(8u, partitions.size());
 }
 
@@ -96,8 +95,7 @@ TEST(ConsistentHashMapTest, TestGetPartitionOneNode) {
   for (unsigned int i = 0; i < test_map.num_partitions(); i++) {
     expected_parts.push_back(range*i);
   }
-  vector<size_t> actual_parts;
-  test_map.get_partitions(&actual_parts);
+  vector<size_t> actual_parts = test_map.get_partitions();
   EXPECT_THAT(actual_parts, ContainerEq(expected_parts));
 }
 
@@ -111,8 +109,7 @@ TEST(ConsistentHashMapTest, TestGetRange) {
   for (unsigned int i = 0; i < test_map.num_partitions(); i++) {
     expected_parts.push_back(range*i);
   }
-  vector<size_t> actual_parts;
-  test_map.get_partitions(&actual_parts);
+  vector<size_t> actual_parts = test_map.get_partitions();
   EXPECT_THAT(actual_parts, ContainerEq(expected_parts));
 
   Range<size_t> range1(0, range - 1);
@@ -193,8 +190,7 @@ TEST(ConsistentHashMapTest, TestGetValues) {
     test_map.insert(i * 1000, node_name);
     expected_nodes.push_back(node_name);
   }
-  vector<string> actual_nodes;
-  test_map.get_values(&actual_nodes);
+  vector<string> actual_nodes = test_map.get_values();
   EXPECT_THAT(actual_nodes, ContainerEq(expected_nodes));
 }
 
@@ -265,12 +261,10 @@ TEST(ConsistentHashMapTest, TestCopyConstructor) {
   for (int i = 0; i < 10; i++) {
     test_map.insert(0*100, string("node") + to_string(i));
   }
-  vector<TestMap::key_type> partitions;
-  test_map.get_partitions(&partitions);
+  vector<TestMap::key_type> partitions = test_map.get_partitions();
 
   TestMap copy_map = test_map;
-  vector<TestMap::key_type> copy_partitions;
-  copy_map.get_partitions(&copy_partitions);
+  vector<TestMap::key_type> copy_partitions = copy_map.get_partitions();
   EXPECT_EQ(partitions, copy_partitions);
 }
 

@@ -178,22 +178,23 @@ class ConsistentHashMap {
    * \brief Return the partition starting points.
    * \param[out] partitions A vector to stores the partitions;
    */
-  void get_partitions(vector<key_type> *partitions) const {
-    CHECK_NOTNULL(partitions);
-    partitions->reserve(ring_.size());
-    append_keys_from_map(ring_, partitions);
+  vector<key_type> get_partitions() const {
+    vector<key_type> partitions;
+    append_keys_from_map(ring_, &partitions);
+    return partitions;
   }
 
   /**
    * \brief Gets all values.
    * \TODO(lxu): Use iterator to avoid memory copies.
    */
-  void get_values(vector<value_type> *values) const {
-    CHECK_NOTNULL(values);
+  vector<value_type> get_values() const {
+    vector<value_type> values;
     auto iter = ring_.begin();
     for (size_t i = 0; i < num_nodes(); ++i, ++iter) {
-      values->push_back(iter->second);
+      values.push_back(iter->second);
     }
+    return values;
   }
 
   /**
