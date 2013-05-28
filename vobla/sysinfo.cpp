@@ -48,13 +48,13 @@ double SysInfo::get_cpu_freq() {
   FILE *fp;
   char buffer[BUFSIZE];
 #if defined(linux) || defined(__linux__)
-  if ((fp = fopen("/proc/cpuinfo", "r")) == NULL) {
+  if ((fp = fopen("/proc/cpuinfo", "r")) == nullptr) {
     perror("get_cpu_freq: Can not get cpu information");
     return 0;
   }
 
   for (int i = 6; i > 0; i--) {
-    if (fgets(buffer, BUFSIZE-1, fp) == NULL) {
+    if (fgets(buffer, BUFSIZE-1, fp) == nullptr) {
       perror("get_cpu_freq: can not get cpu information");
       fclose(fp);
       return 0;
@@ -69,16 +69,16 @@ double SysInfo::get_cpu_freq() {
   cpufreq_ *= 1000000;
 #elif defined(__APPLE__) || defined(__NetBSD__) || defined(__FreeBSD__)
 
-  if ((fp = popen("sysctl -a", "r")) == NULL) {
+  if ((fp = popen("sysctl -a", "r")) == nullptr) {
     perror("cpu_freq(): get cpu frequency");
     return 0;
   }
 
-  while (fgets(buffer, BUFSIZE-1, fp) != NULL) {
+  while (fgets(buffer, BUFSIZE-1, fp) != nullptr) {
 #if defined(__APPLE__)
-    if (strnstr(buffer, "hw.cpufrequency:", BUFSIZE) == NULL)
+    if (strnstr(buffer, "hw.cpufrequency:", BUFSIZE) == nullptr)
 #else
-    if (strnstr(buffer, "dev.cpu.0.freq:", BUFSIZE) == NULL)
+    if (strnstr(buffer, "dev.cpu.0.freq:", BUFSIZE) == nullptr)
 #endif /* FreeBSD & NetBSD */
       continue;
 
@@ -133,7 +133,7 @@ pid_t SysInfo::get_parent_pid(pid_t pid) {
   struct kinfo_proc info;
   size_t length = sizeof(struct kinfo_proc);
   int mib[4] = { CTL_KERN, KERN_PROC, KERN_PROC_PID, pid };
-  if (sysctl(mib, 4, &info, &length, NULL, 0) < 0)
+  if (sysctl(mib, 4, &info, &length, nullptr, 0) < 0)
     return -1;
   if (length == 0)
     return -1;
@@ -145,7 +145,7 @@ pid_t SysInfo::get_parent_pid(pid_t pid) {
   memset(proc_filepath, 0, BUFSIZE);
   snprintf(proc_filepath, BUFSIZE, "/proc/%d/status", pid);
   FILE * fp = fopen(proc_filepath, "r");
-  while (fgets(buffer, BUFSIZE, fp) != NULL) {
+  while (fgets(buffer, BUFSIZE, fp) != nullptr) {
     if (strncmp(buffer, "PPid:", 5) == 0) {
       sscanf(buffer, "PPid: %d", &parent);  // NOLINT
       break;
@@ -176,7 +176,7 @@ int SysInfo::get_process_name(pid_t pid, string *name) {
     perror("get_process_name: failed to open /proc/<pid>/cmdline");
     return -1;
   }
-  if (fgets(line, BUFSIZE, fp) == NULL) {
+  if (fgets(line, BUFSIZE, fp) == nullptr) {
     perror("get_process_name: failed to extract cmdline from "
            "/proc/<pid>/cmdline");
     fclose(fp);

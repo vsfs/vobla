@@ -39,7 +39,7 @@ class RealClock : public Clock {
 
 double RealClock::now() {
   timeval curtime;
-  gettimeofday(&curtime, NULL);
+  gettimeofday(&curtime, nullptr);
   return curtime.tv_sec + static_cast<double>(curtime.tv_usec) / 1000000;
 }
 

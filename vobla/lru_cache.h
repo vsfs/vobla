@@ -131,7 +131,7 @@ class LRUCache {
    */
   pointer_type victim() {
     if (lru_.empty()) {
-      return NULL;
+      return nullptr;
     }
     pointer_type ret = lru_.front();
     lru_.pop_front();

@@ -83,7 +83,7 @@ find_pointer_or_null(const Container& container,
   if (it != container.end()) {
     return it->second;
   }
-  return NULL;
+  return nullptr;
 }
 
 template <typename Container>
@@ -101,7 +101,7 @@ find_pointer_or_null(Map &map,  // NOLINT
     const typename Map::value_type::first_type &key) {
   auto it = map.find(key);
   if (it == map.end()) {
-    return NULL;
+    return nullptr;
   }
   return it->second;
 }

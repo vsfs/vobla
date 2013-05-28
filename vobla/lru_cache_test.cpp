@@ -61,7 +61,7 @@ TEST(LRUCacheTest, TestCheckFull) {
 
     if (lru.full()) {
       unique_ptr<CacheItem> item(lru.victim());
-      ASSERT_TRUE(item != NULL);
+      ASSERT_TRUE(item != nullptr);
       EXPECT_EQ(static_cast<int>(i-32), item->cache_key());
     }
     lru.insert(i, new CacheItem(i, i));
