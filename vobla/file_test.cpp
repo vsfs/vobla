@@ -15,14 +15,97 @@
  */
 
 #include <boost/filesystem.hpp>
+#include <fcntl.h>
 #include <gtest/gtest.h>
+#include <algorithm>
+#include <cerrno>
+#include <memory>
 #include <string>
+#include <vector>
 #include "vobla/file.h"
 
 namespace fs = boost::filesystem;
 using std::string;
+using std::unique_ptr;
+using std::vector;
 
 namespace vobla {
+
+class FileTest : public ::testing::Test {
+ protected:
+  void SetUp() {
+    dir_.reset(new TemporaryDirectory);
+    dirpath_ = dir_->path();
+  }
+
+  unique_ptr<TemporaryDirectory> dir_;
+  string dirpath_;
+};
+
+TEST_F(FileTest, TestConstructor) {
+  string path = dirpath_ + "/test";
+  File file(path, O_WRONLY | O_CREAT);
+  EXPECT_EQ(-1, file.fd());
+  auto status = file.open();
+  EXPECT_TRUE(status.ok());
+  EXPECT_GT(file.fd(), 2);  // FD is larger than stdin/stdout/stderr.
+
+  // Construct an empty file object.
+  File empty;
+  EXPECT_EQ(-1, empty.fd());
+}
+
+TEST_F(FileTest, TestOpenFromStaticMethod) {
+  File file = File::open(dirpath_ + "/test", O_CREAT);
+  EXPECT_GT(file.fd(), 2);
+
+  // Open an non-existed file for reading.
+  auto file1 = File::open(dirpath_ + "/nonexited", O_RDONLY);
+  EXPECT_EQ(file1.fd(), -1);
+}
+
+TEST_F(FileTest, TestMoveFileFd) {
+  File file = File::open(dirpath_ + "/test", O_CREAT);
+  int fd = file.fd();
+  File other = std::move(file);
+  EXPECT_EQ(fd, other.fd());
+  EXPECT_EQ(-1, file.fd());
+
+  File one_more;
+  one_more = std::move(other);
+  EXPECT_EQ(fd, one_more.fd());
+  EXPECT_EQ(-1, other.fd());
+}
+
+TEST_F(FileTest, TestOpenFile) {
+  File file1(dirpath_ + "/file1", O_CREAT);
+  EXPECT_TRUE(file1.open().ok());
+
+  // A file should not be opened multiple times.
+  EXPECT_FALSE(file1.open().ok());
+
+  File file2(dirpath_ + "/file2", O_WRONLY);
+  auto status = file2.open();
+  EXPECT_FALSE(status.ok());
+  EXPECT_EQ(-ENOENT, status.error());
+
+  File file3;  // No path was given.
+  EXPECT_FALSE(file3.open().ok());
+}
+
+TEST_F(FileTest, TestSwap) {
+  File file1(dirpath_ + "/file1", O_CREAT);
+  int fd = file1.fd();
+  File file2;
+  file1.swap(file2);
+  EXPECT_EQ(fd, file2.fd());
+  EXPECT_EQ(-1, file1.fd());
+
+  File file3;
+  std::swap(file2, file3);
+  EXPECT_EQ(-1, file2.fd());
+  EXPECT_EQ(fd, file3.fd());
+}
 
 TEST(TemporaryDirectoryTest, UseDeleteScopeOp) {
   string tmp_path;

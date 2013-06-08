@@ -16,13 +16,92 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
+#include <fcntl.h>
 #include <glog/logging.h>
+#include <algorithm>
+#include <cerrno>
+#include <cstring>
 #include <string>
 #include "vobla/file.h"
 
 namespace fs = boost::filesystem;
 
 namespace vobla {
+
+File File::open(const string& path, int flags, mode_t mode) {
+  File tmp(path, flags, mode);
+  auto status = tmp.open();
+  if (!status.ok()) {
+    LOG(ERROR) << "Failed to open file: " << status.message();
+  }
+  return tmp;
+}
+
+File::File() : fd_(-1) {
+}
+
+File::File(const string& path, int flags, mode_t mode)
+    : fd_(-1), path_(path), flags_(flags), mode_(mode) {
+}
+
+File::File(File&& rhs) : fd_(rhs.release()) {
+}
+
+File::~File() {
+  this->close();
+}
+
+File& File::operator=(File&& rhs) {
+  fd_ = rhs.release();
+  return *this;
+}
+
+int File::fd() const {
+  return fd_;
+}
+
+Status File::open() {
+  if (fd_ >= 0) {
+    return Status(-1, "The file has already been opened.");
+  }
+  if (path_.empty()) {
+    return Status(-1, "The file path is empty.");
+  }
+
+  fd_ = ::open(path_.c_str(), flags_, mode_);
+  if (fd_ == -1) {
+    return Status(-errno, strerror(errno));
+  }
+  return Status::OK;
+}
+
+Status File::close() {
+  if (fd_ < 0) {
+    return Status::OK;
+  }
+  if (::close(fd_) < 0) {
+    return Status(-errno, strerror(errno));
+  }
+  release();
+  return Status::OK;
+}
+
+int File::release() {
+  int ret = fd_;
+  fd_ = -1;
+  return ret;
+}
+
+void File::swap(File& other) {
+  std::swap(fd_, other.fd_);
+  std::swap(path_, other.path_);
+  std::swap(flags_, other.flags_);
+  std::swap(mode_, other.mode_);
+}
+
+void swap(File& lhs, File& rhs) {
+  lhs.swap(rhs);
+}
 
 TemporaryDirectory::TemporaryDirectory(ScopeOp op) : op_(op) {
   fs::path tmp_path = fs::temp_directory_path() / fs::unique_path();
