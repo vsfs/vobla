@@ -35,8 +35,7 @@ namespace vobla {
  *
  * Usage:
  * ~~~~~~~~~{cpp}
- *
- * auto file = File::open("/foo/bar", O_WRONLY);
+ * File file = File::open("/foo/bar", O_WRONLY);
  * if (file.fd() == -1) {
  *    LOG(ERROR) << "Failed to open file.";
  *    // Error handling...
