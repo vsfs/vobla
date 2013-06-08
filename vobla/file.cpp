@@ -16,10 +16,10 @@
 
 #include <boost/filesystem.hpp>
 #include <boost/system/error_code.hpp>
-#include <errno.h>
 #include <fcntl.h>
 #include <glog/logging.h>
 #include <algorithm>
+#include <cerrno>
 #include <cstring>
 #include <string>
 #include "vobla/file.h"
