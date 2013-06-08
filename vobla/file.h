@@ -29,11 +29,29 @@ namespace vobla {
 /**
  * \class File "vobla/file.h"
  * \brief The representation of an opened file.
+ *
+ * It exclusively owns the file descriptor of the opened file. When the File
+ * object destroys, the file descriptor that it owns is closed automatically.
+ *
+ * Usage:
+ * ~~~~~~~~~{cpp}
+ *
+ * auto file = File::open("/foo/bar", O_WRONLY);
+ * if (file.fd() == -1) {
+ *    LOG(ERROR) << "Failed to open file.";
+ *    // Error handling...
+ * }
+ * ::write(file.fd(), buf, size);
+ * ...
+ * ~~~~~~~~~
  */
 class File {
  public:
   /**
    * \brief Open a file and return the File object.
+   *
+   * \note The caller needs to check the fd(), if `fd == -1`, then there is
+   * some error occurred.
    */
   static File open(const string& path, int flags, mode_t mode = 0644);
 
