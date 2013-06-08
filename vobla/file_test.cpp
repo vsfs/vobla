@@ -15,14 +15,50 @@
  */
 
 #include <boost/filesystem.hpp>
+#include <fcntl.h>
 #include <gtest/gtest.h>
+#include <memory>
 #include <string>
 #include "vobla/file.h"
 
 namespace fs = boost::filesystem;
 using std::string;
+using std::unique_ptr;
 
 namespace vobla {
+
+class FileTest : public ::testing::Test {
+ protected:
+  void SetUp() {
+    dir_.reset(new TemporaryDirectory);
+    dirpath_ = dir_->path();
+  }
+
+  unique_ptr<TemporaryDirectory> dir_;
+  string dirpath_;
+};
+
+TEST_F(FileTest, TestConstructor) {
+  string path = dirpath_ + "/test";
+  File file(path, O_WRONLY | O_CREAT);
+  EXPECT_EQ(-1, file.fd());
+  auto status = file.open();
+  EXPECT_TRUE(status.ok());
+  EXPECT_GT(file.fd(), 2);  // FD is larger than stdin/stdout/stderr.
+}
+
+TEST_F(FileTest, TestOpenFromStaticMethod) {
+  File file = File::open(dirpath_ + "/test", O_CREAT);
+  EXPECT_GT(file.fd(), 2);
+}
+
+TEST_F(FileTest, TestMoveFileFd) {
+  File file = File::open(dirpath_ + "/test", O_CREAT);
+  int fd = file.fd();
+  File other = std::move(file);
+  EXPECT_EQ(fd, other.fd());
+  EXPECT_EQ(-1, file.fd());
+}
 
 TEST(TemporaryDirectoryTest, UseDeleteScopeOp) {
   string tmp_path;

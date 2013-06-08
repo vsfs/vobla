@@ -17,15 +17,81 @@
 #ifndef VOBLA_FILE_H_
 #define VOBLA_FILE_H_
 
+#include <algorithm>
 #include <string>
 #include "vobla/macros.h"
+#include "vobla/status.h"
 
 using std::string;
 
 namespace vobla {
 
+/**
+ * \class File "vobla/file.h"
+ * \brief The representation of an opened file.
+ */
 class File {
+ public:
+  /**
+   * \brief Open a file and return the File object.
+   */
+  static File open(const string& path, int flags, mode_t mode = 0644);
+
+  /// Construct a new file object.
+  File();
+
+  /**
+   * \brief Constructs an File object with the file path and open flags.
+   *
+   * It does not open file in the constructor. You need to call File::open()
+   * later to actually open the file.
+   */
+  File(const string& path, int flags, mode_t mode = 0644);
+
+  /// Move constructor.
+  File(File&&);
+
+  /// Move assignment operator.
+  File& operator=(File&& rhs);
+
+  /// Destruct the file object.
+  virtual ~File();
+
+  /**
+   * \brief Gets the file descriptor of the file.
+   * \return -1 if the file was closed or the open operation failed.
+   */
+  int fd() const;
+
+  /// Opens a file without mode.
+  Status open();
+
+  /// Close the file and release the file descriptor.
+  Status close();
+
+  /// Swap another file with this file.
+  void swap(File& other);
+
+  /// Returns the file descriptor and release the ownership.
+  int release();
+
+ private:
+  /// File Descriptor.
+  int fd_;
+
+  /// The directory of this path.
+  string path_;
+
+  /// File open flags.
+  int flags_;
+
+  /// File open mode.
+  mode_t mode_;
+
+  DISALLOW_COPY_AND_ASSIGN(File);
 };
+
+void swap(File& lhs, File& rhs);
 
 class TemporaryFile : public File {
 };
