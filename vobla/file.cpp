@@ -52,7 +52,7 @@ File::~File() {
 }
 
 File& File::operator=(File&& rhs) {
-  *this = std::move(rhs);
+  fd_ = rhs.release();
   return *this;
 }
 
@@ -94,6 +94,9 @@ int File::release() {
 
 void File::swap(File& other) {
   std::swap(fd_, other.fd_);
+  std::swap(path_, other.path_);
+  std::swap(flags_, other.flags_);
+  std::swap(mode_, other.mode_);
 }
 
 void swap(File& lhs, File& rhs) {
