@@ -103,6 +103,18 @@ void swap(File& lhs, File& rhs) {
   lhs.swap(rhs);
 }
 
+
+TemporaryFile::TemporaryFile(ScopeOp op) : op_(op) {
+  fs::path tmp_path = fs::temp_directory_path() / fs::unique_path();
+  path_ = tmp_path.string();
+}
+
+TemporaryFile::~TemporaryFile() {
+  if (op_ == ScopeOp::DELETE) {
+    fs::remove(path_);
+  }
+}
+
 TemporaryDirectory::TemporaryDirectory(ScopeOp op) : op_(op) {
   fs::path tmp_path = fs::temp_directory_path() / fs::unique_path();
   path_ = tmp_path.string();

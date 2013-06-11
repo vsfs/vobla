@@ -110,7 +110,37 @@ class File {
 
 void swap(File& lhs, File& rhs);
 
+/**
+ * \class TemporaryFile "vobla/file.h"
+ * \brief Temporary file.
+ *
+ * Usage:
+ * ~~~~~~~~~{cpp}
+ * TemporaryFile tmpfile;
+ * FooDB db(tmpfile.path());  // Use this temporary file path.
+ * ~~~~~~~~~
+ */
 class TemporaryFile : public File {
+ public:
+  enum class ScopeOp {
+    /// Keeps the temporary file after this object being destructed.
+    KEEP,
+    /// Deletes the temporary file when it being destructed.
+    DELETE
+  };
+
+  explicit TemporaryFile(ScopeOp op = ScopeOp::DELETE);
+
+  ~TemporaryFile();
+
+  const string& path() const {
+    return path_;
+  }
+
+ private:
+  ScopeOp op_;
+
+  string path_;
 };
 
 /**
