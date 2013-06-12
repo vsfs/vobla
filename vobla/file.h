@@ -117,7 +117,7 @@ void swap(File& lhs, File& rhs);
  * Usage:
  * ~~~~~~~~~{cpp}
  * TemporaryFile tmpfile;
- * FooDB db(tmpfile.path());  // Use this temporary file path.
+ * FooDB test_db(tmpfile.path());  // Use this temporary file path.
  * ~~~~~~~~~
  */
 class TemporaryFile : public File {
