@@ -107,6 +107,36 @@ TEST_F(FileTest, TestSwap) {
   EXPECT_EQ(fd, file3.fd());
 }
 
+TEST(TemporaryFileTest, UseDeleteScopeOp) {
+  string tmpfile_path;
+  {
+    TemporaryFile tmpfile;
+    tmpfile_path = tmpfile.path();
+    EXPECT_FALSE(fs::exists(tmpfile_path));
+    File file = File::open(tmpfile_path, O_CREAT);
+    EXPECT_GT(file.fd(), 0);
+    EXPECT_TRUE(fs::exists(tmpfile_path));
+
+    file.close();
+  }
+
+  // This file is automatically deleted after tmpfile going out of scope.
+  EXPECT_FALSE(fs::exists(tmpfile_path));
+}
+
+TEST(TemporaryFileTest, UseKeepScopeOp) {
+  string tmpfile_path;
+  {
+    TemporaryFile tmpfile(TemporaryFile::ScopeOp::KEEP);
+    tmpfile_path = tmpfile.path();
+    {
+      File file = File::open(tmpfile_path, O_CREAT);
+    }
+    EXPECT_TRUE(fs::exists(tmpfile_path));
+  }
+  EXPECT_TRUE(fs::exists(tmpfile_path));
+}
+
 TEST(TemporaryDirectoryTest, UseDeleteScopeOp) {
   string tmp_path;
   {
