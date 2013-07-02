@@ -195,4 +195,61 @@ int SysInfo::get_process_name(pid_t pid, string *name) {
   return 0;
 }
 
+off_t SysInfo::get_block_device_size(const string &dev_path) {
+  off_t num_bytes = 0;
+
+  int fd;
+  fd = open(dev_path.c_str(), O_RDONLY);
+  if (fd < 0) {
+    fprintf(stderr, "SysInfo::get_block_device_size: failed to open device [%s]"
+            ": %s\n", dev_path.c_str(), strerror(errno));
+    return -1;
+  }
+
+#if defined(linux)
+  if (ioctl(fd, BLKGETSIZE64, &num_bytes) < 0) {
+    fprintf(stderr, "SysInfo::get_block_device_size: iotcl BLKGETSIZE64 %s"
+            ": %s\n", dev_path.c_str(), strerror(errno));
+    return -1;
+  }
+#elif defined(__APPLE__)
+  uint32_t blocksize;
+  uint64_t blockcount;
+  if (ioctl(fd, DKIOCGETBLOCKSIZE, &blocksize) < 0) {
+    fprintf(stderr, "SysInfo::get_block_device_size: "
+            "ioctl DKIOCGETBLOCKSIZE %s: %s\n", dev_path.c_str(),
+            strerror(errno));
+    return -1;
+  }
+  if (ioctl(fd, DKIOCGETBLOCKCOUNT, &blockcount) < 0) {
+    fprintf(stderr, "SysInfo::get_block_device_size: "
+            "ioctl DKIOGETBLOCKCOUNT %s: %s\n", dev_path.c_str(),
+            strerror(errno));
+    return -1;
+  }
+#else
+  LOG(FATAL) << "Not implemented.";
+#endif
+
+  close(fd);
+  return num_bytes;
+}
+
+off_t SysInfo::get_size(const string &path) {
+  struct stat stbuf;
+  if (stat(path.c_str(), &stbuf) < 0) {
+    fprintf(stderr, "SysInfo::get_size(): stat file %s: %s\n",
+            path.c_str(), strerror(errno));
+    return -1;
+  }
+ if (S_ISREG(stbuf.st_mode)) {
+    return stbuf.st_size;
+  } else if (S_ISBLK(stbuf.st_mode)) {
+    return get_block_device_size(path);
+  } else {
+    LOG(FATAL) << "Unsupport file type: " << stbuf.st_mode;
+  }
+  return -1;
+}
+
 }  // namespace vobla

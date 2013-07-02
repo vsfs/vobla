@@ -57,6 +57,23 @@ class SysInfo {
    */
   static int get_process_name(pid_t pid, std::string* name);
 
+  /**
+   * \brief Get the size of the given block device.
+   *
+   * \param[in] dev_path the path of the block device.
+   * \return the number of bytes of this block device. Returns -1 if an error
+   * occurred.
+   */
+  static off_t get_block_device_size(const std::string &dev_path);
+
+  /**
+   * \brief Get the actual size of the file or device.
+   *
+   * If 'path' is a regular file, returns the file size. Otherwise, if it is a
+   * block device, returns the device's size.
+   */
+  static off_t get_size(const std::string& path);
+
  private:
   DISALLOW_IMPLICIT_CONSTRUCTORS(SysInfo);
 };
