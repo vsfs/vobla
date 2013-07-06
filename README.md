@@ -54,3 +54,11 @@ $ make check
 $ make api
 $ open api/html/index.html  # On MacOSX
 ~~~~~~~~~~~~
+
+### Usage
+
+~~~~~~~~~~~~{.sh}
+$ export CXXFLAGS=-I/path/to/vobla
+$ export LDFLAGS=-L/path/to/vobla/vobla
+$ g++ $CXXFLAGS $LDFLAGS -lvobla -o foo
+~~~~~~~~~~~~
