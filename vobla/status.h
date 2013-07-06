@@ -13,10 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-/**
- * \file vobla/status.h
- * \brief Status -- encapsure both error code and error message.
- */
 
 #ifndef VOBLA_STATUS_H_
 #define VOBLA_STATUS_H_
@@ -26,10 +22,10 @@
 namespace vobla {
 
 /**
- * \class Status
+ * \class Status "vobla/status.h"
  * \brief encapure both error code and error message.
  *
- * It provides more informations with passing return code around.
+ * It provides more information with passing returning code around.
  * It is prefered to be used as return value.
  *
  * The error code 0 is for successful.
@@ -81,12 +77,16 @@ class Status {
   /// Returns true if two status objects have same error numbers and messages.
   bool operator==(const Status &rhs) const;
 
+  /// Returns true if two status objects are not equal.
   bool operator!=(const Status &rhs) const {
     return !(*this == rhs);
   }
 
  private:
+  /// Returning code. 0 for success.
   int code_;
+
+  /// Error message.
   std::string message_;
 };
 

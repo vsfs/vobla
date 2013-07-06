@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * \file unique_resource.h
- * \brief Auto-releasing resource.
- */
-
 #ifndef VOBLA_UNIQUE_RESOURCE_H_
 #define VOBLA_UNIQUE_RESOURCE_H_
 
@@ -52,27 +47,39 @@ class Resource {
  * Similar works are:
  *   - std::unique_ptr
  *   - std::lock_guard
+ *
+ * \note It is not thread-safe.
  */
 template <typename R>
 class UniqueResource {
  public:
   typedef R value_type;
 
+  /// Constructs an empty UniqueResource.
   UniqueResource() : value_(nullptr) {
   }
 
+  /**
+   * \brief Constructs an UniqueResource with the given resource.
+   * \param resource the resource object, which can be nullptr.
+   */
   explicit UniqueResource(value_type* resource) : value_(resource) {
     if (value_) {
       value_->acquire();
     }
   }
 
+  /// Destructs UniqueResource and releases the resource if any.
   ~UniqueResource() {
     if (value_) {
       value_->release();
     }
   }
 
+  /**
+   * \brief Resets the resource to a new value. The old resource, if exists,
+   * will be released first.
+   */
   void reset(value_type* new_value) {
     if (value_ && value_ != new_value) {
       value_->release();
@@ -81,6 +88,11 @@ class UniqueResource {
     if (value_) {
       value_->acquire();
     }
+  }
+
+  /// Returns the pointer to the resource managed by this UniqueResource.
+  value_type* resource() const {
+    return value_;
   }
 
  private:
