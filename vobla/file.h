@@ -17,9 +17,9 @@
 #ifndef VOBLA_FILE_H_
 #define VOBLA_FILE_H_
 
+#include <boost/utility.hpp>
 #include <algorithm>
 #include <string>
-#include "vobla/macros.h"
 #include "vobla/status.h"
 
 using std::string;
@@ -44,7 +44,7 @@ namespace vobla {
  * ...
  * ~~~~~~~~~
  */
-class File {
+class File : boost::noncopyable {
  public:
   /**
    * \brief Open a file and return the File object.
@@ -104,8 +104,6 @@ class File {
 
   /// File open mode.
   mode_t mode_;
-
-  DISALLOW_COPY_AND_ASSIGN(File);
 };
 
 void swap(File& lhs, File& rhs);
@@ -129,10 +127,13 @@ class TemporaryFile : public File {
     DELETE
   };
 
+  /// Constructor of a TemporaryFile.
   explicit TemporaryFile(ScopeOp op = ScopeOp::DELETE);
 
-  ~TemporaryFile();
+  /// Destructor.
+  virtual ~TemporaryFile();
 
+  /// Returns the path of this temporary file.
   const string& path() const {
     return path_;
   }
@@ -149,7 +150,7 @@ class TemporaryFile : public File {
  * By default (op_ == ScopeOp::DELETE), the temporary directory will be
  * recursively deleted when this object being destructs.
  */
-class TemporaryDirectory {
+class TemporaryDirectory : boost::noncopyable {
  public:
   enum class ScopeOp {
     /// Keeps the temporary directory after this object being destructed.
@@ -161,7 +162,8 @@ class TemporaryDirectory {
   // TODO(eddyxu): add prefix as parameters.
   explicit TemporaryDirectory(ScopeOp op = ScopeOp::DELETE);
 
-  ~TemporaryDirectory();
+  /// Destructor of TemporaryDirectory.
+  virtual ~TemporaryDirectory();
 
   /// Move constructor
   TemporaryDirectory(TemporaryDirectory&& rhs);
@@ -174,12 +176,11 @@ class TemporaryDirectory {
   }
 
  private:
+  /// Removes the directory recursively.
   void remove_directory();
 
   ScopeOp op_;
   string path_;
-
-  DISALLOW_COPY_AND_ASSIGN(TemporaryDirectory);
 };
 
 }  // namespace vobla
