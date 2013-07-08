@@ -22,8 +22,8 @@
 #ifndef VOBLA_TIMER_H_
 #define VOBLA_TIMER_H_
 
+#include <boost/utility.hpp>
 #include <memory>
-#include "vobla/macros.h"
 
 struct rusage;
 
@@ -35,7 +35,7 @@ class Clock;
  * \class TimerInterface
  * \brief defines the interface required by a timer
  */
-class TimerInterface {
+class TimerInterface : boost::noncopyable {
  public:
   TimerInterface() = default;
 
@@ -52,9 +52,6 @@ class TimerInterface {
 
   /// Gets the time consumed in seconds.
   virtual double get_in_second() const;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TimerInterface);
 };
 
 /**

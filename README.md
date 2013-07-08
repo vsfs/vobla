@@ -25,7 +25,7 @@ Vsfs Open-sourced Base C++ Library
 
 ~~~~~~~~~~~~~~{.sh}
 # Ubuntu 13.04
-sudo apt-get install g++ autoconf automake libtool libssl-dev libgoogle-glog-dev
+sudo apt-get install g++ autoconf automake libtool libssl-dev libgoogle-glog-dev libboost-filesystem1.53-dev libboost-system1.53-dev libboost1.53-dev
 ~~~~~~~~~~~~~~
 
 ### Compile

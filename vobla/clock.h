@@ -22,7 +22,7 @@
 #ifndef VOBLA_CLOCK_H_
 #define VOBLA_CLOCK_H_
 
-#include "vobla/macros.h"
+#include <boost/utility.hpp>
 
 namespace vobla {
 
@@ -30,7 +30,7 @@ namespace vobla {
  * \class Clock
  * \brief The basic interface of accessing wall clock time.
  */
-class Clock {
+class Clock : boost::noncopyable {
  public:
   Clock() = default;
 
@@ -43,9 +43,6 @@ class Clock {
   virtual double now() = 0;
 
   virtual void sleep(double seconds) = 0;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(Clock);
 };
 
 /**

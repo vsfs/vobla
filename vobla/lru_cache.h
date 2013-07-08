@@ -22,11 +22,11 @@
 #ifndef VOBLA_LRU_CACHE_H_
 #define VOBLA_LRU_CACHE_H_
 
+#include <boost/utility.hpp>
 #include <cassert>
 #include <cstddef>
 #include <list>
 #include <unordered_map>  // NOLINT
-#include "vobla/macros.h"
 #include "vobla/stl_util.h"
 
 namespace vobla {
@@ -52,7 +52,7 @@ class LRUCacheItem {
 template <typename Item, typename Key = typename Item::cache_key_type,
   const int Capacity = 1024, typename LRUList = typename std::list<Item*>,
   typename Ctn = typename std::unordered_map<Key, typename LRUList::iterator>>
-class LRUCache {
+class LRUCache : boost::noncopyable {
  public:
   typedef Item value_type;
   typedef Item* pointer_type;
@@ -94,11 +94,11 @@ class LRUCache {
   void insert(const Key &key, pointer_type item) {
     assert(!full());
     // the value should not existed before
-    typename container_type::iterator it = cache_.find(key);
+    auto it = cache_.find(key);
     assert(it == cache_.end());
 
     lru_.push_back(item);
-    typename lru_type::iterator last = lru_.end();
+    auto last = lru_.end();
     --last;
     cache_.insert(typename container_type::value_type(key, last));
   }
@@ -174,8 +174,6 @@ class LRUCache {
   lru_type lru_;
   container_type cache_;
   size_t capacity_;
-
-  DISALLOW_COPY_AND_ASSIGN(LRUCache);
 };
 
 }  // namespace vobla

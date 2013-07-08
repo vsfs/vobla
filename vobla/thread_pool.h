@@ -22,6 +22,7 @@
 #ifndef VOBLA_THREAD_POOL_H_
 #define VOBLA_THREAD_POOL_H_
 
+#include <boost/utility.hpp>
 #include <condition_variable>
 #include <functional>
 #include <future>  // NOLINT
@@ -29,7 +30,6 @@
 #include <queue>
 #include <thread>  // NOLINT
 #include <vector>
-#include "vobla/macros.h"
 #include "vobla/status.h"
 
 namespace vobla {
@@ -38,7 +38,7 @@ namespace vobla {
  * \class ThreadPool
  * \brief A simple FIFO-queue based thread pool.
  */
-class ThreadPool {
+class ThreadPool : boost::noncopyable {
  public:
   typedef Status ReturnType;
 
@@ -86,8 +86,6 @@ class ThreadPool {
   std::condition_variable condition_;
 
   bool closed_;
-
-  DISALLOW_COPY_AND_ASSIGN(ThreadPool);
 };
 
 }  // namespace vobla
