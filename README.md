@@ -33,7 +33,7 @@ sudo apt-get install g++ autoconf automake libtool libssl-dev libgoogle-glog-dev
 ~~~~~~~~~~~~~~{.sh}
 $ git clone git://github.com/vsfs/vobla.git
 $ cd vobla
-# Download gtest
+# Download google-mock
 $ cd test
 $ wget http://googlemock.googlecode.com/files/gmock-1.6.0.zip
 $ unzip gmock-*.zip
