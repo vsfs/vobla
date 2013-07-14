@@ -60,7 +60,6 @@ struct TypeToInt {
  * \endcode
  *
  * \see TypeIDs for the available integers.
- * \TODO(eddyxu) Rename it to IntToType
  */
 template<TypeIDs I>
 struct IntToType {
@@ -87,72 +86,29 @@ std::string type_int_to_string(int type_id);
 /**
  * \brief Defines the mapping from C++ type to its integer ID.
  */
-#define DEFINE_TYPE_TO_INT(type, intval) \
-    template <> struct TypeToInt<type> { \
+#define DEFINE_TYPE_WITH_INT(typeval, intval) \
+    template <> struct TypeToInt<typeval> { \
       enum { value_ = intval }; \
       static int value() { return value_; } \
+    }; \
+    template <> struct IntToType<intval> { \
+      typedef typeval type; \
     }
 
-DEFINE_TYPE_TO_INT(char, CHAR);
-DEFINE_TYPE_TO_INT(int8_t, INT8);
-DEFINE_TYPE_TO_INT(uint8_t, UINT8);
-DEFINE_TYPE_TO_INT(int16_t, INT16);
-DEFINE_TYPE_TO_INT(uint16_t, UINT16);
-DEFINE_TYPE_TO_INT(int32_t, INT32);
-DEFINE_TYPE_TO_INT(uint32_t, UINT32);
-DEFINE_TYPE_TO_INT(int64_t, INT64);
-DEFINE_TYPE_TO_INT(uint64_t, UINT64);
-DEFINE_TYPE_TO_INT(float, FLOAT);
-DEFINE_TYPE_TO_INT(double, DOUBLE);
-DEFINE_TYPE_TO_INT(std::string, STRING);
 
-template<> struct IntToType<CHAR> {
-  typedef char type;
-};
+DEFINE_TYPE_WITH_INT(char, CHAR);
+DEFINE_TYPE_WITH_INT(int8_t, INT8);
+DEFINE_TYPE_WITH_INT(uint8_t, UINT8);
+DEFINE_TYPE_WITH_INT(int16_t, INT16);
+DEFINE_TYPE_WITH_INT(uint16_t, UINT16);
+DEFINE_TYPE_WITH_INT(int32_t, INT32);
+DEFINE_TYPE_WITH_INT(uint32_t, UINT32);
+DEFINE_TYPE_WITH_INT(int64_t, INT64);
+DEFINE_TYPE_WITH_INT(uint64_t, UINT64);
+DEFINE_TYPE_WITH_INT(float, FLOAT);
+DEFINE_TYPE_WITH_INT(double, DOUBLE);
+DEFINE_TYPE_WITH_INT(std::string, STRING);
 
-template<> struct IntToType<INT8> {
-  typedef int8_t type;
-};
-
-template<> struct IntToType<UINT8> {
-  typedef uint8_t type;
-};
-
-template<> struct IntToType<INT16> {
-  typedef int16_t type;
-};
-
-template<> struct IntToType<UINT16> {
-  typedef uint16_t type;
-};
-
-template<> struct IntToType<INT32> {
-  typedef int32_t type;
-};
-
-template<> struct IntToType<UINT32> {
-  typedef uint32_t type;
-};
-
-template<> struct IntToType<INT64> {
-  typedef int64_t type;
-};
-
-template<> struct IntToType<UINT64> {
-  typedef uint64_t type;
-};
-
-template<> struct IntToType<FLOAT> {
-  typedef float type;
-};
-
-template<> struct IntToType<DOUBLE> {
-  typedef double type;
-};
-
-template<> struct IntToType<STRING> {
-  typedef typename std::string type;
-};
 /// \endcond
 
 #endif  // VOBLA_TRAITS_H_
