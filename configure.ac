@@ -3,7 +3,7 @@
 
 AC_PREREQ([2.61])
 AC_INIT([vobla], [0.0.1], [eddyxu@gmail.com])
-AM_INIT_AUTOMAKE([foreign dist-bzip2])
+AM_INIT_AUTOMAKE([foreign dist-bzip2 color-tests parallel-tests])
 AC_CONFIG_SRCDIR([vobla/status.cpp])
 AC_CONFIG_HEADERS([config.h])
 AC_CONFIG_MACRO_DIR([m4])
@@ -38,10 +38,11 @@ AC_TYPE_UINT8_T
 AC_TYPE_UINT16_T
 AC_TYPE_UINT32_T
 AC_TYPE_UINT64_T
-AC_TYPE_SIZE_T
-AC_TYPE_SSIZE_T
+AC_TYPE_MODE_T
 AC_TYPE_OFF_T
 AC_TYPE_PID_T
+AC_TYPE_SIZE_T
+AC_TYPE_SSIZE_T
 
 AX_CXX_COMPILE_STDCXX_11(noext)
 if test "$ac_cv_cxx_compile_cxx11" = no ; then
