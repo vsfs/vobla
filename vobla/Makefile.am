@@ -24,6 +24,7 @@ nobase_voblainclude_HEADERS = \
   map_util.h \
   range.h \
   status.h \
+  string_util.h \
   sysinfo.h \
   thread_pool.h \
   timer.h \
@@ -42,6 +43,7 @@ libvobla_la_SOURCES = \
   range.h \
   status.h status.cpp \
   stl_util.h \
+  string_util.h string_util.cpp \
   sysinfo.h sysinfo.cpp \
   thread_pool.h thread_pool.cpp \
   timer.h timer.cpp \
