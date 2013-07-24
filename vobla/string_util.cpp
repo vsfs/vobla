@@ -58,7 +58,7 @@ inline void stringprintf_impl(string* output, const char* format,
                "with format string: ") + format);
   } else if (bytes_used < remaining) {
     // There was enough room, just shrink and return.
-    output->shrink_to_fit();
+    output->resize(write_point + bytes_used);
   } else {
     output->resize(write_point + bytes_used + 1);
     remaining = bytes_used + 1;
@@ -72,7 +72,7 @@ inline void stringprintf_impl(string* output, const char* format,
         string("vsnprint retry did not manage to work "
                "with format string: ") + format);
     }
-    output->shrink_to_fit();
+    output->resize(write_point + bytes_used);
   }
 }
 

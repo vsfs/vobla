@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-#ifndef VOBLA_STRING_UTIL_H_
-#define VOBLA_STRING_UTIL_H_
-
+#include <gtest/gtest.h>
 #include <string>
+#include "vobla/string_util.h"
+
+using std::string;
 
 namespace vobla {
 
-/**
- * \brief A printf-like function to create std::string.
- * \see to facebook/vobla/String.h
- */
-std::string stringprintf(const char* format, ...)
-    __attribute__((format(printf, 1, 2)));
+TEST(StringUtilTest, TestStringPrintf) {
+  string t1 = stringprintf("abc");
+  EXPECT_EQ("abc", t1);
 
+  string t2 = stringprintf("abc %1.1f %d %s", 1.0f, 20, "test");
+  EXPECT_EQ("abc 1.0 20 test", t2);
 }
 
-#endif  // VOBLA_STRING_UTIL_H_
+}  // namespace vobla
