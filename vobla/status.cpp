@@ -15,6 +15,7 @@
  */
 
 #include "vobla/status.h"
+#include <cstring>
 #include <string>
 #include <utility>
 
@@ -23,6 +24,10 @@ using std::string;
 namespace vobla {
 
 const Status Status::OK = Status();
+
+Status Status::system_error(int errnum) {
+  return Status(-errnum, strerror(errnum));
+}
 
 Status::Status() : code_(0) {
 }
@@ -69,8 +74,8 @@ int Status::error() const {
   return code_;
 }
 
-void Status::set_message(const string& message) {
-  message_ = message;
+void Status::set_message(const string& new_msg) {
+  message_ = new_msg;
 }
 
 const string& Status::message() const {

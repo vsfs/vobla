@@ -24,6 +24,7 @@ nobase_voblainclude_HEADERS = \
   map_util.h \
   range.h \
   status.h \
+  string_util.h \
   sysinfo.h \
   thread_pool.h \
   timer.h \
@@ -42,6 +43,7 @@ libvobla_la_SOURCES = \
   range.h \
   status.h status.cpp \
   stl_util.h \
+  string_util.h string_util.cpp \
   sysinfo.h sysinfo.cpp \
   thread_pool.h thread_pool.cpp \
   timer.h timer.cpp \
@@ -56,6 +58,7 @@ TESTS = \
   map_util_test \
   range_test \
   status_test \
+  string_util_test \
   thread_pool_test \
   timer_test \
   traits_test \
@@ -71,6 +74,7 @@ lru_cache_test_SOURCES = lru_cache_test.cpp
 map_util_test_SOURCES = map_util_test.cpp
 range_test_SOURCES = range_test.cpp
 status_test_SOURCES = status_test.cpp
+string_util_test_SOURCES = string_util_test.cpp
 thread_pool_test_SOURCES = thread_pool_test.cpp
 timer_test_SOURCES = timer_test.cpp
 traits_test_SOURCES = traits_test.cpp
