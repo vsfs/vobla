@@ -28,7 +28,7 @@ namespace vobla {
 namespace {
 
 /**
- * \brief Create a string from the format and va_list.
+ * \brief Creates a string from the format and va_list.
  *
  * Modified from Facebook's folly library with the modificaitons of coding
  * style and C++11 features.

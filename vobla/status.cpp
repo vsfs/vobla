@@ -74,7 +74,7 @@ int Status::error() const {
   return code_;
 }
 
-void Status::set_message(const std::string& new_msg) {
+void Status::set_message(const string& new_msg) {
   message_ = new_msg;
 }
 

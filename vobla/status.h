@@ -33,7 +33,7 @@ namespace vobla {
 class Status {
  public:
   /// Constructs a Status object from system error. The error message is
-  /// obtained from strerror(2)
+  /// obtained from strerror(2).
   static Status system_error(int errnum);
 
   /// The default constructor builds a success status (error_code == 0)
