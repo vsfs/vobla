@@ -60,6 +60,9 @@ class Status {
   /// Returns the error code.
   int error() const;
 
+  /// Sets the code and messae to a new value.
+  void set(int code, const std::string& message);
+
   /// Sets the new error code.
   void set_error(int code);
 

@@ -66,6 +66,11 @@ Status& Status::operator=(Status&& rhs) {
   return *this;
 }
 
+void Status::set(int code, const string& new_msg) {
+  code_ = code;
+  message_ = new_msg;
+}
+
 void Status::set_error(int code) {
   code_ = code;
 }
