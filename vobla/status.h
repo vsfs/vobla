@@ -60,7 +60,7 @@ class Status {
   /// Returns the error code.
   int error() const;
 
-  /// Sets the code and messae to a new value.
+  /// Sets the code and message to a new value.
   void set(int code, const std::string& message);
 
   /// Sets the new error code.
@@ -75,7 +75,7 @@ class Status {
   /// Tests whether the error code is zero.
   bool ok() const;
 
-  /// A static Status object to prepresent OK status.
+  /// A static Status object to represent the OK status.
   static const Status OK;
 
   /// Returns true if two status objects have same error numbers and messages.
