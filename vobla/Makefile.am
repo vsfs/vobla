@@ -1,11 +1,11 @@
 # vim: ts=8:st=8:noexpandtab
 AM_LDFLAGS = -lpthread \
-	     -L@top_srcdir@/test/gmock-1.6.0/lib \
-	     -L@top_srcdir@/test/gmock-1.6.0/gtest/lib \
+	     -L@top_srcdir@/test/gmock-1.7.0/lib \
+	     -L@top_srcdir@/test/gmock-1.7.0/gtest/lib \
 	     $(BOOST_FILESYSTEM_LIB) $(BOOST_SYSTEM_LIB)
 
-AM_CXXFLAGS = -isystem @top_srcdir@/test/gmock-1.6.0/include \
-	      -isystem @top_srcdir@/test/gmock-1.6.0/gtest/include
+AM_CXXFLAGS = -isystem @top_srcdir@/test/gmock-1.7.0/include \
+	      -isystem @top_srcdir@/test/gmock-1.7.0/gtest/include
 
 CLEANFILES = *.gcov *.gcno *.gcda
 

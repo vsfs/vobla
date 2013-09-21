@@ -14,8 +14,8 @@ before_install:
   - export CXX="g++-${CXX_VERSION}"
   - sudo pip install cpp-coveralls --use-mirrors
   - cd test
-  - wget http://googlemock.googlecode.com/files/gmock-1.6.0.zip && unzip gmock-*.zip
-  - cd gmock-1.6.0
+  - wget http://googlemock.googlecode.com/files/gmock-1.7.0.zip && unzip gmock-*.zip
+  - cd gmock-1.7.0
   - ./configure && make
   - cd ../..
 before_script:
