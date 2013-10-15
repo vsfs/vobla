@@ -15,7 +15,7 @@ AC_PROG_LIBTOOL
 AC_LANG([C++])
 
 CXXFLAGS="-Wall -Wextra -pedantic -Wunused-value -Wwrite-strings $CXXFLAGS"
-CXXFLAGS="-Wno-unused-parameter -Woverloaded-virtual $CXXFLAGS"
+CXXFLAGS="-Wno-unused-parameter -Woverloaded-virtual -fstack-protector $CXXFLAGS"
 
 # Checks for libraries.
 AC_CHECK_LIB([glog], [openlog], [], [AC_MSG_ERROR(google-glog was not found.)])
