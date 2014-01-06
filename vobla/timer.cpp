@@ -47,10 +47,10 @@ double get_delta_time(const timeval& start, const timeval& end) {
 }  // anonymous namespace
 
 //------ Timer -------
-Timer::Timer() : clock_(Clock::real_clock()), start_(0), end_(0) {
+Timer::Timer() : start_(0), end_(0), clock_(Clock::real_clock()) {
 }
 
-Timer::Timer(Clock* clock) : clock_(clock), start_(0), end_(0) {
+Timer::Timer(Clock* clock) : start_(0), end_(0), clock_(clock) {
 }
 
 Timer::~Timer() {
