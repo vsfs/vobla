@@ -58,8 +58,9 @@ MOSTLYCLEANFILES = $(analyze_plists)
 $(analyze_plists): %.plist: %.cpp
 	@echo "  Static analyzing" $@
 	@clang -I.. ${CXXFLAGS} ${LDFLAGS} --analyze $< -o $@
+	@oclint -fatal-assembler-warnings ${@:.plist=.cpp} -- -I.. ${CXXFLAGS}
 
-static-analytic: $(analyze_plists)
+static-analysis: $(analyze_plists)
 
 TESTS = \
   consistent_hash_map_test \
@@ -90,3 +91,5 @@ thread_pool_test_SOURCES = thread_pool_test.cpp
 timer_test_SOURCES = timer_test.cpp
 traits_test_SOURCES = traits_test.cpp
 unique_resource_test_SOURCES = unique_resource_test.cpp
+
+.PHONY: static-analysis

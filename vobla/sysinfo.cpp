@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
+ * Copyright 2011-2014 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -242,13 +242,12 @@ off_t SysInfo::get_size(const string &path) {
             path.c_str(), strerror(errno));
     return -1;
   }
- if (S_ISREG(stbuf.st_mode)) {
+  if (S_ISREG(stbuf.st_mode)) {
     return stbuf.st_size;
   } else if (S_ISBLK(stbuf.st_mode)) {
     return get_block_device_size(path);
-  } else {
-    LOG(FATAL) << "Unsupport file type: " << stbuf.st_mode;
   }
+  LOG(FATAL) << "Unsupport file type: " << stbuf.st_mode;
   return -1;
 }
 
