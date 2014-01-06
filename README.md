@@ -1,7 +1,7 @@
 Vobla: Vsfs's Open-source Base LibrAry.
 =====
 
-[![Build Status](https://travis-ci.org/vsfs/vobla.png?branch=master)](https://travis-ci.org/vsfs/vobla) [![Coverage Status](https://coveralls.io/repos/vsfs/vobla/badge.png?branch=master)](https://coveralls.io/r/vsfs/vobla)
+[![Build Status](https://travis-ci.org/vsfs/vobla.png?branch=master)](https://travis-ci.org/vsfs/vobla) [![Coverage Status](https://coveralls.io/repos/vsfs/vobla/badge.png?branch=master)](https://coveralls.io/r/vsfs/vobla) [![Static Analysis](https://scan.coverity.com/projects/1145/badge.svg)](https://scan.coverity.com/projects/1145)
 
 Vsfs Open-sourced Base C++ Library
 
