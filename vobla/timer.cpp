@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2013 (c) Lei Xu <eddyxu@gmail.com>
+ * Copyright 2011-2014 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -47,10 +47,10 @@ double get_delta_time(const timeval& start, const timeval& end) {
 }  // anonymous namespace
 
 //------ Timer -------
-Timer::Timer() : clock_(Clock::real_clock()) {
+Timer::Timer() : clock_(Clock::real_clock()), start_(0), end_(0) {
 }
 
-Timer::Timer(Clock* clock) : clock_(clock) {
+Timer::Timer(Clock* clock) : clock_(clock), start_(0), end_(0) {
 }
 
 Timer::~Timer() {

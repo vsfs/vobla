@@ -210,6 +210,7 @@ off_t SysInfo::get_block_device_size(const string &dev_path) {
   if (ioctl(fd, BLKGETSIZE64, &num_bytes) < 0) {
     fprintf(stderr, "SysInfo::get_block_device_size: iotcl BLKGETSIZE64 %s"
             ": %s\n", dev_path.c_str(), strerror(errno));
+    close(fd);
     return -1;
   }
 #elif defined(__APPLE__)

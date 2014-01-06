@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 (c) Lei Xu <eddyxu@gmail.com>
+ * Copyright 2014 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,14 +37,15 @@ File File::open(const string& path, int flags, mode_t mode) {
   return tmp;
 }
 
-File::File() : fd_(-1) {
+File::File() : fd_(-1), flags_(0), mode_(0) {
 }
 
 File::File(const string& path, int flags, mode_t mode)
     : fd_(-1), path_(path), flags_(flags), mode_(mode) {
 }
 
-File::File(File&& rhs) : fd_(rhs.release()) {
+File::File(File&& rhs) : fd_(rhs.release()), flags_(rhs.flags_),
+    mode_(rhs.mode_) {
 }
 
 File::~File() {
