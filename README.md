@@ -17,9 +17,9 @@ Vsfs Open-sourced Base C++ Library
    - boost_system
  - glog
  - libssl-dev
- - gmock 1.6.0 (Optional for test)
-   - Download gmock 1.6.0 from
-     http://googlemock.googlecode.com/files/gmock-1.6.0.zip and unzip it to `test/` directory.
+ - gmock 1.7.0 (Optional for test)
+   - Download gmock 1.7.0 from
+     http://googlemock.googlecode.com/files/gmock-1.7.0.zip and unzip it to `test/` directory.
 
 ### Install dependencies on specific platform
 
@@ -35,7 +35,7 @@ $ git clone git://github.com/vsfs/vobla.git
 $ cd vobla
 # Download google-mock
 $ cd test
-$ wget http://googlemock.googlecode.com/files/gmock-1.6.0.zip
+$ wget http://googlemock.googlecode.com/files/gmock-1.7.0.zip
 $ unzip gmock-*.zip
 $ cd gmock-*
 $ ./configure && make

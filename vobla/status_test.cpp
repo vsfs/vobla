@@ -49,6 +49,16 @@ TEST(StatusTest, TestConstructors) {
   EXPECT_EQ(s3, s4);
 }
 
+TEST(StatusTest, TestConstructFromSystemError) {
+  Status s = Status::system_error(ENOENT);
+  EXPECT_EQ(-ENOENT, s.error());
+  EXPECT_EQ("No such file or directory", s.message());
+
+  s = Status::system_error(EACCES);
+  EXPECT_EQ(-EACCES, s.error());
+  EXPECT_EQ("Permission denied", s.message());
+}
+
 TEST(StatusTest, TestMoveConstructors) {
   Status s(1, "This is a test.");
   Status s1 = std::move(s);

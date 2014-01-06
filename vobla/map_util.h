@@ -27,12 +27,14 @@
 
 namespace vobla {
 
+/// Returns true if the map contains the given key.
 template <typename Map>
 bool contain_key(const Map& map,
                  const typename Map::value_type::first_type& key) {
   return map.find(key) != map.end();
 }
 
+/// Returns true if the map contains both the key and the value.
 template <typename Map>
 bool contain_key_and_value(const Map& map,
                            const typename Map::value_type::first_type& key,
@@ -44,10 +46,14 @@ bool contain_key_and_value(const Map& map,
   return it->second == value;
 }
 
-template <typename Container>
-const typename Container::mapped_type*
-find_or_null(const Container& container,  // NOLINT
-             const typename Container::key_type& key) {
+/**
+ * \brief Returns the pointer of the value in the map for the given key. If
+ * the key does not exist, return nullptr.
+ */
+template <typename Map>
+const typename Map::mapped_type*
+find_or_null(const Map& container,  // NOLINT
+             const typename Map::key_type& key) {
   auto it = container.find(key);  // NOLINT
   if (it == container.end()) {
     return nullptr;
@@ -55,50 +61,65 @@ find_or_null(const Container& container,  // NOLINT
   return &it->second;
 }
 
-template <typename Container>
-typename Container::mapped_type*
-find_or_null(Container& container,  // NOLINT
-             const typename Container::key_type& key) {
-  auto it = container.find(key);  // NOLINT
-  if (it == container.end()) {
+/**
+ * \brief The non-const version of find_or_null()
+ */
+template <typename Map>
+typename Map::mapped_type*
+find_or_null(Map& map,  // NOLINT
+             const typename Map::key_type& key) {
+  auto it = map.find(key);  // NOLINT
+  if (it == map.end()) {
     return nullptr;
   }
   return &it->second;
 }
 
-template <typename Container>
-typename Container::mapped_type
-find_or_die(const Container& container,
-            const typename Container::key_type& key) {
-  auto it = container.find(key);
-  CHECK(it != container.end());
+/**
+ * \brief Returns the value in map for the given key. If the key does not
+ * exist, the program dies.
+ */
+template <typename Map>
+typename Map::mapped_type
+find_or_die(const Map& map,
+            const typename Map::key_type& key) {
+  auto it = map.find(key);
+  CHECK(it != map.end());
   return it->second;
 }
 
-template <typename Container>
-typename Container::mapped_type
-find_pointer_or_null(const Container& container,
-                     const typename Container::key_type& key) {
-  auto it = container.find(key);
-  if (it != container.end()) {
+/**
+ * \brief Returns the second value as pointer. If the key does not exist,
+ * return nullptr.
+ *
+ * The second type of this map must be a pointer.
+ */
+template <typename Map>
+typename Map::mapped_type
+find_pointer_or_null(const Map& map,
+                     const typename Map::key_type& key) {
+  auto it = map.find(key);
+  if (it != map.end()) {
     return it->second;
   }
   return nullptr;
 }
 
-template <typename Container>
-typename Container::mapped_type
-find_pointer_or_die(const Container& container,
-                    const typename Container::key_type& key) {
-  auto it = container.find(key);
-  CHECK(it != container.end());
+/// Returns the second value as a pointer, otherwise dies.
+template <typename Map>
+typename Map::mapped_type
+find_pointer_or_die(const Map& map,
+                    const typename Map::key_type& key) {
+  auto it = map.find(key);
+  CHECK(it != map.end());
   return it->second;
 }
 
+/// The non-const version of `find_pointer_or_null()`.
 template <typename Map>
 typename Map::value_type::second_type
-find_pointer_or_null(Map &map,  // NOLINT
-    const typename Map::value_type::first_type &key) {
+find_pointer_or_null(Map& map,  // NOLINT
+    const typename Map::value_type::first_type& key) {
   auto it = map.find(key);
   if (it == map.end()) {
     return nullptr;
@@ -111,9 +132,9 @@ find_pointer_or_null(Map &map,  // NOLINT
  * old content and assign the new value to it.
  */
 template <typename Map>
-void insert_and_delete(Map *map,
-    const typename Map::value_type::first_type &key,
-    const typename Map::value_type::second_type &value) {
+void insert_and_delete(Map* map,
+    const typename Map::value_type::first_type& key,
+    const typename Map::value_type::second_type& value) {
   typename Map::iterator it = map->find(key);
   if (it != map->end() && it->second != value) {
     delete it->second;
@@ -127,7 +148,7 @@ void insert_and_delete(Map *map,
  */
 template <typename Map>
 typename Map::value_type::second_type insert_key_or_die(
-    Map& map, const typename Map::value_type::first_type &key) {  // NOLINT
+    Map& map, const typename Map::value_type::first_type& key) {  // NOLINT
   auto result = map.insert(
       typename Map::value_type(key, typename Map::value_type::second_type()));
   CHECK(result.second);
@@ -135,8 +156,8 @@ typename Map::value_type::second_type insert_key_or_die(
 }
 
 template <typename Map>
-void erase_and_delete(Map *map,
-                      const typename Map::value_type::first_type &key) {
+void erase_and_delete(Map* map,
+                      const typename Map::value_type::first_type& key) {
   // It is ok to delete a NULL pointer.
   delete find_pointer_or_null(*map, key);
   map->erase(key);
@@ -204,7 +225,7 @@ void append_values_from_map(const Map& map, Container* out) {
 }
 
 template <typename Map>
-typename Map::value_type::first_type sum_keys(const Map &map) {
+typename Map::value_type::first_type sum_keys(const Map& map) {
   typename Map::value_type::first_type result = 0;
   for (const auto &key_and_value : map) {  // NOLINT
     result += key_and_value.first;
@@ -213,7 +234,7 @@ typename Map::value_type::first_type sum_keys(const Map &map) {
 }
 
 template <typename Map>
-typename Map::value_type::second_type sum_values(const Map &map) {
+typename Map::value_type::second_type sum_values(const Map& map) {
   typename Map::value_type::second_type result = 0;
   for (const auto &key_and_value : map) {  // NOLINT
     result += key_and_value.second;

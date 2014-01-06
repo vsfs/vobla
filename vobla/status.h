@@ -32,6 +32,10 @@ namespace vobla {
  */
 class Status {
  public:
+  /// Constructs a Status object from system error. The error message is
+  /// obtained from strerror(2).
+  static Status system_error(int errnum);
+
   /// The default constructor builds a success status (error_code == 0)
   Status();
 
@@ -56,6 +60,9 @@ class Status {
   /// Returns the error code.
   int error() const;
 
+  /// Sets the code and message to a new value.
+  void set(int code, const std::string& message);
+
   /// Sets the new error code.
   void set_error(int code);
 
@@ -65,13 +72,10 @@ class Status {
   /// Sets the new error message.
   void set_message(const std::string& message);
 
-  // TODO(eddyxu): set message with format
-  // void set_error_message(const char* fmt, ...)
-
   /// Tests whether the error code is zero.
   bool ok() const;
 
-  /// A static Status object to prepresent OK status.
+  /// A static Status object to represent the OK status.
   static const Status OK;
 
   /// Returns true if two status objects have same error numbers and messages.

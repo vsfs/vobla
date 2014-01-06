@@ -315,6 +315,18 @@ TEST(ConsistentHashMapTest, TestNumPartitionsPerNode) {
   EXPECT_EQ(4u, test_map.num_partitions_per_node());
 }
 
+TEST(ConsistentHashMapTest, TestInt64MapInsert) {
+  typedef ConsistentHashMap<int64_t, int64_t> Int64Map;
+  Int64Map test_map;
+  int64_t part = std::numeric_limits<int64_t>::max() / 64;
+
+  for (int64_t i = 0; i < 128; i++) {
+    int64_t k = i * part;
+    int64_t v = i * 2;
+    EXPECT_TRUE(test_map.insert(k, v).ok());
+  }
+}
+
 TEST(ConsistentHashMapTest, TestSwapTwoMaps) {
   TestMap map0 = { {1, "node1"}, {10, "node2"} };
   TestMap map1;

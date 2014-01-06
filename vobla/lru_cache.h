@@ -150,16 +150,6 @@ class LRUCache : boost::noncopyable {
     cache_[value->cache_key()] = --lru_.end();
   }
 
-  /// Forces destaging a item specified by the key
-  void destage(const Key &key) {
-    auto it = cache_.find(key);
-    if (it == cache_.end()) {
-      return;
-    }
-    lru_.erase(it->second);
-    cache_.erase(it);
-  }
-
   /// Clears all items.
   void clear() {
     delete_pointers(lru_);

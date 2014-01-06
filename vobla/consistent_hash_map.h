@@ -23,6 +23,7 @@
 #ifndef VOBLA_CONSISTENT_HASH_MAP_H_
 #define VOBLA_CONSISTENT_HASH_MAP_H_
 
+#include <boost/call_traits.hpp>
 #include <glog/logging.h>
 #include <algorithm>
 #include <initializer_list>  // NOLINT
@@ -98,7 +99,8 @@ class ConsistentHashMap {
   /**
    * \brief Insert a node with a client specified key value to the hash map.
    */
-  Status insert(key_type key, const Value& value) {
+  Status insert(key_type key,
+                typename boost::call_traits<Value>::param_type value) {
     if (contain_key(ring_, key)) {
       return Status(-EEXIST, "The key is already inserted");
     }
