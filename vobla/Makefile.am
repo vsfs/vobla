@@ -48,6 +48,17 @@ libvobla_la_SOURCES = \
   traits.h traits.cpp \
   unique_resource.h
 
+analyze_srcs = $(filter %.cpp, $(libvobla_la_SOURCES))
+analyze_plists = $(analyze_srcs:%.cpp=%.plist)
+
+MOSTLYCLEANFILES = $(analyze_plists)
+
+$(analyze_plists): %.plist: %.cpp
+	@echo "  Static analyzing" $@
+	@clang -I.. ${CXXFLAGS} ${LDFLAGS} --analyze $< -o $@
+
+static-analytic: $(analyze_plists)
+
 TESTS = \
   consistent_hash_map_test \
   file_test \

@@ -18,4 +18,7 @@ api:
 distclean-local:
 	rm -rf api
 
+static:
+	make -C vobla static-analytic
+
 .PHONY: api
