@@ -78,7 +78,7 @@ TESTS = \
 
 check_PROGRAMS = $(TESTS)
 
-LDADD = -lgtest -lgtest_main libvobla.la
+LDADD = -lgtest -lgtest_main -lgmock libvobla.la
 consistent_hash_map_test_SOURCES = consistent_hash_map_test.cpp
 file_test_SOURCES = file_test.cpp
 hash_test_SOURCES = hash_test.cpp

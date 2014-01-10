@@ -18,6 +18,7 @@
 #define VOBLA_STRING_UTIL_H_
 
 #include <string>
+#include <vector>
 
 namespace vobla {
 
@@ -28,6 +29,12 @@ namespace vobla {
 std::string stringprintf(const char* format, ...)
     __attribute__((format(printf, 1, 2)));
 
-}
+/**
+ * \brief Quoted string tokenizer.
+ * \note it could not support escape chars for now.
+ */
+std::vector<std::string> tokenize(const std::string& str);
+
+}  // namespace vobla
 
 #endif  // VOBLA_STRING_UTIL_H_

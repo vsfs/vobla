@@ -19,9 +19,11 @@
 #include <cstring>
 #include <stdexcept>
 #include <string>
+#include <vector>
 #include "vobla/string_util.h"
 
 using std::string;
+using std::vector;
 
 namespace vobla {
 
@@ -78,7 +80,7 @@ inline void stringprintf_impl(string* output, const char* format,
 
 }  // anon namespace
 
-std::string stringprintf(const char* format, ...) {
+string stringprintf(const char* format, ...) {
   // snprintf will tell us how large the output buffer should be, but
   // we then have to call it a second time, which is costly.  By
   // guestimating the final size, we avoid the double snprintf in many
@@ -96,6 +98,48 @@ std::string stringprintf(const char* format, ...) {
   stringprintf_impl(&ret, format, ap);
   va_end(ap);
   return ret;
+}
+
+vector<string> tokenize(const string& str) {
+  enum {
+    NO_STRING, SPACE_SEP, SINGLE_QUOTA_SEP, DOUBLE_QUOTA_SEP,
+  };
+  vector<string> tokens;
+  string buf;
+  int state = NO_STRING;
+  for (auto it = str.begin(); it != str.end(); ++it) {
+    char c = *it;
+    if (state == NO_STRING && !isblank(c)) {
+      if (c == '\'') {
+        state = SINGLE_QUOTA_SEP;
+      } else if (c == '"') {
+        state = DOUBLE_QUOTA_SEP;
+      } else {
+        state = SPACE_SEP;
+        buf.push_back(c);
+      }
+    } else if (state != NO_STRING) {
+      if ((state == SPACE_SEP && isblank(c))
+          || (state == SINGLE_QUOTA_SEP && c == '\'')
+          || (state == DOUBLE_QUOTA_SEP && c == '"')) {
+        if (!buf.empty()) {
+          tokens.push_back(buf);
+          buf.clear();
+          state = NO_STRING;
+        }
+      } else {
+        buf.push_back(c);
+      }
+    }
+  }
+  if (!buf.empty()) {
+    if (state == SPACE_SEP) {
+      tokens.push_back(buf);
+    } else {
+      tokens.clear();
+    }
+  }
+  return tokens;
 }
 
 }   // namespace vobla

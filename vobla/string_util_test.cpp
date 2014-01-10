@@ -14,11 +14,15 @@
  * limitations under the License.
  */
 
+#include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <string>
+#include <vector>
 #include "vobla/string_util.h"
 
+using ::testing::ElementsAre;
 using std::string;
+using std::vector;
 
 namespace vobla {
 
@@ -28,6 +32,35 @@ TEST(StringUtilTest, TestStringPrintf) {
 
   string t2 = stringprintf("abc %1.1f %d %s", 1.0f, 20, "test");
   EXPECT_EQ("abc 1.0 20 test", t2);
+}
+
+TEST(StringUtilTest, TestTokenize) {
+  vector<string> results;
+  results = tokenize("abc def high");
+  EXPECT_THAT(results, ElementsAre("abc", "def", "high"));
+
+  results = tokenize(" \t\tabc \t\tdef\t\thigh \t\t");
+  EXPECT_THAT(results, ElementsAre("abc", "def", "high"));
+
+  results = tokenize("'abc \"\"bcd' def high ");
+  EXPECT_THAT(results, ElementsAre("abc \"\"bcd", "def", "high"));
+
+  results = tokenize(" I'm a sentence ");
+  EXPECT_THAT(results, ElementsAre("I'm", "a", "sentence"));
+
+  results = tokenize(" 'This \" has' no \"effect as '\"");
+  EXPECT_THAT(results, ElementsAre("This \" has", "no", "effect as '"));
+
+  EXPECT_TRUE(tokenize("").empty());
+  EXPECT_TRUE(tokenize(" \t \t \t").empty());
+}
+
+TEST(SingleUtilTest, TestErrorTokens) {
+  auto results = tokenize("'abc def gef");
+  EXPECT_TRUE(results.empty());
+
+  EXPECT_TRUE(tokenize("'").empty());
+  EXPECT_TRUE(tokenize("\"").empty());
 }
 
 }  // namespace vobla
