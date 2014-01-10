@@ -53,6 +53,11 @@ TEST(StringUtilTest, TestTokenize) {
 
   EXPECT_TRUE(tokenize("").empty());
   EXPECT_TRUE(tokenize(" \t \t \t").empty());
+
+  results = tokenize("''");
+  EXPECT_THAT(results, ElementsAre(""));
+  results = tokenize("\"\"");
+  EXPECT_THAT(results, ElementsAre(""));
 }
 
 TEST(SingleUtilTest, TestErrorTokens) {
@@ -61,6 +66,7 @@ TEST(SingleUtilTest, TestErrorTokens) {
 
   EXPECT_TRUE(tokenize("'").empty());
   EXPECT_TRUE(tokenize("\"").empty());
+  EXPECT_TRUE(tokenize("\"'").empty());
 }
 
 }  // namespace vobla

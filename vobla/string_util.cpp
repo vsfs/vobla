@@ -119,14 +119,17 @@ vector<string> tokenize(const string& str) {
         buf.push_back(c);
       }
     } else if (state != NO_STRING) {
-      if ((state == SPACE_SEP && isblank(c))
-          || (state == SINGLE_QUOTA_SEP && c == '\'')
-          || (state == DOUBLE_QUOTA_SEP && c == '"')) {
+      if (state == SPACE_SEP && isblank(c)) {
         if (!buf.empty()) {
           tokens.push_back(buf);
           buf.clear();
           state = NO_STRING;
         }
+      } else if ((state == SINGLE_QUOTA_SEP && c == '\'')
+                 || (state == DOUBLE_QUOTA_SEP && c == '"')) {
+        tokens.push_back(buf);
+        buf.clear();
+        state = NO_STRING;
       } else {
         buf.push_back(c);
       }
