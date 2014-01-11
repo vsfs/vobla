@@ -58,6 +58,9 @@ TEST(StringUtilTest, TestTokenize) {
   EXPECT_THAT(results, ElementsAre(""));
   results = tokenize("\"\"");
   EXPECT_THAT(results, ElementsAre(""));
+
+  results = tokenize("\"\"\"\"");
+  EXPECT_THAT(results, ElementsAre("", ""));
 }
 
 TEST(SingleUtilTest, TestErrorTokens) {
