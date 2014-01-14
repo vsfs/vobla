@@ -9,6 +9,7 @@ EXTRA_DIST = \
   Doxyfile \
   LICENSE \
   README.md \
+  bootstrap \
   contrib/cpplint.py \
   contrib/pre-commit
 
