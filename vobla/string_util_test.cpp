@@ -34,6 +34,12 @@ TEST(StringUtilTest, TestStringPrintf) {
   EXPECT_EQ("abc 1.0 20 test", t2);
 }
 
+TEST(StringUtilTest, TestStringPrintfExtendBuffer) {
+  string large_string = "abcdefghijklmnopqrstuvwxyz-0123456789";
+  string rst = stringprintf("test %s", large_string.c_str());
+  EXPECT_EQ(string("test ") + large_string, rst);
+}
+
 TEST(StringUtilTest, TestTokenize) {
   vector<string> results;
   results = tokenize("abc def high");
