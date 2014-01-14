@@ -29,9 +29,6 @@ Status Status::system_error(int errnum) {
   return Status(-errnum, strerror(errnum));
 }
 
-Status::Status() : code_(0) {
-}
-
 Status::Status(int code, const string& message) : code_(code),
     message_(message) {
 }

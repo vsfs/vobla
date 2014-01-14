@@ -37,7 +37,7 @@ class Status {
   static Status system_error(int errnum);
 
   /// The default constructor builds a success status (error_code == 0)
-  Status();
+  Status() = default;
 
   /// Constructs a Status object with error code and error message.
   Status(int code, const std::string& message);
@@ -88,7 +88,7 @@ class Status {
 
  private:
   /// Returning code. 0 for success.
-  int code_;
+  int code_ = 0;
 
   /// Error message.
   std::string message_;

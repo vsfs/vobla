@@ -47,6 +47,12 @@ TEST(StatusTest, TestConstructors) {
   s4 = s2;
   EXPECT_EQ(s2, s3);
   EXPECT_EQ(s3, s4);
+
+  Status s5;
+  EXPECT_TRUE(s5.ok());
+  s5.set(1, "test failure");
+  EXPECT_FALSE(s5.ok());
+  EXPECT_EQ(s2, s5);
 }
 
 TEST(StatusTest, TestConstructFromSystemError) {
