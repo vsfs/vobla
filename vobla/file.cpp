@@ -37,9 +37,6 @@ File File::open(const string& path, int flags, mode_t mode) {
   return tmp;
 }
 
-File::File() : fd_(-1), flags_(0), mode_(0) {
-}
-
 File::File(const string& path, int flags, mode_t mode)
     : fd_(-1), path_(path), flags_(flags), mode_(mode) {
 }

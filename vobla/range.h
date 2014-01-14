@@ -65,10 +65,7 @@ class Range {
   static const Value kMax;
 
   /// Default constructor. It constructs a full-range Range object.
-  Range() : lower_(std::numeric_limits<value_type>::min()),
-    upper_(std::numeric_limits<value_type>::max()),
-    lower_opened_(false), upper_opened_(false) {
-  }
+  Range() = default;
 
   /**
    * \brief Constructs a Range object with closed lower bound and closed upper
@@ -78,8 +75,7 @@ class Range {
    *
    * \note The lower bound must be smaller than or equal to upper bound.
    */
-  Range(value_type l, value_type u) : lower_(l), upper_(u),
-      lower_opened_(false), upper_opened_(false) {
+  Range(value_type l, value_type u) : lower_(l), upper_(u) {
   }
 
   /**
@@ -90,8 +86,7 @@ class Range {
    * Range r = {1, 100}  // a range to represents: [0, 100]
    * ~~~~~~~~~~~~~~~~
    */
-  Range(std::initializer_list<value_type> values)  // NOLINT
-      : lower_opened_(false), upper_opened_(false) {
+  Range(std::initializer_list<value_type> values) {  // NOLINT
     CHECK_GE(2, values.size());
     auto it = values.begin();
     lower_ = *it;
@@ -184,10 +179,10 @@ class Range {
   }
 
  private:
-  Value lower_;
-  Value upper_;
-  bool lower_opened_;
-  bool upper_opened_;
+  Value lower_ = std::numeric_limits<value_type>::min();
+  Value upper_ = std::numeric_limits<value_type>::max();
+  bool lower_opened_ = false;
+  bool upper_opened_ = false;
 };
 
 template<typename V, typename I>

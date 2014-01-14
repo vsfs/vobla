@@ -55,7 +55,7 @@ class File : boost::noncopyable {
   static File open(const string& path, int flags, mode_t mode = 0644);
 
   /// Construct a new file object.
-  File();
+  File() = default;
 
   /**
    * \brief Constructs an File object with the file path and open flags.
@@ -94,16 +94,16 @@ class File : boost::noncopyable {
 
  private:
   /// File Descriptor.
-  int fd_;
+  int fd_ = -1;
 
   /// The directory of this path.
   string path_;
 
   /// File open flags.
-  int flags_;
+  int flags_ = 0;
 
   /// File open mode.
-  mode_t mode_;
+  mode_t mode_ = 0;
 };
 
 void swap(File& lhs, File& rhs);

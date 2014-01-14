@@ -89,13 +89,13 @@ class Timer : public TimerInterface {
 
  protected:
   /// Start time.
-  double start_;
+  double start_ = 0;
 
   /// End time.
-  double end_;
+  double end_ = 0;
 
   /// The Clock object to get timestamp.
-  Clock* clock_;
+  Clock* clock_ = nullptr;
 };
 
 /**
