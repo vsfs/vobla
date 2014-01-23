@@ -15,6 +15,7 @@ Vsfs Open-sourced Base C++ Library
  - boost > 1.48
    - boost_filesystem
    - boost_system
+   - boost_regex
  - glog
  - libssl-dev
  - gmock 1.7.0 (Optional for test)

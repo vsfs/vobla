@@ -27,6 +27,7 @@ AC_HEADER_STDBOOL
 AX_BOOST_BASE([1.48])
 AX_BOOST_SYSTEM([1.48])
 AX_BOOST_FILESYSTEM([1.48])
+AX_BOOST_REGEX([1.48])
 
 
 # Checks for typedefs, structures, and compiler characteristics.

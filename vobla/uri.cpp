@@ -15,15 +15,15 @@
  */
 
 #include <boost/algorithm/string.hpp>
-#include <regex>
+#include <boost/regex.hpp>
 #include <string>
 #include "vobla/status.h"
 #include "vobla/uri.h"
 
 using boost::algorithm::to_lower;
-using std::regex;
-using std::regex_match;
-using std::smatch;
+using boost::regex;
+using boost::regex_match;
+using boost::smatch;
 using std::string;
 
 namespace vobla {
@@ -34,7 +34,7 @@ URI::URI(const string& uri) {
 
 /// See Facebook's folly/URI.cpp
 Status URI::parse(const string& uri) {
-  static const regex uri_regex(
+  static const boost::regex uri_regex(
       "([a-zA-Z][a-zA-Z0-9+.-]*):"  // scheme:
       "([^?#]*)"                    // authority and path
       "(?:\\?([^#]*))?"             // ?query
@@ -43,6 +43,7 @@ Status URI::parse(const string& uri) {
   if (!regex_match(uri, results, uri_regex)) {
     return Status(-1, "Invalid URI");
   }
+
   scheme_ = results[1];
   to_lower(scheme_);
 
