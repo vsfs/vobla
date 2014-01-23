@@ -9,8 +9,10 @@ before_install:
   - sudo add-apt-repository -y ppa:ubuntu-toolchain-r/test
 # google-glog
   - sudo add-apt-repository -y ppa:fcitx-team/nightly
+#
+  - sudo add-apt-repository -y ppa:boost-latest/ppa
   - sudo apt-get update
-  - sudo apt-get install -y g++-${CXX_VERSION} libboost1.48-dev libboost-filesystem1.48-dev libboost-system1.48-dev libboost-regex1.48-dev libgoogle-glog-dev autoconf-archive
+  - sudo apt-get install -y g++-${CXX_VERSION} libboost1.54-dev libboost-filesystem1.54-dev libboost-system1.54-dev libboost-regex1.54-dev libgoogle-glog-dev autoconf-archive
   - export CXX="g++-${CXX_VERSION}"
   - sudo pip install cpp-coveralls --use-mirrors
   - cd test
