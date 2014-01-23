@@ -21,29 +21,63 @@
 
 namespace vobla {
 
+class Status;
+
 /**
  * \brief Unified resource identifier.
+ *
+ * \see RFC3986, http://tools.ietf.org/html/rfc3986
+ * \see Hadoop's URI class.
  */
-elass URI {
+class URI {
  public:
   /// Default constructor
   URI() = default;
 
-  URI(const std::string& uri);
+  /// Construct URI object from an URI string.
+  explicit URI(const std::string& uri);
 
-  ~URI() = delete;
+  ~URI() = default;
+
+  /**
+   * \brief Parses a string form of URI and fills the members of URI class.
+   *
+   * \todo(eddyxu): It currently only supports absolute URI.
+   */
+  vobla::Status parse(const std::string& uri);
 
   /**
    * \brief Returns the absolute form of URI in string.
    */
   std::string to_string() const;
 
+  const std::string& scheme() const { return scheme_; }
+
+  const std::string& host() const { return host_; }
+
+  int port() const { return port_; }
+
+  const std::string& path() const { return path_; }
+
+  const std::string& username() const { return username_; }
+
+  const std::string& password() const { return password_; }
+
+  const std::string& query() const { return query_; }
+
+  const std::string& fragment() const { return fragment_; }
+
  private:
   std::string scheme_;
+  std::string username_;
+  std::string password_;
   std::string host_;
-  int port_ = -1;
-}
+  int port_ = 0;
+  std::string path_;
+  std::string query_;
+  std::string fragment_;
+};
 
-};  // namespace vobla
+}  // namespace vobla
 
 #endif  // VOBLA_URI_H_

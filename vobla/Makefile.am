@@ -48,7 +48,8 @@ libvobla_la_SOURCES = \
   thread_pool.h thread_pool.cpp \
   timer.h timer.cpp \
   traits.h traits.cpp \
-  unique_resource.h
+  unique_resource.h \
+  uri.h uri.cpp
 
 analyze_srcs = $(filter %.cpp, $(libvobla_la_SOURCES))
 analyze_plists = $(analyze_srcs:%.cpp=%.plist)
@@ -74,7 +75,8 @@ TESTS = \
   thread_pool_test \
   timer_test \
   traits_test \
-  unique_resource_test
+  unique_resource_test \
+  uri_test
 
 check_PROGRAMS = $(TESTS)
 
@@ -91,5 +93,6 @@ thread_pool_test_SOURCES = thread_pool_test.cpp
 timer_test_SOURCES = timer_test.cpp
 traits_test_SOURCES = traits_test.cpp
 unique_resource_test_SOURCES = unique_resource_test.cpp
+uri_test_SOURCES = uri_test.cpp
 
 .PHONY: static-analysis
