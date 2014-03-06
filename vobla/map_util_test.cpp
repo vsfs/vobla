@@ -16,10 +16,10 @@
 
 #include <gtest/gtest.h>
 #include <map>
+#include <unordered_map>
 #include <vector>
-#include <unordered_map>  // NOLINT
-#include "vobla/stl_util.h"
 #include "vobla/map_util.h"
+#include "vobla/stl_util.h"
 
 using std::map;
 using std::unordered_map;

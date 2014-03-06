@@ -26,7 +26,7 @@
 #include <array>
 #include <initializer_list>
 #include <limits>
-#include <type_traits>  // NOLINT
+#include <type_traits>
 #include <utility>
 
 using std::array;
@@ -213,13 +213,12 @@ class MultiDimRange {
     return DIMENSION;
   }
 
-  MultiDimRange() {
-  }
+  MultiDimRange() = default;
 
   MultiDimRange(
       std::initializer_list<pair<value_type, value_type>> values) {
     size_t i = 0;
-    for(const auto &lower_and_upper : values) {  // NOLINT
+    for(const auto& lower_and_upper : values) {  // NOLINT
       ranges_[i].set_lower(lower_and_upper.first);
       ranges_[i].set_upper(lower_and_upper.second);
       i++;
@@ -229,7 +228,7 @@ class MultiDimRange {
     }
   }
 
-  MultiDimRange(const MultiDimRange &rhs) {
+  MultiDimRange(const MultiDimRange& rhs) {
     ranges_ = rhs.ranges_;
   }
 
@@ -280,11 +279,11 @@ class MultiDimRange {
     ranges_.fill(range_type());
   }
 
-  bool operator==(const MultiDimRange &rhs) const {
+  bool operator==(const MultiDimRange& rhs) const {
     return ranges_ == rhs.ranges_;
   }
 
-  bool contains(const MultiDimRange &rhs) const {
+  bool contains(const MultiDimRange& rhs) const {
     for (size_t i = 0; i < DIMENSION; i++) {
       if (!ranges_[i].contains(rhs.ranges_[i])) {
         return false;

@@ -14,19 +14,13 @@
  * limitations under the License.
  */
 
-/**
- * \file vobla/consistent_hash_map.h
- *
- * \brief A generic class for Consistent Hashing
- */
-
 #ifndef VOBLA_CONSISTENT_HASH_MAP_H_
 #define VOBLA_CONSISTENT_HASH_MAP_H_
 
 #include <boost/call_traits.hpp>
 #include <glog/logging.h>
 #include <algorithm>
-#include <initializer_list>  // NOLINT
+#include <initializer_list>
 #include <limits>
 #include <map>
 #include <stdexcept>

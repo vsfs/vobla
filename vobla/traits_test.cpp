@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 (c) Lei Xu <eddyxu@gmail.com>
+ * Copyright 2014 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
 
 #include <gtest/gtest.h>
 #include <string>
-#include <type_traits>  // NOLINT
+#include <type_traits>
 #include "vobla/traits.h"
 
 using std::string;

@@ -87,7 +87,7 @@ double SysInfo::get_cpu_freq() {
     cpufreq_ *= 1000000;
 #endif /* FreeBSD / NetBSD */
     break;
-  };
+  }
 #endif /* __APPLE__ || __FreeBSD__ || __NetBSD__ */
   fclose(fp);
   return cpufreq_;

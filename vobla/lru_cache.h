@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * \file lru_cache.h
- * \brief A generic LRU cache
- */
-
 #ifndef VOBLA_LRU_CACHE_H_
 #define VOBLA_LRU_CACHE_H_
 
@@ -26,7 +21,7 @@
 #include <cassert>
 #include <cstddef>
 #include <list>
-#include <unordered_map>  // NOLINT
+#include <unordered_map>
 #include "vobla/stl_util.h"
 
 namespace vobla {

@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * \file thread_pool_test.cpp
- * \brief Unit tests for ThreadPools
- */
-
 #include <gtest/gtest.h>
 #include <memory>
-#include <mutex>  // NOLINT
+#include <mutex>
 #include <vector>
 #include "vobla/status.h"
 #include "vobla/sysinfo.h"

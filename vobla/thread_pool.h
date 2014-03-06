@@ -14,21 +14,16 @@
  * limitations under the License.
  */
 
-/**
- * \file thread_pool.h
- * \brief A generaic threads pool.
- */
-
 #ifndef VOBLA_THREAD_POOL_H_
 #define VOBLA_THREAD_POOL_H_
 
 #include <boost/utility.hpp>
 #include <condition_variable>
 #include <functional>
-#include <future>  // NOLINT
-#include <mutex>  // NOLINT
+#include <future>
+#include <mutex>
 #include <queue>
-#include <thread>  // NOLINT
+#include <thread>
 #include <vector>
 #include "vobla/status.h"
 

@@ -52,9 +52,9 @@ bool contain_key_and_value(const Map& map,
  */
 template <typename Map>
 const typename Map::mapped_type*
-find_or_null(const Map& container,  // NOLINT
+find_or_null(const Map& container,
              const typename Map::key_type& key) {
-  auto it = container.find(key);  // NOLINT
+  auto it = container.find(key);
   if (it == container.end()) {
     return nullptr;
   }
@@ -68,7 +68,7 @@ template <typename Map>
 typename Map::mapped_type*
 find_or_null(Map& map,  // NOLINT
              const typename Map::key_type& key) {
-  auto it = map.find(key);  // NOLINT
+  auto it = map.find(key);
   if (it == map.end()) {
     return nullptr;
   }
@@ -206,7 +206,7 @@ void delete_and_erase(Container& container,  // NOLINT
  */
 template <typename Map, typename Container>
 void append_keys_from_map(const Map& map, Container* out) {
-  for (const auto &key_and_value : map) {  // NOLINT
+  for (const auto &key_and_value : map) {
     out->push_back(key_and_value.first);
   }
 }
@@ -219,7 +219,7 @@ void append_keys_from_map(const Map& map, Container* out) {
  */
 template <typename Map, typename Container>
 void append_values_from_map(const Map& map, Container* out) {
-  for (const auto &key_and_value : map) {  // NOLINT
+  for (const auto &key_and_value : map) {
     out->push_back(key_and_value.second);
   }
 }
@@ -227,7 +227,7 @@ void append_values_from_map(const Map& map, Container* out) {
 template <typename Map>
 typename Map::value_type::first_type sum_keys(const Map& map) {
   typename Map::value_type::first_type result = 0;
-  for (const auto &key_and_value : map) {  // NOLINT
+  for (const auto &key_and_value : map) {
     result += key_and_value.first;
   }
   return result;
@@ -236,7 +236,7 @@ typename Map::value_type::first_type sum_keys(const Map& map) {
 template <typename Map>
 typename Map::value_type::second_type sum_values(const Map& map) {
   typename Map::value_type::second_type result = 0;
-  for (const auto &key_and_value : map) {  // NOLINT
+  for (const auto &key_and_value : map) {
     result += key_and_value.second;
   }
   return result;

@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 (c) Lei Xu <eddyxu@gmail.com>
+ * Copyright 2014 (c) Lei Xu <eddyxu@gmail.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,16 +14,10 @@
  * limitations under the License.
  */
 
-/**
- * \file traits.h
- *
- * \brief Provide an convinient way to do type->int and int->type conversions.
- */
-
 #ifndef VOBLA_TRAITS_H_
 #define VOBLA_TRAITS_H_
 
-#include <cstdint>  // NOLINT
+#include <cstdint>
 #include <string>
 
 /// The integer ID for basic C++ types.
