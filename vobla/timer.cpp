@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-/**
- * \file vobla/timer.cpp
- * \brief Implementation of various timers.
- */
-
 #include <stddef.h>
-#include <sys/time.h>
 #include <sys/resource.h>
+#include <sys/time.h>
 #include "vobla/clock.h"
 #include "vobla/timer.h"
 
@@ -66,9 +61,6 @@ void Timer::stop() {
 
 double Timer::get_in_ms() const {
   return (end_ - start_) * kMicroSecond;
-}
-
-CumulatedTimer::CumulatedTimer() : cumulated_milli_seconds_(0) {
 }
 
 CumulatedTimer::~CumulatedTimer() {

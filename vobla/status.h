@@ -79,10 +79,10 @@ class Status {
   static const Status OK;
 
   /// Returns true if two status objects have same error numbers and messages.
-  bool operator==(const Status &rhs) const;
+  bool operator==(const Status& rhs) const;
 
   /// Returns true if two status objects are not equal.
-  bool operator!=(const Status &rhs) const {
+  bool operator!=(const Status& rhs) const {
     return !(*this == rhs);
   }
 

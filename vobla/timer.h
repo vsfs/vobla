@@ -14,11 +14,6 @@
  * limitations under the License.
  */
 
-/**
- * \file vobla/timer.h
- * \brief Provides a timer for conveniently timing.
- */
-
 #ifndef VOBLA_TIMER_H_
 #define VOBLA_TIMER_H_
 
@@ -125,7 +120,7 @@ class CycleTimer : public TimerInterface {
  */
 class CumulatedTimer : public Timer {
  public:
-  CumulatedTimer();
+  CumulatedTimer() = default;
 
   virtual ~CumulatedTimer();
 
@@ -150,7 +145,7 @@ class CumulatedTimer : public Timer {
   virtual void reset();
 
  private:
-  double cumulated_milli_seconds_;
+  double cumulated_milli_seconds_ = 0;
 };
 
 /**
